@@ -104,11 +104,6 @@ Designed for comfort, clarity, and style:
 
 This application is built with a strong focus on user privacy:
 
-- Zero Automatic Data Collection.  
-- No user data is stored on our servers.  
-- No third-party analytics or advertising is used.  
-- All GPA/CGPA calculations are performed locally on your device.
-
 📄 Please refer to the full [Privacy Policy](https://github.com/ShafiqulIslamShamim/Land-Measurement/blob/main/PrivacyPolicy.txt) for complete details.
 
 ---
