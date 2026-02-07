@@ -109,7 +109,7 @@ This application is built with a strong focus on user privacy:
 - No third-party analytics or advertising is used.  
 - All GPA/CGPA calculations are performed locally on your device.
 
-📄 Please refer to the full [Privacy Policy](https://github.com/ShafiqulIslamShamim/Land-Measurement-Java/blob/main/PrivacyPolicy.txt) for complete details.
+📄 Please refer to the full [Privacy Policy](https://github.com/ShafiqulIslamShamim/Land-Measurement/blob/main/PrivacyPolicy.txt) for complete details.
 
 ---
 
