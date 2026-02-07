@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+>
+
+    <Space android:layout_width="match_parent" android:layout_height="24dp" />
+
+    <com.google.android.material.button.MaterialButton
+    android:id="@+id/btn_calculate"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:text="@string/result_section_btn"
+    android:textAppearance="?attr/textAppearanceTitleMedium"
+    app:backgroundTint="?attr/colorPrimary"
+    app:cornerRadius="16dp"
+    app:elevation="6dp"
+    app:iconTint="?attr/colorOnPrimary"
+  />
+
+    <Space android:layout_width="match_parent" android:layout_height="24dp" />
+
+    <com.google.android.material.card.MaterialCardView
+    android:id="@+id/card_result"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    app:cardBackgroundColor="?attr/colorSurfaceVariant"
+    app:cardCornerRadius="28dp"
+    app:cardElevation="3dp"
+  >
+
+        <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:paddingHorizontal="20dp"
+      android:paddingVertical="24dp"
+    >
+
+            <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/card_conversion_hind"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+      />
+
+            <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+      />
+
+            <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/result_item_conventional"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+      />
+
+            <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="16dp"
+      >
+
+                <LinearLayout
+          android:id="@+id/container_common_units"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp"
+        />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:alpha="0.5"
+      />
+
+            <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/result_item_regional"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+      />
+
+            <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="16dp"
+      >
+
+                <LinearLayout
+          android:id="@+id/container_regional_units"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp"
+        />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

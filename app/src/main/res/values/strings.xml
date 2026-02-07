@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="app_name">Land Measurement</string>
+    
+    <string name="settings">Settings</string>
+    <string name="shortcut_main_short">Home</string>
+    <string name="shortcut_main_long">Open Main Screen</string>
+    <string name="shortcut_settings_short">Settings</string>
+    <string name="shortcut_settings_long">Open Settings</string>
+
+    <!-- Tab Texts -->
+    <string name="tab_land_calculation">Calculation</string>
+    <string name="tab_land_conversion">Conversion</string>
+
+    <!-- Toolbar / Menu related -->
+    <string name="menu_reset">Reset</string>
+    <string name="menu_settings">Settings</string>
+
+    <!-- Share chooser title -->
+    <string name="share_chooser_title">Share via</string>
+    <string name="open_with_chooser_title">Open with</string>
+    
+    <!-- Settings Titles -->
+    <string name="settings_title">Settings</string>
+    <string name="news_updates_title">News &amp; Updates</string>
+    <string name="close">Close</string>
+    
+    <!-- News Dialog Items -->
+    <string name="news_facebook">Facebook Page</string>
+    <string name="news_github">GitHub Repository</string>
+
+    <!-- Email Feedback -->
+    <string name="feedback_subject">Feedback - %1$s v%2$s (Code %3$d)</string>
+    <string name="send_feedback_chooser">Send Feedback</string>
+    
+    <string name="welcome">Welcome to Land Measurement</string>
+    <string
+    name="summary"
+  >Accurate &amp; Reliable Modern Land Measurement Solution</string>
+
+    <string name="select_language">Select Language</string>
+    <string name="lang_default">Default</string>
+    <string name="bangla">Bangla</string>
+
+    <string name="get_started">Get Started</string>
+
+    <!-- Network / Internet -->
+    <string name="internet_not_available">Internet is not available!</string>
+    <string
+    name="internet_available_auto_reload"
+  >Internet available! Auto-reloading...</string>
+    
+    <!-- Theme options -->
+    <string name="theme_follow_system">Follow System</string>
+    <string name="theme_dark_mode">Dark Mode</string>
+    <string name="theme_light_mode">Light Mode</string>
+    
+    <string name="language_default">Default</string>
+    <string name="language_ban">Bangla</string>
+    
+    <string name="app_theme_dynamic">Dynamic theme</string>
+    <string name="app_theme_default">Default theme</string>
+    
+    <!-- Settings Preference -->
+    <string name="pref_settings">Settings</string>
+
+    <!-- Categories -->
+    <string name="pref_category_system">System</string>
+    <string name="pref_category_about">About</string>
+    <string name="pref_category_support">Support</string>
+
+    <!-- System -->
+    <string name="pref_app_theme_title">App theme</string>
+    <string name="pref_select_mode_title">Select mode</string>
+    <string name="pref_select_language_title">Select language</string>
+    <string name="pref_enable_logcat_title">Enable logcat</string>
+    <string
+    name="pref_enable_logcat_summary"
+  >Turn on to enable logcat logging</string>
+  
+    <string name="pref_disable_seasonal_effect_title">Seasonal effect</string>
+    <string
+    name="pref_disable_seasonal_effect_summary"
+  >Turn on to disable seasonal effect</string>
+
+    <!-- About -->
+    <string name="pref_developed_by_title">Developed by</string>
+    <string name="pref_developed_by_summary">Shafiqul Islam Shamim</string>
+
+    <string name="pref_news_title">News</string>
+    <string
+    name="pref_news_summary"
+  >Stay informed about updates and other news.</string>
+
+    <string name="pref_check_updates_title">Check for updates</string>
+    <string
+    name="pref_check_updates_summary"
+  >Download link will be available here if an update is available.</string>
+
+    <string name="pref_privacy_policy_title">Privacy policy</string>
+    <string
+    name="pref_privacy_policy_summary"
+  >Privacy policy • Terms &amp; conditions.</string>
+
+    <!-- Support -->
+    <string name="pref_rate_it_title">Rate it</string>
+    <string
+    name="pref_rate_it_summary"
+  >Every rating helps make the app even better.</string>
+
+    <string name="pref_try_more_apps_title">Try more apps</string>
+    <string
+    name="pref_try_more_apps_summary"
+  >All my apps are available through this link.</string>
+
+    <string name="pref_feedback_title">Feedback</string>
+    <string
+    name="pref_feedback_summary"
+  >Tell us how this app can be improved or report any issues.</string>
+
+    <string name="et_inch_hind">Inch(if any) (0-11)</string>
+    <string name="btn_feet">Feet</string>    
+    <string name="btn_inch">Inch</string>
+    <string name="btn_hat">Cubit</string>
+    <string name="btn_meter">Meter</string>
+
+    <string name="et_single_feet_hind">Feet</string>
+    <string name="et_single_inch_hind">Inch</string>
+    <string name="et_single_hat_hind">Cubit</string>    
+    <string name="et_single_meter_hind">Meter</string>
+    <string name="et_single_default_hind">Enter value</string>
+
+    <string name="et_double_feet_hind">Feet</string>
+    <string name="et_double_inch_hind">Inch</string>
+    <string name="et_double_hat_hind">Cubit</string>    
+    <string name="et_double_meter_hind">Meter</string>
+    <string name="et_double_default_hind">Meter</string>
+
+    <string name="et_double_first_hind">First %1$s (%2$s)</string>
+    <string name="et_double_second_hind">Second %1$s (%2$s)</string>
+
+    <string name="header_land_shape">Land shape</string>
+    <string name="header_conversion">Conversion</string>
+
+    <string name="item_quadrilateral">Quadrilateral</string>
+    <string name="item_circular">Circular</string>
+    <string name="item_triangular">Triangular</string>
+    <string name="item_measurement">Measurement</string>
+    <string name="item_rectangular">Rectangular</string>
+    <string name="item_square">Square</string>
+    <string name="item_scalene">Scalene</string>
+
+    <string name="card_length_title">Length</string>    
+    <string name="card_width_title">Width</string>
+    <string name="card_radius_title">Radius</string>
+
+    <string name="first_arm_title">First side</string>    
+    <string name="second_arm_title">Second side</string>
+    <string name="third_arm_title">Third side</string>    
+    <string
+    name="item_triangular_input_error"
+  >You must fill at least three side fields!</string>
+    <string
+    name="item_scalene_input_error"
+  >You must fill at least one length and one width field!</string>
+    <string
+    name="item_circular_input_error"
+  >You must fill the radius field!</string>
+    <string
+    name="item_rectangular_input_error"
+  >You must fill both length and width fields!</string>
+    <string
+    name="item_square_input_error"
+  >You must fill the length field!</string>
+
+    <string
+    name="error_invalid_conversion_land_amount"
+  >Land amount must be valid and greater than zero!</string>
+
+    <!-- Units -->
+    <string name="unit_sqft">Square Feet</string>
+    <string name="unit_sqm">Square Meter</string>
+    <string name="unit_shotok">Shotok</string>
+    <string name="unit_katha">Katha</string>
+    <string name="unit_bigha">Bigha</string>
+    <string name="unit_acre">Acre</string>
+    <string name="unit_hectare">Hectare</string>
+    <string name="unit_kora">Kora</string>
+    <string name="unit_joistho">Joistho</string>
+    <string name="unit_kani">Kani</string>
+    
+    <string name="card_conversion_hind">Land Amount</string>
+    <string name="et_conversion_hind">Amount</string>
+    
+    <string name="result_section_btn">Calculate</string>
+<string name="result_item_conventional">Standard Method</string>
+<string name="result_item_regional">Regional Method</string>
+<string name="error_invalid_conversion_land_unit">Invalid unit selected</string>
+    
+</resources>

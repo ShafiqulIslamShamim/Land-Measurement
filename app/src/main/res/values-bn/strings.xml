@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="app_name">জমি পরিমাপ</string>
+    
+    <string name="settings">সেটিংস</string>
+    <string name="shortcut_main_short">হোম</string>
+    <string name="shortcut_main_long">প্রধান স্ক্রিন খুলুন</string>
+    <string name="shortcut_settings_short">সেটিংস</string>
+    <string name="shortcut_settings_long">সেটিংস খুলুন</string>
+
+    <!-- Tab Texts -->
+    <string name="tab_land_calculation">হিসাব</string>
+    <string name="tab_land_conversion">রূপান্তর</string>
+
+    <!-- Toolbar / Menu related -->
+    <string name="menu_reset">রিসেট</string>
+    <string name="menu_settings">সেটিংস</string>
+
+    <!-- Share chooser title -->
+    <string name="share_chooser_title">শেয়ার করুন</string>
+    <string name="open_with_chooser_title">এর মাধ্যমে খুলুন</string>
+    
+    <!-- Settings Titles -->
+    <string name="settings_title">সেটিংস</string>
+    <string name="news_updates_title">খবর ও আপডেট</string>
+    <string name="close">বন্ধ করুন</string>
+    
+    <!-- News Dialog Items -->
+    <string name="news_facebook">ফেসবুক পেজ</string>
+    <string name="news_github">গিটহাব রিপোজিটরি</string>
+
+    <!-- Email Feedback -->
+    <string name="feedback_subject">ফিডব্যাক - %1$s v%2$s (কোড %3$d)</string>
+    <string name="send_feedback_chooser">ফিডব্যাক পাঠান</string>
+    
+    <string name="welcome">ল্যান্ড মেজারমেন্ট অ্যাপে স্বাগতম</string>
+    <string
+    name="summary"
+  >পরিমিত ও নির্ভরযোগ্য জমি পরিমাপের আধুনিক সমাধান</string>
+
+    <string name="select_language">ভাষা নির্বাচন করুন</string>
+    <string name="lang_default">ডিফল্ট</string>
+    <string name="bangla">বাংলা</string>
+
+    <string name="get_started">শুরু করুন</string>
+
+    <!-- Network / Internet -->
+    <string name="internet_not_available">ইন্টারনেট সংযোগ নেই!</string>
+    <string
+    name="internet_available_auto_reload"
+  >ইন্টারনেট সংযুক্ত! স্বয়ংক্রিয়ভাবে রিলোড হচ্ছে...</string>
+    
+    <!-- Theme options -->
+    <string name="theme_follow_system">সিস্টেম অনুসরণ করুন</string>
+    <string name="theme_dark_mode">ডার্ক মোড</string>
+    <string name="theme_light_mode">লাইট মোড</string>
+    
+    <string name="language_default">ডিফল্ট</string>
+    <string name="language_ban">বাংলা</string>
+    
+    <string name="app_theme_dynamic">ডায়নামিক থিম</string>
+    <string name="app_theme_default">ডিফল্ট থিম</string>
+    
+    <!-- Settings Preference -->
+    <string name="pref_settings">সেটিংস</string>
+
+    <!-- Categories -->
+    <string name="pref_category_system">সিস্টেম</string>
+    <string name="pref_category_about">অ্যাপ সম্পর্কে</string>
+    <string name="pref_category_support">সাপোর্ট</string>
+
+    <!-- System -->
+    <string name="pref_app_theme_title">অ্যাপের থিম</string>
+    <string name="pref_select_mode_title">মোড নির্বাচন করুন</string>
+    <string name="pref_select_language_title">ভাষা নির্বাচন করুন</string>
+    <string name="pref_enable_logcat_title">লগক্যাট চালু করুন</string>
+    <string
+    name="pref_enable_logcat_summary"
+  >লগক্যাট লগিং চালু করতে এটি অন করুন</string>
+  
+    <string name="pref_disable_seasonal_effect_title">সিজনাল ইফেক্ট</string>
+    <string
+    name="pref_disable_seasonal_effect_summary"
+  >সিজনাল ইফেক্ট বন্ধ করতে অন করুন</string>
+
+    <!-- About -->
+    <string name="pref_developed_by_title">নির্মাতা</string>
+    <string name="pref_developed_by_summary">শফিকুল ইসলাম শামিম</string>
+
+    <string name="pref_news_title">খবর</string>
+    <string
+    name="pref_news_summary"
+  >আপডেট ও অন্যান্য খবর সম্পর্কে জানুন।</string>
+
+    <string name="pref_check_updates_title">আপডেট চেক</string>
+    <string
+    name="pref_check_updates_summary"
+  >আপডেট পাওয়া গেলে এখানে ডাউনলোড লিঙ্ক পাওয়া যাবে।</string>
+
+    <string name="pref_privacy_policy_title">গোপনীয়তা নীতিমালা</string>
+    <string
+    name="pref_privacy_policy_summary"
+  >গোপনীয়তা নীতিমালা • শর্তাবলী।</string>
+
+    <!-- Support -->
+    <string name="pref_rate_it_title">রেটিং দিন</string>
+    <string
+    name="pref_rate_it_summary"
+  >প্রতিটি রেটিং অ্যাপটিকে আরও উন্নত করতে সাহায্য করে।</string>
+
+    <string name="pref_try_more_apps_title">আরও অ্যাপ দেখুন</string>
+    <string
+    name="pref_try_more_apps_summary"
+  >আমার সব অ্যাপ এই লিঙ্কে পাওয়া যাবে।</string>
+
+    <string name="pref_feedback_title">মতামত দিন</string>
+    <string
+    name="pref_feedback_summary"
+  >অ্যাপটি কীভাবে আরও উন্নত করা যায় বা কোনো সমস্যা জানান।</string>
+
+    <string name="et_inch_hind">ইঞ্চি(যদি থাকে) (০-১১)</string>
+    <string name="btn_feet">ফুট</string>    
+    <string name="btn_inch">ইঞ্চি</string>
+    <string name="btn_hat">হাত</string>
+    <string name="btn_meter">মিটার</string>
+
+    <string name="et_single_feet_hind">ফুট</string>
+    <string name="et_single_inch_hind">ইঞ্চি</string>
+    <string name="et_single_hat_hind">হাত</string>    
+    <string name="et_single_meter_hind">মিটার</string>
+    <string name="et_single_default_hind">মান দিন</string>
+
+    <string name="et_double_feet_hind">ফুট</string>
+    <string name="et_double_inch_hind">ইঞ্চি</string>
+    <string name="et_double_hat_hind">হাত</string>    
+    <string name="et_double_meter_hind">মিটার</string>
+    <string name="et_double_default_hind">মিটার</string>
+
+    <string name="et_double_first_hind">প্রথম %1$s (%2$s)</string>
+    <string name="et_double_second_hind">দ্বিতীয় %1$s (%2$s)</string>
+
+    <string name="header_land_shape">জমির আকৃতি</string>
+    <string name="header_conversion">রূপান্তর</string>
+
+    <string name="item_quadrilateral">চতুর্ভুজ</string>
+    <string name="item_circular">বৃত্তাকার</string>
+    <string name="item_triangular">ত্রিভুজাকার</string>
+    <string name="item_measurement">পরিমাপ</string>
+    <string name="item_rectangular">আয়তক্ষেত্রাকার</string>
+    <string name="item_square">বর্গাকার</string>
+    <string name="item_scalene">অসমবাহু</string>
+
+    <string name="card_length_title">দৈর্ঘ্য</string>    
+    <string name="card_width_title">প্রস্থ</string>
+    <string name="card_radius_title">ব্যাসার্ধ</string>
+
+    <string name="first_arm_title">প্রথম বাহু</string>    
+    <string name="second_arm_title">দ্বিতীয় বাহু</string>
+    <string name="third_arm_title">তৃতীয় বাহু</string>    
+    <string
+    name="item_triangular_input_error"
+  >আপনাকে অন্তত তিনটি বাহুর ঘর পূরণ করতে হবে!</string>
+    <string
+    name="item_scalene_input_error"
+  >আপনাকে অন্তত একটি দৈর্ঘ্য এবং একটি প্রস্থের ঘর পূরণ করতে হবে!</string>
+    <string
+    name="item_circular_input_error"
+  >আপনাকে অন্তত ব্যাসার্ধের ঘর পূরণ করতে হবে!</string>
+    <string
+    name="item_rectangular_input_error"
+  >আপনাকে অন্তত দৈর্ঘ্য এবং প্রস্থের ঘর পূরণ করতে হবে!</string>
+    <string
+    name="item_square_input_error"
+  >আপনাকে অন্তত দৈর্ঘ্যের ঘর পূরণ করতে হবে!</string>
+
+    <string
+    name="error_invalid_conversion_land_amount"
+  >জমির পরিমাণ বৈধ এবং শূন্যের চেয়ে বড় হতে হবে!</string>
+
+    <!-- Units -->
+    <string name="unit_sqft">বর্গফুট</string>
+    <string name="unit_sqm">বর্গমিটার</string>
+    <string name="unit_shotok">শতক</string>
+    <string name="unit_katha">কাঠা</string>
+    <string name="unit_bigha">বিঘা</string>
+    <string name="unit_acre">একর</string>
+    <string name="unit_hectare">হেক্টর</string>
+    <string name="unit_kora">কড়া</string>
+    <string name="unit_joistho">জৈষ্ঠ্য</string>
+    <string name="unit_kani">কানি</string>
+    
+    <string name="card_conversion_hind">জমির পরিমাণ</string>
+    <string name="et_conversion_hind">পরিমাণ</string>
+    
+    <string name="result_section_btn">হিসাব করুন</string>
+    <string name="result_item_conventional">প্রচলিত হিসেব</string>
+    <string name="result_item_regional">আঞ্চলিক হিসেব</string>
+    
+    <string
+    name="error_invalid_conversion_land_unit"
+  >অবৈধ ইউনিট নির্বাচিত</string>
+    
+</resources>

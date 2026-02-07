@@ -1,0 +1,129 @@
+Privacy Policy for Land Measurement
+
+Effective Date: February 07, 2026
+Developer Name: Shafiqul Islam Shamim
+Contact Email: shafiqulislamshamimofficial@gmail.com
+
+------------------------------------------------------------
+
+1. Data Collection Overview
+
+We respect your privacy and are committed to transparency.
+
+Land Measurement follows a minimal and limited data collection policy. We do not
+collect personal informations.
+
+However, limited non-personal data may be collected automatically through
+trusted third-party services (Firebase) to ensure app stability, security,
+and improved user experience.
+
+------------------------------------------------------------
+
+2. Automatically Collected Information (Firebase Services)
+
+The app uses Google Firebase, a service provided by Google LLC.
+
+A. Firebase Analytics
+
+Purpose:
+- To understand general app usage patterns
+- To improve app features and user experience
+
+Data Collected (Non-Personal):
+- App interaction events (screen views, feature usage)
+- Device information (model, OS version)
+- App version
+- Approximate location (country-level only)
+
+Important Notes:
+- No personal or academic data is collected
+- Data is aggregated and anonymized
+- Google processes this data according to its privacy policy
+
+------------------------------------------------------------
+
+B. Firebase Crashlytics
+
+Purpose:
+- To detect, monitor, and fix app crashes and errors
+
+Data Collected (Non-Personal):
+- Crash logs and stack traces
+- Device type and operating system
+- App state during a crash
+
+Important Notes:
+- Crash reports do not intentionally contain personal data
+- Data is used only to improve app stability
+
+------------------------------------------------------------
+
+3. Information Collected Manually by the User
+
+The app processes information only when the user actively provides it.
+This data is not stored on our servers.
+
+------------------------------------------------------------
+
+4. Permissions and Device Access
+
+The app requests permissions only for core functionality.
+
+Permission: android.permission.INTERNET
+Purpose:
+- Checking updates
+- Communicate with Firebase services
+
+Data Handling:
+- Used only for connectivity and service delivery
+
+------------------------------------------------------------
+
+Permission: android.permission.READ_EXTERNAL_STORAGE
+Permission: android.permission.WRITE_EXTERNAL_STORAGE
+
+Purpose:
+- Allow users to save logcat locally
+
+Data Handling:
+- Access occurs only when the user explicitly saves a file
+
+------------------------------------------------------------
+
+5. Third-Party Services and Links
+
+Third-Party Services Used:
+- Google Firebase (Analytics, Crashlytics)
+
+Firebase Privacy Policy:
+https://policies.google.com/privacy
+
+------------------------------------------------------------
+
+6. Children’s Privacy
+
+Land Measurement is not directed toward children under the age of 13.
+
+- We do not knowingly collect personal data from children
+- Firebase services may collect limited non-personal usage data as described
+- Parents or guardians may contact us if they believe personal data was provided
+
+------------------------------------------------------------
+
+8. Changes to This Privacy Policy
+
+We may update this Privacy Policy from time to time.
+
+- Changes will be posted on this page
+- The Effective Date will be updated accordingly
+
+Users are encouraged to review this policy periodically.
+
+------------------------------------------------------------
+
+9. Contact Me
+
+If you have any questions or concerns regarding this Privacy Policy, please contact:
+
+Developer: Shafiqul Islam Shamim
+Email: shafiqulislamshamimofficial@gmail.com

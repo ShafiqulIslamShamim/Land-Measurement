@@ -1,0 +1,94 @@
+
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+def keystorePropertiesFile = file("keystore/signing.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    namespace 'com.shamim.landmeasurement'
+    compileSdk 36
+    
+    
+    defaultConfig {
+        applicationId "com.shamim.landmeasurement"
+        minSdk 27
+        targetSdk 36
+        versionCode 3
+        versionName "1.2"
+        
+        vectorDrawables { 
+            useSupportLibrary true
+        }
+        
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    
+    signingConfigs {
+        release {
+            if (keystoreProperties['STORE_FILE']) {
+    storeFile file(keystoreProperties['STORE_FILE'])
+    storePassword keystoreProperties['STORE_PASSWORD']
+    keyAlias keystoreProperties['KEY_ALIAS']
+    keyPassword keystoreProperties['KEY_PASSWORD']
+}
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    
+   // buildFeatures {
+   //    viewBinding true
+        
+  //  }
+    
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ["-Xlint:all"]
+}
+
+dependencies {
+
+
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.preference:preference:1.2.1'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation "androidx.activity:activity:1.9.0"
+    implementation 'androidx.documentfile:documentfile:1.1.0'
+    implementation 'com.airbnb.android:lottie:6.7.1'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+  
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation 'com.google.firebase:firebase-config:22.0.0' // latest version
+    
+    implementation "com.github.mdbqnull:seasonal-effects-android:1.0.0"
+    }
+    
