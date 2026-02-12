@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ConversionActivity extends BaseActivity {
+public class AreaUnitsConversionActivity extends BaseActivity {
 
   private LandResultManager resultManager;
   private MaterialToolbar toolbar;
@@ -47,13 +47,13 @@ public class ConversionActivity extends BaseActivity {
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_land_conversion);
+    setContentView(R.layout.activity_area_units_conversion);
 
     toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setTitle(R.string.header_conversion);
+      getSupportActionBar().setTitle(R.string.item_cov_area_units);
     }
 
     findViews();
@@ -155,7 +155,7 @@ public class ConversionActivity extends BaseActivity {
 
     double sqFt = input * factor;
 
-    resultManager.showResult(sqFt);
+    resultManager.showResult(sqFt, getString(selectedUnitResId));
 
     // Scroll to bottom
     scrollView.postDelayed(

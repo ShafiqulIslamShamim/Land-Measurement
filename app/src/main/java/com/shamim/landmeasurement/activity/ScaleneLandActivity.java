@@ -51,7 +51,7 @@ public class ScaleneLandActivity extends BaseActivity {
     }
 
     double areaSqFt = avgLength * avgWidth;
-    resultManager.showResult(areaSqFt);
+    resultManager.showResult(areaSqFt, "");
 
     // Scroll to bottom
     scrollView.postDelayed(

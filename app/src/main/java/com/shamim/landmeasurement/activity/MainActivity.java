@@ -94,7 +94,13 @@ public class MainActivity extends BaseActivity {
     items.add(new ItemModel(getString(R.string.header_conversion)));
     items.add(
         new ItemModel(
-            2, R.drawable.swap_horizontal_circle_24px, getString(R.string.item_measurement), null));
+            2, R.drawable.square_foot_24px, getString(R.string.item_cov_area_units), null));
+    items.add(
+        new ItemModel(
+            21,
+            R.drawable.trail_length_medium_24px,
+            getString(R.string.item_cov_linear_units),
+            null));
 
     ItemAdapter adapter =
         new ItemAdapter(
@@ -107,7 +113,9 @@ public class MainActivity extends BaseActivity {
               } else if (id == 12) {
                 startActivity(new Intent(this, TriangularLandActivity.class));
               } else if (id == 2) {
-                startActivity(new Intent(this, ConversionActivity.class));
+                startActivity(new Intent(this, AreaUnitsConversionActivity.class));
+              } else if (id == 21) {
+                startActivity(new Intent(this, LinearUnitsConversionActivity.class));
               }
             });
 

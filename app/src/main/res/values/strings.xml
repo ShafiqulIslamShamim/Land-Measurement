@@ -145,7 +145,8 @@
     <string name="item_quadrilateral">Quadrilateral</string>
     <string name="item_circular">Circular</string>
     <string name="item_triangular">Triangular</string>
-    <string name="item_measurement">Measurement</string>
+    <string name="item_cov_area_units">Area units</string>
+    <string name="item_cov_linear_units">Linear units</string>
     <string name="item_rectangular">Rectangular</string>
     <string name="item_square">Square</string>
     <string name="item_scalene">Scalene</string>
@@ -175,7 +176,7 @@
 
     <string
     name="error_invalid_conversion_land_amount"
-  >Land amount must be valid and greater than zero!</string>
+  >Area must be valid and greater than zero!</string>
 
     <!-- Units -->
     <string name="unit_sqft">Square Feet</string>
@@ -189,12 +190,41 @@
     <string name="unit_joistho">Joistho</string>
     <string name="unit_kani">Kani</string>
     
-    <string name="card_conversion_hind">Land Amount</string>
+    <string name="card_conversion_hind">Area</string>
     <string name="et_conversion_hind">Amount</string>
     
     <string name="result_section_btn">Calculate</string>
-<string name="result_item_conventional">Standard Method</string>
-<string name="result_item_regional">Regional Method</string>
-<string name="error_invalid_conversion_land_unit">Invalid unit selected</string>
+    <string
+    name="error_invalid_conversion_land_unit"
+  >Invalid unit selected</string>
+<string name="result_item_international">International Units</string>
+<string name="result_item_regional_standard">Regional (Standard) Units</string>
+<string
+    name="result_item_regional_localized"
+  >Regional (Localized) Units</string>
+
+    <string name="title_length_conversion">Length Conversion</string>
+
+    <string name="label_convert_length">Length</string>
+    <string name="hint_enter_value">Enter value (length)</string>
+    <string name="btn_convert">Convert</string>
+    <string name="label_converted_values">Linear units</string>
+
+    <string name="unit_inch">Inch</string>
+    <string name="unit_foot">Foot</string>
+    <string name="unit_yard">Yard</string>
+    <string name="unit_hath">Cubit</string> <string
+    name="unit_meter"
+  >Meter</string>
+    <string name="unit_centimeter">Centimeter</string>
+    <string name="unit_millimeter">Millimeter</string>
+
+    <string
+    name="conversation_length_error_invalid_value"
+  >Please enter a valid value</string>
+    <string
+    name="conversation_length_error_unit_not_found"
+  >Unit not found</string>
+    
     
 </resources>

@@ -48,7 +48,7 @@ public class SquareLandActivity extends BaseActivity {
 
     double areaSqFt = Math.pow(Length, 2);
 
-    resultManager.showResult(areaSqFt);
+    resultManager.showResult(areaSqFt, "");
 
     // Scroll to bottom
     scrollView.postDelayed(

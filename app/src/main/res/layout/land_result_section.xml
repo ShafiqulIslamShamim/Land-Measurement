@@ -47,6 +47,8 @@
         android:layout_height="wrap_content"
         android:text="@string/card_conversion_hind"
         android:textAppearance="?attr/textAppearanceTitleLarge"
+        android:letterSpacing="0.03"
+        android:textAllCaps="false"
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
       />
@@ -59,7 +61,7 @@
             <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/result_item_conventional"
+        android:text="@string/result_item_international"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
@@ -74,7 +76,7 @@
       >
 
                 <LinearLayout
-          android:id="@+id/container_common_units"
+          android:id="@+id/container_international_units"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="vertical"
@@ -85,15 +87,16 @@
 
             <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginVertical="8dp"
-        android:alpha="0.5"
+        android:layout_height="1.5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:dividerColor="?attr/colorOutline"
       />
 
             <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/result_item_regional"
+        android:text="@string/result_item_regional_standard"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
@@ -108,7 +111,42 @@
       >
 
                 <LinearLayout
-          android:id="@+id/container_regional_units"
+          android:id="@+id/container_regional_standard_units"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp"
+        />
+
+            </com.google.android.material.card.MaterialCardView>
+            
+            <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:dividerColor="?attr/colorOutline"
+      />
+
+            <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/result_item_regional_localized"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        android:textColor="?attr/colorPrimary"
+        android:textStyle="bold"
+      />
+
+            <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="16dp"
+      >
+
+                <LinearLayout
+          android:id="@+id/container_regional_localized_units"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="vertical"

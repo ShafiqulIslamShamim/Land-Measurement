@@ -145,7 +145,8 @@
     <string name="item_quadrilateral">চতুর্ভুজ</string>
     <string name="item_circular">বৃত্তাকার</string>
     <string name="item_triangular">ত্রিভুজাকার</string>
-    <string name="item_measurement">পরিমাপ</string>
+    <string name="item_cov_area_units">ক্ষেত্রফলের একক</string>
+    <string name="item_cov_linear_units">দৈর্ঘ্যের একক</string>
     <string name="item_rectangular">আয়তক্ষেত্রাকার</string>
     <string name="item_square">বর্গাকার</string>
     <string name="item_scalene">অসমবাহু</string>
@@ -175,7 +176,7 @@
 
     <string
     name="error_invalid_conversion_land_amount"
-  >জমির পরিমাণ বৈধ এবং শূন্যের চেয়ে বড় হতে হবে!</string>
+  >পরিমাণ বৈধ এবং শূন্যের চেয়ে বড় হতে হবে!</string>
 
     <!-- Units -->
     <string name="unit_sqft">বর্গফুট</string>
@@ -189,15 +190,42 @@
     <string name="unit_joistho">জৈষ্ঠ্য</string>
     <string name="unit_kani">কানি</string>
     
-    <string name="card_conversion_hind">জমির পরিমাণ</string>
+    <string name="card_conversion_hind">পরিমাণ</string>
     <string name="et_conversion_hind">পরিমাণ</string>
     
     <string name="result_section_btn">হিসাব করুন</string>
-    <string name="result_item_conventional">প্রচলিত হিসেব</string>
-    <string name="result_item_regional">আঞ্চলিক হিসেব</string>
-    
     <string
     name="error_invalid_conversion_land_unit"
   >অবৈধ ইউনিট নির্বাচিত</string>
+  
+  <string name="result_item_international">আন্তর্জাতিক ইউনিট</string>
+<string
+    name="result_item_regional_standard"
+  >আঞ্চলিক (স্ট্যান্ডার্ড) ইউনিট</string>
+<string name="result_item_regional_localized">আঞ্চলিক (স্থানীয়) ইউনিট</string>
+
+
+    <!-- Hints and labels -->
+    <string name="label_convert_length">দৈর্ঘ্য</string>
+    <string name="hint_enter_value">মান লিখুন (দৈর্ঘ্য)</string>
+    <string name="btn_convert">রূপান্তর করুন</string>
+    <string name="label_converted_values">দৈর্ঘ্যের একক</string>
+
+    <!-- Units -->
+    <string name="unit_inch">ইঞ্চি</string>
+    <string name="unit_foot">ফুট</string>
+    <string name="unit_yard">গজ</string>
+    <string name="unit_hath">হাত</string>
+    <string name="unit_meter">মিটার</string>
+    <string name="unit_centimeter">সেন্টিমিটার</string>
+    <string name="unit_millimeter">মিলিমিটার</string>
+
+    <!-- Messages -->
+    <string
+    name="conversation_length_error_invalid_value"
+  >দয়া করে বৈধ মান দিন</string>
+    <string
+    name="conversation_length_error_unit_not_found"
+  >একক পাওয়া যায়নি</string>
     
 </resources>

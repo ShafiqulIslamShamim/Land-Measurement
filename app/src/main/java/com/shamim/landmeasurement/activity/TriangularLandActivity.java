@@ -62,7 +62,7 @@ public class TriangularLandActivity extends BaseActivity {
 
     double areaSqFt = Math.sqrt(s * (s - FirstArm) * (s - SecondArm) * (s - ThirdArm));
 
-    resultManager.showResult(areaSqFt);
+    resultManager.showResult(areaSqFt, "");
 
     // Scroll to bottom
     scrollView.postDelayed(

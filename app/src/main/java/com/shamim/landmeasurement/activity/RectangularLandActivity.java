@@ -53,7 +53,7 @@ public class RectangularLandActivity extends BaseActivity {
 
     double areaSqFt = Length * Width;
 
-    resultManager.showResult(areaSqFt);
+    resultManager.showResult(areaSqFt, "");
 
     // Scroll to bottom
     scrollView.postDelayed(

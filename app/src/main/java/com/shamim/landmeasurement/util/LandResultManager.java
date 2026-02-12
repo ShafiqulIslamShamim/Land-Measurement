@@ -17,11 +17,12 @@ public class LandResultManager {
   private final Context context;
   private final MaterialButton btnCalculate;
   private final MaterialCardView cardResult;
-  private final ViewGroup containerCommonUnits;
-  private final ViewGroup containerRegionalUnits;
+
+  private final ViewGroup containerInternational;
+  private final ViewGroup containerRegionalStandard;
+  private final ViewGroup containerRegionalLocalized;
 
   private OnCalculateClickListener listener;
-
   private final View section;
 
   public interface OnCalculateClickListener {
@@ -33,13 +34,22 @@ public class LandResultManager {
 
     this.section = rootView.findViewById(R.id.result_section);
     if (section == null) {
-      throw new IllegalStateException("include_result_section not found");
+      throw new IllegalStateException(
+          "Result section not found. Make sure the included layout has id='result_section'");
     }
 
     this.btnCalculate = section.findViewById(R.id.btn_calculate);
     this.cardResult = section.findViewById(R.id.card_result);
-    this.containerCommonUnits = section.findViewById(R.id.container_common_units);
-    this.containerRegionalUnits = section.findViewById(R.id.container_regional_units);
+
+    this.containerInternational = section.findViewById(R.id.container_international_units);
+    this.containerRegionalStandard = section.findViewById(R.id.container_regional_standard_units);
+    this.containerRegionalLocalized = section.findViewById(R.id.container_regional_localized_units);
+
+    if (containerInternational == null
+        || containerRegionalStandard == null
+        || containerRegionalLocalized == null) {
+      throw new IllegalStateException("One or more result containers not found in layout");
+    }
   }
 
   public View sectionLayout() {
@@ -56,37 +66,58 @@ public class LandResultManager {
         });
   }
 
-  public void showResult(double areaSqFt) {
+  public void showResult(double areaSqFt, String selectedUnit) {
+    // Clear all containers first
+    containerInternational.removeAllViews();
+    containerRegionalStandard.removeAllViews();
+    containerRegionalLocalized.removeAllViews();
 
-    // Common units
-    containerCommonUnits.removeAllViews();
-    List<UnitValue> common = new ArrayList<>();
-    common.add(new UnitValue(context.getString(R.string.unit_shotok), areaSqFt / 435.6));
-    common.add(new UnitValue(context.getString(R.string.unit_sqft), areaSqFt));
-    common.add(new UnitValue(context.getString(R.string.unit_sqm), areaSqFt / 10.7639));
-    common.add(new UnitValue(context.getString(R.string.unit_katha), areaSqFt / 720.0));
-    common.add(new UnitValue(context.getString(R.string.unit_bigha), areaSqFt / 14400.0));
-    common.add(new UnitValue(context.getString(R.string.unit_acre), areaSqFt / 43560.0));
-    common.add(new UnitValue(context.getString(R.string.unit_hectare), areaSqFt / 107639.0));
+    // ─────────────────────────────────────────────
+    // International / Common units
+    // ─────────────────────────────────────────────
+    List<UnitValue> international = new ArrayList<>();
+    international.add(new UnitValue(context.getString(R.string.unit_sqft), areaSqFt));
+    international.add(new UnitValue(context.getString(R.string.unit_sqm), areaSqFt / 10.7639));
+    international.add(new UnitValue(context.getString(R.string.unit_acre), areaSqFt / 43560.0));
+    international.add(new UnitValue(context.getString(R.string.unit_hectare), areaSqFt / 107639.0));
 
-    for (UnitValue uv : common) {
-      addUnitRow(containerCommonUnits, uv.unit, String.format("%.4f", uv.value));
+    for (UnitValue uv : international) {
+      if (!uv.unit.equals(selectedUnit)) {
+        addUnitRow(containerInternational, uv.unit, String.format("%.4f", uv.value));
+      }
     }
 
-    // Regional units
-    containerRegionalUnits.removeAllViews();
-    List<UnitValue> regional = new ArrayList<>();
-    double shatak = areaSqFt / 435.6;
-    double kora = shatak / 2;
-    double joistho = kora / 10;
-    double kani = kora / 80;
+    // ─────────────────────────────────────────────
+    // Regional Standard units ─────────────────────────────────────────────
+    List<UnitValue> regionalStandard = new ArrayList<>();
 
-    regional.add(new UnitValue(context.getString(R.string.unit_kora), kora));
-    regional.add(new UnitValue(context.getString(R.string.unit_joistho), joistho));
-    regional.add(new UnitValue(context.getString(R.string.unit_kani), kani));
+    regionalStandard.add(new UnitValue(context.getString(R.string.unit_shotok), areaSqFt / 435.6));
+    regionalStandard.add(new UnitValue(context.getString(R.string.unit_katha), areaSqFt / 720.0));
+    regionalStandard.add(new UnitValue(context.getString(R.string.unit_bigha), areaSqFt / 14400.0));
 
-    for (UnitValue uv : regional) {
-      addUnitRow(containerRegionalUnits, uv.unit, String.format("%.3f", uv.value));
+    for (UnitValue uv : regionalStandard) {
+      if (!uv.unit.equals(selectedUnit)) {
+        addUnitRow(containerRegionalStandard, uv.unit, String.format("%.3f", uv.value));
+      }
+    }
+
+    // ─────────────────────────────────────────────
+    // Regional Localized units ─────────────────────────────────────────────
+    List<UnitValue> regionalLocalized = new ArrayList<>();
+
+    double shotok = areaSqFt / 435.6;
+    double kora = shotok * 2;
+    double joistho = kora * 10;
+    double kani = kora * 80;
+
+    regionalLocalized.add(new UnitValue(context.getString(R.string.unit_kora), kora));
+    regionalLocalized.add(new UnitValue(context.getString(R.string.unit_joistho), joistho));
+    regionalLocalized.add(new UnitValue(context.getString(R.string.unit_kani), kani));
+
+    for (UnitValue uv : regionalLocalized) {
+      if (!uv.unit.equals(selectedUnit)) {
+        addUnitRow(containerRegionalLocalized, uv.unit, String.format("%.3f", uv.value));
+      }
     }
 
     cardResult.setVisibility(View.VISIBLE);

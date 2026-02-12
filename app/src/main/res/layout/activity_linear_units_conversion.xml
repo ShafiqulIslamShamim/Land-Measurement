@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+>
+
+    <com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+
+        <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorSurface"
+      app:titleTextColor="?attr/colorOnSurface"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:navigationIconTint="?attr/colorOnSurface"
+    />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:fillViewport="true"
+  >
+
+        <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:gravity="center_horizontal"
+      android:paddingHorizontal="16dp"
+    >
+
+            <!-- Input Card -->
+            <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="3dp"
+        app:strokeWidth="0dp"
+        app:cardCornerRadius="20dp"
+      >
+
+                <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp"
+        >
+
+                    <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_convert_length"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
+          />
+
+                    <com.google.android.material.textfield.TextInputLayout
+            style="@style/RoundedOutlinedTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+          >
+
+                        <com.google.android.material.textfield.TextInputEditText
+              android:id="@+id/et_input_length"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="@string/hint_enter_value"
+              android:inputType="numberDecimal"
+              android:singleLine="true"
+            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_units"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="1dp"
+            app:singleSelection="true"
+          />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+      />
+
+            <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_calculate"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="@string/btn_convert"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        app:backgroundTint="?attr/colorPrimary"
+        app:cornerRadius="16dp"
+        app:elevation="6dp"
+      />
+
+            <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+      />
+
+            <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:cardBackgroundColor="?attr/colorSurfaceVariant"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="3dp"
+      >
+
+                <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:gravity="center_horizontal"
+          android:paddingHorizontal="20dp"
+          android:paddingVertical="24dp"
+        >
+
+                    <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_converted_values"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:letterSpacing="0.03"
+            android:textAllCaps="false"
+            android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
+          />
+                        
+                        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="16dp"
+          >
+
+                    <LinearLayout
+              android:id="@+id/container_length_units"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="16dp"
+            />
+                        
+                   </com.google.android.material.card.MaterialCardView>
+                   
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

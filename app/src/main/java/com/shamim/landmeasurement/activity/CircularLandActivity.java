@@ -47,7 +47,7 @@ public class CircularLandActivity extends BaseActivity {
     }
 
     double areaSqFt = Math.PI * Math.pow(Radius, 2);
-    resultManager.showResult(areaSqFt);
+    resultManager.showResult(areaSqFt, "");
 
     // Scroll to bottom
     scrollView.postDelayed(

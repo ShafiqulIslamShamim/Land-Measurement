@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
     android:name=".LandMeasurementApp"
@@ -35,7 +34,8 @@
     <activity android:name=".activity.ScaleneLandActivity" />
     <activity android:name=".activity.CircularLandActivity" />
     <activity android:name=".activity.SquareLandActivity" />
-    <activity android:name=".activity.ConversionActivity" />
+    <activity android:name=".activity.AreaUnitsConversionActivity" />
+    <activity android:name=".activity.LinearUnitsConversionActivity" />
     <activity android:name=".activity.TriangularLandActivity" />
     <activity android:name=".activity.QuadrilateralItemsActivity" />
         <activity android:name=".activity.MainActivity" android:exported="true">

@@ -51,9 +51,15 @@ public class OTAUpdateHelper {
               || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
     } else {
       // Fallback for older devices
-      android.net.NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-      return activeNetwork != null && activeNetwork.isConnected();
+      return checkInternetConnectionLegacy(cm);
     }
+  }
+
+  @SuppressWarnings("deprecation")
+  public static boolean checkInternetConnectionLegacy(ConnectivityManager cm) {
+    android.net.NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+    return activeNetwork != null && activeNetwork.isConnected();
   }
 
   public static String getVersionName(Context context) {
@@ -201,7 +207,7 @@ public class OTAUpdateHelper {
     private void fetchUpdate(AlertDialog progressDialog) {
       try {
         String encodedUrl =
-            "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1NoYWZpcXVsSXNsYW1TaGFtaW0vUmVzdWx0LVZpZXcvbWFpbi9VcGRhdGVDaGVja2VySW5mby50eHQ=";
+            "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL1NoYWZpcXVsSXNsYW1TaGFtaW0vTGFuZC1NZWFzdXJlbWVudC9tYWluL1VwZGF0ZUNoZWNrZXJJbmZvLnR4dA==";
         String textUrl =
             new String(Base64.decode(encodedUrl, Base64.DEFAULT), StandardCharsets.UTF_8);
         HttpURLConnection connection = (HttpURLConnection) new URL(textUrl).openConnection();
@@ -273,13 +279,16 @@ public class OTAUpdateHelper {
                         context, "Update Available: " + remoteVersion));
 
         if (HtmlDetector.isHtml(changelog)) {
-          Spanned formatted;
+
           if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            formatted = Html.fromHtml(changelog, Html.FROM_HTML_MODE_LEGACY);
+            Spanned formatted = Html.fromHtml(changelog, Html.FROM_HTML_MODE_LEGACY);
+            changelogBuilder.setMessage(formatted);
           } else {
-            formatted = Html.fromHtml(changelog);
+            @SuppressWarnings("deprecation")
+            Spanned formatted = Html.fromHtml(changelog);
+            changelogBuilder.setMessage(formatted);
           }
-          changelogBuilder.setMessage(formatted);
+
         } else {
           changelogBuilder.setMessage(changelog);
         }
@@ -302,6 +311,8 @@ public class OTAUpdateHelper {
             label = "Dropbox";
           } else if (link.contains("github.com")) {
             label = "GitHub Release";
+          } else if (link.contains("play.google.com")) {
+            label = "Play Store";
           } else {
             label = "Direct Download (Mirror " + mirrorCount + ")";
           }
