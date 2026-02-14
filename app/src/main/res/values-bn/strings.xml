@@ -145,7 +145,7 @@
     <string name="item_quadrilateral">চতুর্ভুজ</string>
     <string name="item_circular">বৃত্তাকার</string>
     <string name="item_triangular">ত্রিভুজাকার</string>
-    <string name="item_cov_area_units">ক্ষেত্রফলের একক</string>
+    <string name="item_cov_area_units">জমির পরিমাণ</string>
     <string name="item_cov_linear_units">দৈর্ঘ্যের একক</string>
     <string name="item_rectangular">আয়তক্ষেত্রাকার</string>
     <string name="item_square">বর্গাকার</string>
@@ -159,7 +159,7 @@
     <string name="second_arm_title">দ্বিতীয় বাহু</string>
     <string name="third_arm_title">তৃতীয় বাহু</string>    
     <string
-    name="item_triangular_input_error"
+    name="item_triangular_arm_input_error"
   >আপনাকে অন্তত তিনটি বাহুর ঘর পূরণ করতে হবে!</string>
     <string
     name="item_scalene_input_error"
@@ -190,7 +190,7 @@
     <string name="unit_joistho">জৈষ্ঠ্য</string>
     <string name="unit_kani">কানি</string>
     
-    <string name="card_conversion_hind">পরিমাণ</string>
+    <string name="card_conversion_hind">পরিমাপের ফলাফল</string>
     <string name="et_conversion_hind">পরিমাণ</string>
     
     <string name="result_section_btn">হিসাব করুন</string>
@@ -227,5 +227,13 @@
     <string
     name="conversation_length_error_unit_not_found"
   >একক পাওয়া যায়নি</string>
+  
+  <string name="item_rectangular_arm_based">বাহু-ভিত্তিক</string>
+  <string name="item_rectangular_height_based">উচ্চতা-ভিত্তিক</string>
+  <string name="card_base_title">ভূমি</string>
+  <string name="card_height_title">উচ্চতা</string>
+  <string
+    name="item_triangular_height_input_error"
+  >আপনাকে অন্তত ভূমি এবং উচ্চতার ঘর পূরণ করতে হবে!</string>
     
 </resources>

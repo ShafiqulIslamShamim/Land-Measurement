@@ -9,58 +9,50 @@ import com.shamim.landmeasurement.R;
 import com.shamim.landmeasurement.util.*;
 import com.shamim.landmeasurement.view.*;
 
-public class TriangularLandActivity extends BaseActivity {
+public class TriangularLandActivityHeight extends BaseActivity {
 
   private LandResultManager resultManager;
-  private LandSingleEditTextCardView FirstArmInput;
-  private LandSingleEditTextCardView SecondArmInput;
-  private LandSingleEditTextCardView ThirdArmInput;
+  private LandSingleEditTextCardView baseInput;
+  private LandSingleEditTextCardView heightInput;
   private ScrollView scrollView;
   private MaterialToolbar toolbar;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_triangular_land);
+    setContentView(R.layout.activity_triangular_land_height);
 
     toolbar = findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setTitle(getString(R.string.item_triangular));
+      getSupportActionBar().setTitle(getString(R.string.item_rectangular_height_based));
     }
 
-    FirstArmInput = findViewById(R.id.first_arm_input);
-    SecondArmInput = findViewById(R.id.second_arm_input);
-    ThirdArmInput = findViewById(R.id.third_arm_input);
+    baseInput = findViewById(R.id.base_input);
+    heightInput = findViewById(R.id.height_input);
     scrollView = findViewById(R.id.scroll_view);
 
-    FirstArmInput.setTitle(getString(R.string.first_arm_title));
-    SecondArmInput.setTitle(getString(R.string.second_arm_title));
-    ThirdArmInput.setTitle(getString(R.string.third_arm_title));
+    baseInput.setTitle(getString(R.string.card_base_title));
+    heightInput.setTitle(getString(R.string.card_height_title));
 
     resultManager = new LandResultManager(findViewById(android.R.id.content), this);
     resultManager.setOnCalculateClickListener(this::calculate);
   }
 
   private void calculate() {
-    double FirstArm = FirstArmInput.getValueInFeet();
-    double SecondArm = SecondArmInput.getValueInFeet();
-    double ThirdArm = ThirdArmInput.getValueInFeet();
+    double Base = baseInput.getValueInFeet();
+    double Height = heightInput.getValueInFeet();
 
-    if (!FirstArmInput.hasValidInput()
-        || !SecondArmInput.hasValidInput()
-        || !ThirdArmInput.hasValidInput()) {
-      Toast.makeText(this, getString(R.string.item_triangular_input_error), Toast.LENGTH_LONG)
+    if (!baseInput.hasValidInput() || !heightInput.hasValidInput()) {
+      Toast.makeText(
+              this, getString(R.string.item_triangular_height_input_error), Toast.LENGTH_LONG)
           .show();
       resultManager.hideResult();
       return;
     }
 
-    // অর্ধ-পরিসীমা হিসাব
-    double s = (FirstArm + SecondArm + ThirdArm) / 2.0;
-
-    double areaSqFt = Math.sqrt(s * (s - FirstArm) * (s - SecondArm) * (s - ThirdArm));
+    double areaSqFt = 0.5 * Base * Height;
 
     resultManager.showResult(areaSqFt, "");
 

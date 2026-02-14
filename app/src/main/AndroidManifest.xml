@@ -36,8 +36,10 @@
     <activity android:name=".activity.SquareLandActivity" />
     <activity android:name=".activity.AreaUnitsConversionActivity" />
     <activity android:name=".activity.LinearUnitsConversionActivity" />
-    <activity android:name=".activity.TriangularLandActivity" />
+    <activity android:name=".activity.TriangularLandActivityArm" />
+    <activity android:name=".activity.TriangularLandActivityHeight" />
     <activity android:name=".activity.QuadrilateralItemsActivity" />
+    <activity android:name=".activity.TriangularItemsActivity" />
         <activity android:name=".activity.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

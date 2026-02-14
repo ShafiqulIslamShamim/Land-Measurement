@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity {
               } else if (id == 11) {
                 startActivity(new Intent(this, CircularLandActivity.class));
               } else if (id == 12) {
-                startActivity(new Intent(this, TriangularLandActivity.class));
+                startActivity(new Intent(this, TriangularItemsActivity.class));
               } else if (id == 2) {
                 startActivity(new Intent(this, AreaUnitsConversionActivity.class));
               } else if (id == 21) {

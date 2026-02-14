@@ -145,7 +145,7 @@
     <string name="item_quadrilateral">Quadrilateral</string>
     <string name="item_circular">Circular</string>
     <string name="item_triangular">Triangular</string>
-    <string name="item_cov_area_units">Area units</string>
+    <string name="item_cov_area_units">Amount of Land</string>
     <string name="item_cov_linear_units">Linear units</string>
     <string name="item_rectangular">Rectangular</string>
     <string name="item_square">Square</string>
@@ -159,7 +159,7 @@
     <string name="second_arm_title">Second side</string>
     <string name="third_arm_title">Third side</string>    
     <string
-    name="item_triangular_input_error"
+    name="item_triangular_arm_input_error"
   >You must fill at least three side fields!</string>
     <string
     name="item_scalene_input_error"
@@ -190,7 +190,7 @@
     <string name="unit_joistho">Joistho</string>
     <string name="unit_kani">Kani</string>
     
-    <string name="card_conversion_hind">Area</string>
+    <string name="card_conversion_hind">Measurement Results</string>
     <string name="et_conversion_hind">Amount</string>
     
     <string name="result_section_btn">Calculate</string>
@@ -226,5 +226,12 @@
     name="conversation_length_error_unit_not_found"
   >Unit not found</string>
     
-    
+      <string name="item_rectangular_arm_based">Side-based</string>
+  <string name="item_rectangular_height_based">Height-based</string>
+  <string name="card_base_title">Base</string>
+  <string name="card_height_title">Height</string>
+  <string
+    name="item_triangular_height_input_error"
+  >You must fill in at least the base and height fields!</string>
+  
 </resources>
