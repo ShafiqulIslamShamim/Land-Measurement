@@ -1,7 +1,6 @@
 package com.shamim.landmeasurement.activity;
 
 import android.content.*;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,16 +45,6 @@ public class SettingsActivity extends BaseActivity {
   public static final String KEY_RATE_IT = "pref_rate_it_key";
   public static final String KEY_MORE_APPS = "pref_try_more_apps_key";
   public static final String KEY_FEEDBACK = "pref_feedback_key";
-
-  private final BroadcastReceiver themeReceiver =
-      new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-          if (ThemeActions.ACTION_THEME_CHANGED.equals(intent.getAction())) {
-            recreate(); // 🔥 Activity auto reload
-          }
-        }
-      };
 
   private MaterialToolbar toolbar;
 
@@ -158,27 +147,6 @@ public class SettingsActivity extends BaseActivity {
     return true;
   }
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    IntentFilter filter = new IntentFilter(ThemeActions.ACTION_THEME_CHANGED);
-
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-      registerReceiver(themeReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-    } else {
-      registerReceiver(themeReceiver, filter);
-    }
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-    try {
-      unregisterReceiver(themeReceiver);
-    } catch (IllegalArgumentException ignored) {
-    }
-  }
-
   public static class SettingsFragment extends PreferenceFragmentCompat
       implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -243,7 +211,7 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-      if (key == null && key.isEmpty()) return;
+      if (key == null || key.isEmpty()) return;
       sharedPreferences.edit().putBoolean(PREF_CHANGE_FLAG, true).apply();
 
       if (key.equals("disable_seasonal_effect")) {
@@ -256,8 +224,7 @@ public class SettingsActivity extends BaseActivity {
           || key.equals("app_theme_preference")
           || key.equals("language_preference")) {
 
-        // 🔥 Global Broadcast
-        requireContext().sendBroadcast(new Intent(ThemeActions.ACTION_THEME_CHANGED));
+        requireActivity().recreate();
       }
     }
 

@@ -1,8 +1,6 @@
 package com.shamim.landmeasurement.activity;
 
 import android.content.*;
-import android.content.BroadcastReceiver;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
@@ -24,20 +22,9 @@ import com.shamim.landmeasurement.util.*;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-  private final BroadcastReceiver themeReceiver =
-      new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-          if (ThemeActions.ACTION_THEME_CHANGED.equals(intent.getAction())) {
-            recreate(); // 🔥 Activity auto reload
-          }
-        }
-      };
-
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-    // MUST apply theme before super.onCreate()
     applyLocalTheme();
     LocaleHelper.applyLocale(this);
 
@@ -45,9 +32,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     EdgeToEdge.enable(this);
 
     super.onCreate(savedInstanceState);
-
-    // LocaleHelper.saveLanguageIfUnsaved(this, "default");
-
   }
 
   @Override
@@ -81,27 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     setTheme(themeRes);
-  }
-
-  @Override
-  protected void onStart() {
-    super.onStart();
-    IntentFilter filter = new IntentFilter(ThemeActions.ACTION_THEME_CHANGED);
-
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-      registerReceiver(themeReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
-    } else {
-      registerReceiver(themeReceiver, filter);
-    }
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-    try {
-      unregisterReceiver(themeReceiver);
-    } catch (IllegalArgumentException ignored) {
-    }
   }
 
   // Status + Navigation bar icon color (Light/Dark)

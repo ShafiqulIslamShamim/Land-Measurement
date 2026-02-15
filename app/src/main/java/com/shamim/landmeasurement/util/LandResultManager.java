@@ -106,9 +106,9 @@ public class LandResultManager {
     List<UnitValue> regionalLocalized = new ArrayList<>();
 
     double shotok = areaSqFt / 435.6;
-    double kora = shotok * 2;
-    double joistho = kora * 10;
-    double kani = kora * 80;
+    double kora = shotok / 2;
+    double joistho = kora / 10;
+    double kani = kora / 80;
 
     regionalLocalized.add(new UnitValue(context.getString(R.string.unit_kora), kora));
     regionalLocalized.add(new UnitValue(context.getString(R.string.unit_joistho), joistho));
