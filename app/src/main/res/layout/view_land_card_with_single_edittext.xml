@@ -75,48 +75,59 @@
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-      android:id="@+id/toggle_unit"
-      android:layout_width="wrap_content"
+        <com.google.android.material.chip.ChipGroup
+      android:id="@+id/chip_group_unit"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center_horizontal"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="12dp"
       app:singleSelection="true"
+      app:selectionRequired="true"
+      app:chipSpacingHorizontal="8dp"
+      app:chipSpacingVertical="1dp"
     >
 
-            <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_ft"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+            <com.google.android.material.chip.Chip
+        android:id="@+id/chip_ft"
+        style="@style/Widget.Material3.Chip.Filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_feet"
+        app:checkedIcon="@drawable/ic_check"
+        app:checkedIconVisible="true"
       />
 
-            <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_inch"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+            <com.google.android.material.chip.Chip
+        android:id="@+id/chip_inch"
+        style="@style/Widget.Material3.Chip.Filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_inch"
+        app:checkedIcon="@drawable/ic_check"
+        app:checkedIconVisible="true"
       />
 
-            <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_hat"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+            <com.google.android.material.chip.Chip
+        android:id="@+id/chip_hat"
+        style="@style/Widget.Material3.Chip.Filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_hat"
+        app:checkedIcon="@drawable/ic_check"
+        app:checkedIconVisible="true"
       />
 
-            <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_meter"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+            <com.google.android.material.chip.Chip
+        android:id="@+id/chip_meter"
+        style="@style/Widget.Material3.Chip.Filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_meter"
+        app:checkedIcon="@drawable/ic_check"
+        app:checkedIconVisible="true"
       />
 
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+        </com.google.android.material.chip.ChipGroup>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

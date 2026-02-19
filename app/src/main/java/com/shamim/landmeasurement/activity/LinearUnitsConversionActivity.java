@@ -1,11 +1,13 @@
 package com.shamim.landmeasurement.activity;
 
+import android.content.*;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ScrollView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
@@ -178,7 +180,16 @@ public class LinearUnitsConversionActivity extends BaseActivity {
       }
     }
 
+    closeKeyboard();
     cardResult.setVisibility(View.VISIBLE);
+  }
+
+  public void closeKeyboard() {
+    View view = this.getCurrentFocus();
+    if (view != null) {
+      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
   }
 
   private String formatValue(double value) {

@@ -88,7 +88,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         root,
         (v, insets) -> {
           Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-          v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+          Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+
+          int bottomPadding = Math.max(systemBars.bottom, imeInsets.bottom);
+
+          v.setPadding(systemBars.left, systemBars.top, systemBars.right, bottomPadding);
+
           return insets;
         });
   }

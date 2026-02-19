@@ -53,10 +53,13 @@ public class StoragePermissionHelper {
       AppCompatActivity activity, ActivityResultLauncher<Intent> launcher) {
 
     new MaterialAlertDialogBuilder(activity)
-        .setCustomTitle(DialogUtils.createStyledDialogTitle(activity, "Folder Access Needed"))
-        .setMessage("This app needs permission to save log files. Please select a folder.")
-        .setPositiveButton("Select Folder", (d, w) -> openFolderPicker(launcher))
-        .setNegativeButton("Cancel", null)
+        .setCustomTitle(
+            DialogUtils.createStyledDialogTitle(
+                activity, activity.getString(R.string.dialog_folder_permission_title)))
+        .setMessage(R.string.dialog_folder_permission_message)
+        .setPositiveButton(
+            R.string.dialog_folder_permission_positive, (d, w) -> openFolderPicker(launcher))
+        .setNegativeButton(R.string.dialog_folder_permission_negative, null)
         .show();
   }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -24,6 +25,7 @@ public class LandResultManager {
 
   private OnCalculateClickListener listener;
   private final View section;
+  private final View rootView;
 
   public interface OnCalculateClickListener {
     void onCalculateClicked();
@@ -31,6 +33,7 @@ public class LandResultManager {
 
   public LandResultManager(@NonNull View rootView, Context context) {
     this.context = context;
+    this.rootView = rootView;
 
     this.section = rootView.findViewById(R.id.result_section);
     if (section == null) {
@@ -54,6 +57,19 @@ public class LandResultManager {
 
   public View sectionLayout() {
     return section;
+  }
+
+  public void closeKeyboard() {
+    if (context != null && rootView != null) {
+      // InputMethodManager ইমপোর্ট করা থাকলে এটি কাজ করবে
+      InputMethodManager imm =
+          (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+      // rootView-এর উইন্ডো টোকেন ব্যবহার করে কিবোর্ড হাইড করা
+      if (imm != null) {
+        imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+      }
+    }
   }
 
   public void setOnCalculateClickListener(OnCalculateClickListener listener) {
@@ -120,6 +136,7 @@ public class LandResultManager {
       }
     }
 
+    closeKeyboard();
     cardResult.setVisibility(View.VISIBLE);
   }
 

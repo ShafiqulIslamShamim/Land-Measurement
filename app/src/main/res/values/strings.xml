@@ -234,4 +234,11 @@
     name="item_triangular_height_input_error"
   >You must fill in at least the base and height fields!</string>
   
+   <string name="dialog_folder_permission_title">Folder Access Needed</string>
+    <string
+    name="dialog_folder_permission_message"
+  >This app needs permission to save log files. Please select a folder.</string>
+    <string name="dialog_folder_permission_positive">Select Folder</string>
+    <string name="dialog_folder_permission_negative">Cancel</string>
+
 </resources>

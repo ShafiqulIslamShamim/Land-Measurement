@@ -5,7 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -16,7 +17,8 @@ public class LandSingleEditTextCardView extends ConstraintLayout {
   private MaterialTextView tvTitle;
   private TextInputEditText etFirstVal, etFirstIn;
   private TextInputLayout tilFirstVal, tilFirstIn;
-  private MaterialButtonToggleGroup toggleUnit;
+  private ChipGroup chipGroupUnit;
+  private Chip chipFt, chipInch, chipHat, chipMeter;
   private Context viewContext;
 
   public LandSingleEditTextCardView(Context context) {
@@ -44,37 +46,43 @@ public class LandSingleEditTextCardView extends ConstraintLayout {
     etFirstIn = findViewById(R.id.et_first_in);
     tilFirstVal = findViewById(R.id.til_first_val);
     tilFirstIn = findViewById(R.id.til_first_in);
-    toggleUnit = findViewById(R.id.toggle_unit);
+
+    chipGroupUnit = findViewById(R.id.chip_group_unit);
+    chipFt = findViewById(R.id.chip_ft);
+    chipInch = findViewById(R.id.chip_inch);
+    chipHat = findViewById(R.id.chip_hat);
+    chipMeter = findViewById(R.id.chip_meter);
 
     // Default selection
-    toggleUnit.check(R.id.btn_ft);
+    chipGroupUnit.check(R.id.chip_ft);
 
-    // Listen to unit changes
-    toggleUnit.addOnButtonCheckedListener(
-        (group, checkedId, isChecked) -> {
-          if (isChecked) {
+    // Listen to chip selection changes
+    chipGroupUnit.setOnCheckedStateChangeListener(
+        (group, checkedIds) -> {
+          if (!checkedIds.isEmpty()) {
+            int checkedId = checkedIds.get(0);
             updateHintAndInchField(checkedId);
           }
         });
 
     // Set initial state
-    updateHintAndInchField(toggleUnit.getCheckedButtonId());
+    updateHintAndInchField(chipGroupUnit.getCheckedChipId());
   }
 
   private void updateHintAndInchField(int checkedId) {
     String mainHint;
     boolean showInchField = false;
 
-    if (checkedId == R.id.btn_ft) {
+    if (checkedId == R.id.chip_ft) {
       mainHint = viewContext.getString(R.string.et_single_feet_hind);
       showInchField = true;
-    } else if (checkedId == R.id.btn_inch) {
+    } else if (checkedId == R.id.chip_inch) {
       mainHint = viewContext.getString(R.string.et_single_inch_hind);
       showInchField = false;
-    } else if (checkedId == R.id.btn_hat) {
+    } else if (checkedId == R.id.chip_hat) {
       mainHint = viewContext.getString(R.string.et_single_hat_hind);
       showInchField = false;
-    } else if (checkedId == R.id.btn_meter) {
+    } else if (checkedId == R.id.chip_meter) {
       mainHint = viewContext.getString(R.string.et_single_meter_hind);
       showInchField = false;
     } else {
@@ -95,7 +103,7 @@ public class LandSingleEditTextCardView extends ConstraintLayout {
   }
 
   public double getValueInFeet() {
-    int unit = toggleUnit.getCheckedButtonId();
+    int checkedId = chipGroupUnit.getCheckedChipId();
 
     double mainValue = parseDoubleOrZero(etFirstVal.getText());
     double inches = parseDoubleOrZero(etFirstIn.getText());
@@ -103,15 +111,15 @@ public class LandSingleEditTextCardView extends ConstraintLayout {
     double totalFeet = mainValue;
 
     // If feet is selected → add inches
-    if (unit == R.id.btn_ft) {
+    if (checkedId == R.id.chip_ft) {
       totalFeet += (inches / 12.0);
     }
     // Convert other units to feet
-    else if (unit == R.id.btn_hat) {
+    else if (checkedId == R.id.chip_hat) {
       totalFeet = mainValue * 1.5;
-    } else if (unit == R.id.btn_inch) {
+    } else if (checkedId == R.id.chip_inch) {
       totalFeet = mainValue / 12.0;
-    } else if (unit == R.id.btn_meter) {
+    } else if (checkedId == R.id.chip_meter) {
       totalFeet = mainValue * 3.28084;
     }
 
@@ -134,6 +142,6 @@ public class LandSingleEditTextCardView extends ConstraintLayout {
   public void clear() {
     etFirstVal.setText("");
     etFirstIn.setText("");
-    toggleUnit.check(R.id.btn_ft);
+    chipGroupUnit.check(R.id.chip_ft);
   }
 }

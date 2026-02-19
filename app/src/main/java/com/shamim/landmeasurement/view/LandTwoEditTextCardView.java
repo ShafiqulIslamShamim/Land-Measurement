@@ -5,7 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -16,7 +17,8 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
   private MaterialTextView tvTitle;
   private TextInputEditText etFirstVal, etFirstIn, etSecondVal, etSecondIn;
   private TextInputLayout tilFirstVal, tilFirstIn, tilSecondVal, tilSecondIn;
-  private MaterialButtonToggleGroup toggleUnit;
+  private ChipGroup chipGroupUnit;
+  private Chip chipFt, chipInch, chipHat, chipMeter;
   private String typeText; // default
   private Context viewContext;
 
@@ -48,39 +50,48 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     etSecondVal = findViewById(R.id.et_second_val);
     etSecondIn = findViewById(R.id.et_second_in);
 
-    tilFirstVal = findViewById(R.id.til_first_val); // ← added
+    tilFirstVal = findViewById(R.id.til_first_val);
     tilFirstIn = findViewById(R.id.til_first_in);
-    tilSecondVal = findViewById(R.id.til_second_val); // ← added
+    tilSecondVal = findViewById(R.id.til_second_val);
     tilSecondIn = findViewById(R.id.til_second_in);
 
-    toggleUnit = findViewById(R.id.toggle_unit);
+    chipGroupUnit = findViewById(R.id.chip_group_unit);
+    chipFt = findViewById(R.id.chip_ft);
+    chipInch = findViewById(R.id.chip_inch);
+    chipHat = findViewById(R.id.chip_hat);
+    chipMeter = findViewById(R.id.chip_meter);
 
     // Default to feet
-    toggleUnit.check(R.id.btn_ft);
+    chipGroupUnit.check(R.id.chip_ft);
 
-    toggleUnit.addOnButtonCheckedListener(
-        (group, checkedId, isChecked) -> {
-          if (isChecked) {
+    // Listen to chip selection changes
+    chipGroupUnit.setOnCheckedStateChangeListener(
+        (group, checkedIds) -> {
+          if (!checkedIds.isEmpty()) {
+            int checkedId = checkedIds.get(0);
             updateHintsAndInchFields(checkedId);
           }
         });
+
+    // Initial hints
+    updateHintsAndInchFields(chipGroupUnit.getCheckedChipId());
   }
 
   private void updateHintsAndInchFields(int checkedId) {
-    boolean showInchFields = (checkedId == R.id.btn_ft);
+    boolean showInchFields = (checkedId == R.id.chip_ft);
 
     String format1 = viewContext.getString(R.string.et_double_first_hind);
     String format2 = viewContext.getString(R.string.et_double_second_hind);
 
     String unit;
 
-    if (checkedId == R.id.btn_ft) {
+    if (checkedId == R.id.chip_ft) {
       unit = viewContext.getString(R.string.et_double_feet_hind);
-    } else if (checkedId == R.id.btn_inch) {
+    } else if (checkedId == R.id.chip_inch) {
       unit = viewContext.getString(R.string.et_double_inch_hind);
-    } else if (checkedId == R.id.btn_hat) {
+    } else if (checkedId == R.id.chip_hat) {
       unit = viewContext.getString(R.string.et_double_hat_hind);
-    } else if (checkedId == R.id.btn_meter) {
+    } else if (checkedId == R.id.chip_meter) {
       unit = viewContext.getString(R.string.et_double_meter_hind);
     } else {
       unit = viewContext.getString(R.string.et_double_default_hind);
@@ -104,15 +115,14 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
 
   public void setTitle(String title) {
     tvTitle.setText(title);
-
     typeText = title;
 
-    // টাইটেল বদলালে হিন্টও রিফ্রেশ
-    updateHintsAndInchFields(toggleUnit.getCheckedButtonId());
+    // Refresh hints when title changes
+    updateHintsAndInchFields(chipGroupUnit.getCheckedChipId());
   }
 
   public double getAverageInFeet() {
-    int unit = toggleUnit.getCheckedButtonId();
+    int checkedId = chipGroupUnit.getCheckedChipId();
 
     double val1 = parseDoubleOrZero(etFirstVal.getText());
     double in1 = parseDoubleOrZero(etFirstIn.getText());
@@ -123,18 +133,18 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     double total2 = val2;
 
     // Add inches only if feet is selected
-    if (unit == R.id.btn_ft) {
+    if (checkedId == R.id.chip_ft) {
       total1 += (in1 / 12.0);
       total2 += (in2 / 12.0);
     }
     // Convert other units to feet
-    else if (unit == R.id.btn_hat) {
+    else if (checkedId == R.id.chip_hat) {
       total1 *= 1.5;
       total2 *= 1.5;
-    } else if (unit == R.id.btn_inch) {
+    } else if (checkedId == R.id.chip_inch) {
       total1 /= 12.0;
       total2 /= 12.0;
-    } else if (unit == R.id.btn_meter) {
+    } else if (checkedId == R.id.chip_meter) {
       total1 *= 3.28084;
       total2 *= 3.28084;
     }
@@ -164,6 +174,6 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     etFirstIn.setText("");
     etSecondVal.setText("");
     etSecondIn.setText("");
-    toggleUnit.check(R.id.btn_ft);
+    chipGroupUnit.check(R.id.chip_ft);
   }
 }
