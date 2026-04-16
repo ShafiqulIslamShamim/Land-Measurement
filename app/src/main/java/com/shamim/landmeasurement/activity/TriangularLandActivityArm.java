@@ -63,12 +63,26 @@ public class TriangularLandActivityArm extends BaseActivity {
 
     double areaSqFt = Math.sqrt(s * (s - FirstArm) * (s - SecondArm) * (s - ThirdArm));
 
-    Map<String, Double> InputMap = new LinkedHashMap<>();
-    InputMap.put(getString(R.string.first_arm_title), FirstArm);
-    InputMap.put(getString(R.string.second_arm_title), SecondArm);
-    InputMap.put(getString(R.string.third_arm_title), ThirdArm);
+    resultManager.showResultWithScroll(areaSqFt, "", scrollView);
 
-    resultManager.showResultWithScroll(areaSqFt, "", InputMap, scrollView);
+    String shareText = resultManager.buildShareableText(areaSqFt, sharedTextHeading());
+
+    resultManager.setLastSharedText(shareText);
+  }
+
+  private String sharedTextHeading() {
+
+    return getString(R.string.first_arm_title)
+        + " : "
+        + FirstArmInput.getValueAsString()
+        + "\n"
+        + getString(R.string.second_arm_title)
+        + " : "
+        + SecondArmInput.getValueAsString()
+        + "\n"
+        + getString(R.string.third_arm_title)
+        + " : "
+        + ThirdArmInput.getValueAsString();
   }
 
   @Override

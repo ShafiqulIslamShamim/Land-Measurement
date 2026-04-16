@@ -249,7 +249,7 @@
 
 
 <!-- Share section -->
-<string name="share_area_label">Area: </string>
+<string name="share_area_label">Area : </string>
 <string name="share_selected_unit">Selected unit: </string>
 <string name="share_footer">Shared from Land Measurement App</string>
 <string name="share_lengths_label">Lengths: </string>
@@ -264,4 +264,10 @@
 <string name="value_with_unit">%1$s %2$s</string>
 
 <string name="no_result_to_share">No result to share yet!</string>
+
+<string name="header_side_calculation">Side calculation</string>
+<string name="other_side_title">Other Side</string>
+<string name="unknown_side_title">Base or height</string>
+<string name="amount_of_land_title">Amount of land</string>
+
 </resources>

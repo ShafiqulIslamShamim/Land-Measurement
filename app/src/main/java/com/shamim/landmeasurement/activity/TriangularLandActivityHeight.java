@@ -55,11 +55,22 @@ public class TriangularLandActivityHeight extends BaseActivity {
 
     double areaSqFt = 0.5 * Base * Height;
 
-    Map<String, Double> InputMap = new LinkedHashMap<>();
-    InputMap.put(getString(R.string.card_base_title), Base);
-    InputMap.put(getString(R.string.card_height_title), Height);
+    resultManager.showResultWithScroll(areaSqFt, "", scrollView);
 
-    resultManager.showResultWithScroll(areaSqFt, "", InputMap, scrollView);
+    String shareText = resultManager.buildShareableText(areaSqFt, sharedTextHeading());
+
+    resultManager.setLastSharedText(shareText);
+  }
+
+  private String sharedTextHeading() {
+
+    return getString(R.string.card_base_title)
+        + " : "
+        + baseInput.getValueAsString()
+        + "\n"
+        + getString(R.string.card_height_title)
+        + " : "
+        + heightInput.getValueAsString();
   }
 
   @Override

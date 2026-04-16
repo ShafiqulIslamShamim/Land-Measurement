@@ -26,27 +26,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.shamim.landmeasurement.R;
 import com.shamim.landmeasurement.recycle_view.NewsAdapter;
+import com.shamim.landmeasurement.util.UnitConverter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LinearUnitsConversionActivity extends BaseActivity {
-
-  private static final double INCHES_PER_FOOT = 12.0;
-  private static final double FEET_PER_YARD = 0.333333; // 1/3
-  private static final double HATH_PER_FOOT = 0.6666666666666666666; // ≈ 2/3
-  private static final double METERS_PER_FOOT = 0.3048;
-  private static final double CENTIMETERS_PER_FOOT = 30.48;
-  private static final double MILLIMETERS_PER_FOOT = 304.8;
-
-  // Derived / consistent with original repeating style
-  private static final double YARDS_PER_FOOT = 0.333333;
-  private static final double FEET_PER_HATH = 1.5; // 1 / 0.666...
-  private static final double HATH_PER_FOOT_ORIGINAL = 0.6666666666666666666;
 
   private MaterialToolbar toolbar;
   private TextInputEditText etInputLength;
@@ -60,31 +46,19 @@ public class LinearUnitsConversionActivity extends BaseActivity {
   private int selectedUnitResId = R.string.unit_foot;
   private String lastSharedText = "";
 
-  // unit resource id → how many feet = 1 of this unit
-  private final Map<Integer, Double> feetPerUnit = new HashMap<>();
-
-  {
-    feetPerUnit.put(R.string.unit_inch, 1.0 / INCHES_PER_FOOT); // 1 inch = 1/12 ft
-    feetPerUnit.put(R.string.unit_foot, 1.0);
-    feetPerUnit.put(R.string.unit_yard, 1.0 / FEET_PER_YARD); // 1 yard ≈ 3 ft
-    feetPerUnit.put(R.string.unit_hath, FEET_PER_HATH); // 1 hath ≈ 1.5 ft
-    feetPerUnit.put(R.string.unit_meter, 1.0 / METERS_PER_FOOT);
-    feetPerUnit.put(R.string.unit_centimeter, 1.0 / CENTIMETERS_PER_FOOT);
-    feetPerUnit.put(R.string.unit_millimeter, 1.0 / MILLIMETERS_PER_FOOT);
-  }
-
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_linear_units_conversion);
 
-    toolbar = findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setTitle(R.string.item_cov_linear_units);
-    }
+    initViews();
+    setupToolbar();
+    setupChipGroup();
+    setupListeners();
+  }
 
+  private void initViews() {
+    toolbar = findViewById(R.id.toolbar);
     etInputLength = findViewById(R.id.et_input_length);
     chipGroupUnits = findViewById(R.id.chip_group_units);
     scrollView = findViewById(R.id.scroll_view);
@@ -92,9 +66,14 @@ public class LinearUnitsConversionActivity extends BaseActivity {
     btnShare = findViewById(R.id.btn_share);
     cardResult = findViewById(R.id.card_result);
     containerLengthUnits = findViewById(R.id.container_length_units);
+  }
 
-    setupChipGroup();
-    setupListeners();
+  private void setupToolbar() {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setTitle(R.string.item_cov_linear_units);
+    }
   }
 
   private void setupChipGroup() {
@@ -165,35 +144,23 @@ public class LinearUnitsConversionActivity extends BaseActivity {
       return;
     }
 
-    Double feetFactor = feetPerUnit.get(selectedUnitResId);
-    if (feetFactor == null) {
-      Toast.makeText(this, R.string.conversation_length_error_unit_not_found, Toast.LENGTH_SHORT)
-          .show();
-      hideResult();
-      return;
-    }
+    double valueInFeet =
+        UnitConverter.convertLength(inputValue, selectedUnitResId, R.string.unit_foot);
 
-    double valueInFeet = inputValue * feetFactor;
     showResult(valueInFeet, getString(selectedUnitResId));
   }
 
   private void showResult(double feet, String selectedUnit) {
     containerLengthUnits.removeAllViews();
 
-    List<UnitValue> units = new ArrayList<>();
-    units.add(new UnitValue(getString(R.string.unit_inch), feet * INCHES_PER_FOOT));
-    units.add(new UnitValue(getString(R.string.unit_foot), feet));
-    units.add(new UnitValue(getString(R.string.unit_yard), feet * YARDS_PER_FOOT));
-    units.add(new UnitValue(getString(R.string.unit_hath), feet * HATH_PER_FOOT_ORIGINAL));
-    units.add(new UnitValue(getString(R.string.unit_meter), feet * METERS_PER_FOOT));
-    units.add(new UnitValue(getString(R.string.unit_centimeter), feet * CENTIMETERS_PER_FOOT));
-    units.add(new UnitValue(getString(R.string.unit_millimeter), feet * MILLIMETERS_PER_FOOT));
+    for (UnitConverter.LengthUnit unit : UnitConverter.LengthUnit.values()) {
+      String unitName = getString(unit.getResId());
+      if (unitName.equals(selectedUnit)) continue;
 
-    for (UnitValue uv : units) {
-      if (!uv.unit.equals(selectedUnit)) {
-        String formatted = formatValue(uv.value);
-        addUnitRow(containerLengthUnits, uv.unit, formatted);
-      }
+      double convertedValue = unit.fromFeet(feet);
+      String formatted = formatValue(convertedValue);
+
+      addUnitRow(containerLengthUnits, unitName, formatted);
     }
 
     lastSharedText = buildShareableText(feet, selectedUnit);
@@ -201,6 +168,7 @@ public class LinearUnitsConversionActivity extends BaseActivity {
     closeKeyboard();
     cardResult.setVisibility(View.VISIBLE);
 
+    // Scroll to result
     cardResult.post(
         () -> {
           cardResult.requestFocus();
@@ -212,57 +180,34 @@ public class LinearUnitsConversionActivity extends BaseActivity {
   private String buildShareableText(double feet, String selectedUnit) {
     StringBuilder sb = new StringBuilder();
 
-    Double feetFactor = feetPerUnit.get(selectedUnitResId);
-    double inputValue = (feetFactor != null) ? feet / feetFactor : 0;
+    // Input value in selected unit
+    double inputValue = UnitConverter.convertLength(feet, R.string.unit_foot, selectedUnitResId);
 
     sb.append(getString(R.string.label_converted_values)).append("\n\n");
-    sb.append(getString(R.string.label_convert_length));
-    sb.append(": ").append(formatValue(inputValue)).append(" ").append(selectedUnit).append("\n\n");
-    sb.append("──────────────────────────────\n\n");
-
-    sb.append(getString(R.string.label_converted_values));
-    sb.append(":\n");
-    sb.append("• ")
-        .append(getString(R.string.unit_inch))
-        .append(" : ")
-        .append(formatValue(feet * INCHES_PER_FOOT))
-        .append("\n");
-    sb.append("• ")
-        .append(getString(R.string.unit_foot))
-        .append(" : ")
-        .append(formatValue(feet))
-        .append("\n");
-    sb.append("• ")
-        .append(getString(R.string.unit_yard))
-        .append(" : ")
-        .append(formatValue(feet * YARDS_PER_FOOT))
-        .append("\n");
-    sb.append("• ")
-        .append(getString(R.string.unit_hath))
-        .append(" : ")
-        .append(formatValue(feet * HATH_PER_FOOT_ORIGINAL))
-        .append("\n");
-    sb.append("• ")
-        .append(getString(R.string.unit_meter))
-        .append(" : ")
-        .append(formatValue(feet * METERS_PER_FOOT))
-        .append("\n");
-    sb.append("• ")
-        .append(getString(R.string.unit_centimeter))
-        .append(" : ")
-        .append(formatValue(feet * CENTIMETERS_PER_FOOT))
-        .append("\n");
-    sb.append("• ")
-        .append(getString(R.string.unit_millimeter))
-        .append(" : ")
-        .append(formatValue(feet * MILLIMETERS_PER_FOOT))
+    sb.append(getString(R.string.label_convert_length))
+        .append(": ")
+        .append(formatValue(inputValue))
+        .append(" ")
+        .append(selectedUnit)
         .append("\n\n");
 
-    sb.append(getString(R.string.share_footer));
+    sb.append("──────────────────────────────\n\n");
+    sb.append(getString(R.string.label_converted_values)).append(":\n");
 
+    for (UnitConverter.LengthUnit unit : UnitConverter.LengthUnit.values()) {
+      double value = unit.fromFeet(feet);
+      sb.append("• ")
+          .append(getString(unit.getResId()))
+          .append(" : ")
+          .append(formatValue(value))
+          .append("\n");
+    }
+
+    sb.append("\n").append(getString(R.string.share_footer));
     return sb.toString();
   }
 
+  // ================== Share Logic ==================
   private void showShareOptionsDialog() {
     if (lastSharedText.isEmpty()) {
       Toast.makeText(this, R.string.no_result_to_share, Toast.LENGTH_SHORT).show();
@@ -270,7 +215,6 @@ public class LinearUnitsConversionActivity extends BaseActivity {
     }
 
     String[] titles = {getString(R.string.share_as_text), getString(R.string.share_as_file)};
-
     int[] icons = {R.drawable.text_ad_24px, R.drawable.file_export_24px};
 
     NewsAdapter adapter =
@@ -326,27 +270,7 @@ public class LinearUnitsConversionActivity extends BaseActivity {
     }
   }
 
-  public void closeKeyboard() {
-    View view = getCurrentFocus();
-    if (view != null) {
-      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-      if (imm != null) {
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-      }
-    }
-  }
-
-  private String formatValue(double value) {
-    if (value >= 10000 || value < 0.001) return String.format("%.4f", value);
-    if (value >= 100) return String.format("%.2f", value);
-    return String.format("%.3f", value);
-  }
-
-  private void hideResult() {
-    cardResult.setVisibility(View.GONE);
-    lastSharedText = "";
-  }
-
+  // ================== Helpers ==================
   private void addUnitRow(ViewGroup parent, String label, String value) {
     View row = LayoutInflater.from(this).inflate(R.layout.item_unit_row, parent, false);
     MaterialTextView tvLabel = row.findViewById(R.id.tv_unit_name);
@@ -354,6 +278,12 @@ public class LinearUnitsConversionActivity extends BaseActivity {
     tvLabel.setText(label);
     tvValue.setText(value);
     parent.addView(row);
+  }
+
+  private String formatValue(double value) {
+    if (value >= 10000 || value < 0.001) return String.format("%.4f", value);
+    if (value >= 100) return String.format("%.2f", value);
+    return String.format("%.3f", value);
   }
 
   private double parseDoubleOrZero(String s) {
@@ -365,14 +295,19 @@ public class LinearUnitsConversionActivity extends BaseActivity {
     }
   }
 
-  private static class UnitValue {
-    final String unit;
-    final double value;
-
-    UnitValue(String unit, double value) {
-      this.unit = unit;
-      this.value = value;
+  public void closeKeyboard() {
+    View view = getCurrentFocus();
+    if (view != null) {
+      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      if (imm != null) {
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+      }
     }
+  }
+
+  private void hideResult() {
+    cardResult.setVisibility(View.GONE);
+    lastSharedText = "";
   }
 
   @Override

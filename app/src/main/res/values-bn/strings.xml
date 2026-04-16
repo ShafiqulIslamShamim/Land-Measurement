@@ -252,7 +252,7 @@
 <string name="share_choose_option">কীভাবে শেয়ার করবেন...</string>
 
 <!-- শেয়ার সেকশন -->
-<string name="share_area_label">ক্ষেত্রফল: </string>
+<string name="share_area_label">ক্ষেত্রফল : </string>
 <string name="share_selected_unit">নির্বাচিত একক: </string>
 <string name="share_footer">ভূমি পরিমাপ অ্যাপ থেকে শেয়ার করা হয়েছে</string>
 <string name="share_lengths_label">দৈর্ঘ্য: </string>
@@ -266,5 +266,10 @@
 <string
     name="no_result_to_share"
   >এখনও শেয়ার করার মতো কোনো ফলাফল পাওয়া যায়নি!</string>
+  
+  <string name="header_side_calculation">পার্শ্ব গণনা</string>
+<string name="other_side_title">অন্য বাহু</string>
+<string name="unknown_side_title">ভূমি অথবা উচ্চতা</string>
+<string name="amount_of_land_title">জমির পরিমাণ</string>
 
 </resources>

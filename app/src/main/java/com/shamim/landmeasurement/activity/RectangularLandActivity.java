@@ -54,11 +54,22 @@ public class RectangularLandActivity extends BaseActivity {
 
     double areaSqFt = Length * Width;
 
-    Map<String, Double> InputMap = new LinkedHashMap<>();
-    InputMap.put(getString(R.string.card_length_title), Length);
-    InputMap.put(getString(R.string.card_width_title), Width);
+    resultManager.showResultWithScroll(areaSqFt, "", scrollView);
 
-    resultManager.showResultWithScroll(areaSqFt, "", InputMap, scrollView);
+    String shareText = resultManager.buildShareableText(areaSqFt, sharedTextHeading());
+
+    resultManager.setLastSharedText(shareText);
+  }
+
+  private String sharedTextHeading() {
+
+    return getString(R.string.card_length_title)
+        + " : "
+        + lengthInput.getValueAsString()
+        + "\n"
+        + getString(R.string.card_width_title)
+        + " : "
+        + widthInput.getValueAsString();
   }
 
   @Override

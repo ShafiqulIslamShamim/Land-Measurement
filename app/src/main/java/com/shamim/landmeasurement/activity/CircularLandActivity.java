@@ -49,10 +49,16 @@ public class CircularLandActivity extends BaseActivity {
 
     double areaSqFt = Math.PI * Math.pow(Radius, 2);
 
-    Map<String, Double> InputMap = new LinkedHashMap<>();
-    InputMap.put(getString(R.string.card_radius_title), Radius);
+    resultManager.showResultWithScroll(areaSqFt, "", scrollView);
 
-    resultManager.showResultWithScroll(areaSqFt, "", InputMap, scrollView);
+    String shareText = resultManager.buildShareableText(areaSqFt, sharedTextHeading());
+
+    resultManager.setLastSharedText(shareText);
+  }
+
+  private String sharedTextHeading() {
+
+    return getString(R.string.card_radius_title) + " : " + radiusInput.getValueAsString();
   }
 
   @Override

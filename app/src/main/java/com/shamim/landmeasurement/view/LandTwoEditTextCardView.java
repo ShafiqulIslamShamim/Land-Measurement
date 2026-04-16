@@ -11,6 +11,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.shamim.landmeasurement.R;
+import com.shamim.landmeasurement.util.UnitConverter;
+import java.util.Arrays;
+import java.util.List;
 
 public class LandTwoEditTextCardView extends ConstraintLayout {
 
@@ -18,9 +21,9 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
   private TextInputEditText etFirstVal, etFirstIn, etSecondVal, etSecondIn;
   private TextInputLayout tilFirstVal, tilFirstIn, tilSecondVal, tilSecondIn;
   private ChipGroup chipGroupUnit;
-  private Chip chipFt, chipInch, chipHat, chipMeter;
-  private String typeText; // default
-  private Context viewContext;
+
+  private String typeText;
+  private int selectedUnitResId = R.string.unit_foot; // default
 
   public LandTwoEditTextCardView(Context context) {
     super(context);
@@ -40,11 +43,8 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
   private void init(Context context) {
     LayoutInflater.from(context).inflate(R.layout.view_land_card_with_two_edittext, this, true);
 
-    viewContext = context;
-
-    typeText = viewContext.getString(R.string.card_length_title);
-
     tvTitle = findViewById(R.id.tv_title);
+
     etFirstVal = findViewById(R.id.et_first_val);
     etFirstIn = findViewById(R.id.et_first_in);
     etSecondVal = findViewById(R.id.et_second_val);
@@ -56,58 +56,71 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     tilSecondIn = findViewById(R.id.til_second_in);
 
     chipGroupUnit = findViewById(R.id.chip_group_unit);
-    chipFt = findViewById(R.id.chip_ft);
-    chipInch = findViewById(R.id.chip_inch);
-    chipHat = findViewById(R.id.chip_hat);
-    chipMeter = findViewById(R.id.chip_meter);
 
-    // Default to feet
-    chipGroupUnit.check(R.id.chip_ft);
+    typeText = context.getString(R.string.card_length_title);
 
-    // Listen to chip selection changes
-    chipGroupUnit.setOnCheckedStateChangeListener(
-        (group, checkedIds) -> {
-          if (!checkedIds.isEmpty()) {
-            int checkedId = checkedIds.get(0);
-            updateHintsAndInchFields(checkedId);
-          }
-        });
-
-    // Initial hints
-    updateHintsAndInchFields(chipGroupUnit.getCheckedChipId());
+    setupChips();
   }
 
-  private void updateHintsAndInchFields(int checkedId) {
-    boolean showInchFields = (checkedId == R.id.chip_ft);
+  private void setupChips() {
+    List<Integer> unitResIds =
+        Arrays.asList(
+            R.string.unit_inch,
+            R.string.unit_foot,
+            R.string.unit_yard,
+            R.string.unit_hath,
+            R.string.unit_meter,
+            R.string.unit_centimeter,
+            R.string.unit_millimeter);
 
-    String format1 = viewContext.getString(R.string.et_double_first_hind);
-    String format2 = viewContext.getString(R.string.et_double_second_hind);
+    chipGroupUnit.removeAllViews();
 
-    String unit;
+    for (int resId : unitResIds) {
+      Chip chip = new Chip(getContext());
+      chip.setText(resId);
+      chip.setCheckable(true);
+      chip.setChecked(resId == selectedUnitResId);
+      chip.setChipIconResource(R.drawable.ic_check);
+      chip.setChipIconVisible(resId == selectedUnitResId);
 
-    if (checkedId == R.id.chip_ft) {
-      unit = viewContext.getString(R.string.et_double_feet_hind);
-    } else if (checkedId == R.id.chip_inch) {
-      unit = viewContext.getString(R.string.et_double_inch_hind);
-    } else if (checkedId == R.id.chip_hat) {
-      unit = viewContext.getString(R.string.et_double_hat_hind);
-    } else if (checkedId == R.id.chip_meter) {
-      unit = viewContext.getString(R.string.et_double_meter_hind);
-    } else {
-      unit = viewContext.getString(R.string.et_double_default_hind);
+      chip.setOnCheckedChangeListener(
+          (buttonView, isChecked) -> {
+            if (isChecked) {
+              selectedUnitResId = resId;
+              updateChipIcons();
+              updateHintsAndInchFields();
+            }
+          });
+
+      chipGroupUnit.addView(chip);
     }
 
-    String mainHint1 = String.format(format1, typeText, unit);
-    String mainHint2 = String.format(format2, typeText, unit);
+    updateHintsAndInchFields();
+  }
 
-    tilFirstVal.setHint(mainHint1);
-    tilSecondVal.setHint(mainHint2);
+  private void updateChipIcons() {
+    for (int i = 0; i < chipGroupUnit.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroupUnit.getChildAt(i);
+      boolean isSelected =
+          chip.getText().toString().equals(getContext().getString(selectedUnitResId));
+      chip.setChipIconVisible(isSelected);
+    }
+  }
 
-    tilFirstIn.setVisibility(showInchFields ? View.VISIBLE : View.GONE);
-    tilSecondIn.setVisibility(showInchFields ? View.VISIBLE : View.GONE);
+  private void updateHintsAndInchFields() {
+    boolean isFeet = (selectedUnitResId == R.string.unit_foot);
+    String unit = getContext().getString(selectedUnitResId);
 
-    // Clear inch fields when hidden
-    if (!showInchFields) {
+    String format1 = getContext().getString(R.string.et_double_first_hind);
+    String format2 = getContext().getString(R.string.et_double_second_hind);
+
+    tilFirstVal.setHint(String.format(format1, typeText, unit));
+    tilSecondVal.setHint(String.format(format2, typeText, unit));
+
+    tilFirstIn.setVisibility(isFeet ? View.VISIBLE : View.GONE);
+    tilSecondIn.setVisibility(isFeet ? View.VISIBLE : View.GONE);
+
+    if (!isFeet) {
       etFirstIn.setText("");
       etSecondIn.setText("");
     }
@@ -116,41 +129,96 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
   public void setTitle(String title) {
     tvTitle.setText(title);
     typeText = title;
-
-    // Refresh hints when title changes
-    updateHintsAndInchFields(chipGroupUnit.getCheckedChipId());
+    updateHintsAndInchFields();
   }
 
-  // প্রথম ভ্যালুটিকে ফিটে কনভার্ট করে রিটার্ন করবে
-  public double getFirstValueInFeet() {
-    double val1 = parseDoubleOrZero(etFirstVal.getText());
-    double in1 = parseDoubleOrZero(etFirstIn.getText());
-    return convertToFeet(val1, in1);
-  }
+  // ================== Value Getters ==================
 
-  // দ্বিতীয় ভ্যালুটিকে ফিটে কনভার্ট করে রিটার্ন করবে
-  public double getSecondValueInFeet() {
-    double val2 = parseDoubleOrZero(etSecondVal.getText());
-    double in2 = parseDoubleOrZero(etSecondIn.getText());
-    return convertToFeet(val2, in2);
-  }
+  /** Returns first value in currently selected unit */
+  public double getFirstValue() {
+    double main = parseDoubleOrZero(etFirstVal.getText());
+    double inch = parseDoubleOrZero(etFirstIn.getText());
 
-  // কনভার্সন লজিকটি এখানে আলাদা করা হয়েছে (Private helper method)
-  private double convertToFeet(double value, double inches) {
-    int checkedId = chipGroupUnit.getCheckedChipId();
-    double totalFeet = value;
-
-    if (checkedId == R.id.chip_ft) {
-      totalFeet += (inches / 12.0);
-    } else if (checkedId == R.id.chip_hat) {
-      totalFeet *= 1.5;
-    } else if (checkedId == R.id.chip_inch) {
-      totalFeet /= 12.0;
-    } else if (checkedId == R.id.chip_meter) {
-      totalFeet *= 3.28084;
+    if (selectedUnitResId == R.string.unit_foot) {
+      return main + (inch / 12.0);
     }
+    return main;
+  }
 
-    return totalFeet;
+  /** Returns second value in currently selected unit */
+  public double getSecondValue() {
+    double main = parseDoubleOrZero(etSecondVal.getText());
+    double inch = parseDoubleOrZero(etSecondIn.getText());
+
+    if (selectedUnitResId == R.string.unit_foot) {
+      return main + (inch / 12.0);
+    }
+    return main;
+  }
+
+  /** ✅ Returns first value converted to Feet */
+  public double getFirstValueInFeet() {
+    double value = getFirstValue();
+    if (value <= 0) return 0.0;
+
+    return UnitConverter.convertLength(value, selectedUnitResId, R.string.unit_foot);
+  }
+
+  /** ✅ Returns second value converted to Feet */
+  public double getSecondValueInFeet() {
+    double value = getSecondValue();
+    if (value <= 0) return 0.0;
+
+    return UnitConverter.convertLength(value, selectedUnitResId, R.string.unit_foot);
+  }
+
+  /** First value as readable string */
+  public String getFirstValueAsString() {
+    double main = parseDoubleOrZero(etFirstVal.getText());
+    double inch = parseDoubleOrZero(etFirstIn.getText());
+
+    if (selectedUnitResId == R.string.unit_foot) {
+      return main
+          + " "
+          + getContext().getString(R.string.unit_foot)
+          + " "
+          + inch
+          + " "
+          + getContext().getString(R.string.unit_inch);
+    } else {
+      return main + " " + getContext().getString(selectedUnitResId);
+    }
+  }
+
+  /** Second value as readable string */
+  public String getSecondValueAsString() {
+    double main = parseDoubleOrZero(etSecondVal.getText());
+    double inch = parseDoubleOrZero(etSecondIn.getText());
+
+    if (selectedUnitResId == R.string.unit_foot) {
+      return main
+          + " "
+          + getContext().getString(R.string.unit_foot)
+          + " "
+          + inch
+          + " "
+          + getContext().getString(R.string.unit_inch);
+    } else {
+      return main + " " + getContext().getString(selectedUnitResId);
+    }
+  }
+
+  public String getSelectedUnit() {
+    return getContext().getString(selectedUnitResId);
+  }
+
+  public int getSelectedUnitResId() {
+    return selectedUnitResId;
+  }
+
+  public void setSelectedUnit(int unitResId) {
+    this.selectedUnitResId = unitResId;
+    setupChips();
   }
 
   private double parseDoubleOrZero(CharSequence s) {
@@ -162,8 +230,12 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     }
   }
 
-  public boolean hasValidInput(double feet) {
-    return feet > 0;
+  public boolean hasValidInput() {
+    return getFirstValueInFeet() > 0 && getSecondValueInFeet() > 0;
+  }
+
+  public boolean hasValidInput(double input) {
+    return input > 0;
   }
 
   public void clear() {
@@ -171,6 +243,6 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     etFirstIn.setText("");
     etSecondVal.setText("");
     etSecondIn.setText("");
-    chipGroupUnit.check(R.id.chip_ft);
+    setSelectedUnit(R.string.unit_foot);
   }
 }

@@ -49,10 +49,16 @@ public class SquareLandActivity extends BaseActivity {
 
     double areaSqFt = Math.pow(Length, 2);
 
-    Map<String, Double> InputMap = new LinkedHashMap<>();
-    InputMap.put(getString(R.string.card_length_title), Length);
+    resultManager.showResultWithScroll(areaSqFt, "", scrollView);
 
-    resultManager.showResultWithScroll(areaSqFt, "", InputMap, scrollView);
+    String shareText = resultManager.buildShareableText(areaSqFt, sharedTextHeading());
+
+    resultManager.setLastSharedText(shareText);
+  }
+
+  private String sharedTextHeading() {
+
+    return getString(R.string.card_length_title) + " : " + lengthInput.getValueAsString();
   }
 
   @Override

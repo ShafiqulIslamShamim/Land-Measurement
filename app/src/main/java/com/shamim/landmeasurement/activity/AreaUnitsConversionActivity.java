@@ -11,8 +11,10 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.shamim.landmeasurement.R;
-import com.shamim.landmeasurement.util.*;
-import java.util.*;
+import com.shamim.landmeasurement.util.LandResultManager;
+import com.shamim.landmeasurement.util.UnitConverter;
+import java.util.Arrays;
+import java.util.List;
 
 public class AreaUnitsConversionActivity extends BaseActivity {
 
@@ -25,44 +27,33 @@ public class AreaUnitsConversionActivity extends BaseActivity {
 
   private int selectedUnitResId = R.string.unit_shotok;
 
-  // unit resource id → square feet conversion factor
-  private final Map<Integer, Double> conversionFactors = new HashMap<>();
-
-  {
-    conversionFactors.put(R.string.unit_sqft, 1.0);
-    conversionFactors.put(R.string.unit_sqm, 10.7639);
-    conversionFactors.put(R.string.unit_shotok, 435.6);
-    conversionFactors.put(R.string.unit_katha, 720.0);
-    conversionFactors.put(R.string.unit_bigha, 14400.0);
-    conversionFactors.put(R.string.unit_acre, 43560.0);
-    conversionFactors.put(R.string.unit_hectare, 107639.0);
-    conversionFactors.put(R.string.unit_kora, 435.6 * 2);
-    conversionFactors.put(R.string.unit_joistho, 435.6 * 2 * 10);
-    conversionFactors.put(R.string.unit_kani, 435.6 * 2 * 80);
-  }
-
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_area_units_conversion);
 
+    initViews();
+    setupToolbar();
+    setupChipGroup();
+    setupListeners();
+  }
+
+  private void initViews() {
     toolbar = findViewById(R.id.toolbar);
+    etInputValue = findViewById(R.id.et_input_value);
+    chipGroupUnits = findViewById(R.id.chip_group_units);
+    scrollView = findViewById(R.id.scroll_view);
+
+    // Initialize LandResultManager
+    resultManager = new LandResultManager(findViewById(android.R.id.content), this);
+  }
+
+  private void setupToolbar() {
     setSupportActionBar(toolbar);
     if (getSupportActionBar() != null) {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       getSupportActionBar().setTitle(R.string.item_cov_area_units);
     }
-
-    findViews();
-    setupChipGroup();
-    setupListeners();
-  }
-
-  private void findViews() {
-    etInputValue = findViewById(R.id.et_input_value);
-    chipGroupUnits = findViewById(R.id.chip_group_units);
-    scrollView = findViewById(R.id.scroll_view);
-    resultManager = new LandResultManager(findViewById(android.R.id.content), this);
   }
 
   private void setupChipGroup() {
@@ -81,27 +72,19 @@ public class AreaUnitsConversionActivity extends BaseActivity {
 
     for (int resId : unitResIds) {
       Chip chip = new Chip(this);
-
-      chip.setText(resId); // uses string resource
+      chip.setText(resId);
       chip.setCheckable(true);
       chip.setChecked(resId == selectedUnitResId);
-
-      // Set the icon (this is your "button")
-      chip.setChipIconResource(R.drawable.ic_check); // use any icon you want
-      chip.setChipIconVisible(resId == selectedUnitResId); // visible only if selected
-      // chip.setChipIconTintResource(R.color.white); // optional
+      chip.setChipIconResource(R.drawable.ic_check);
+      chip.setChipIconVisible(resId == selectedUnitResId);
 
       chip.setOnCheckedChangeListener(
           (buttonView, isChecked) -> {
             if (isChecked) {
               selectedUnitResId = resId;
-
-              // Show icon when selected
               chip.setChipIconVisible(true);
-
               calculate();
             } else {
-              // Hide icon when not selected
               chip.setChipIconVisible(false);
             }
           });
@@ -134,28 +117,32 @@ public class AreaUnitsConversionActivity extends BaseActivity {
 
   private void calculate() {
     String inputStr = etInputValue.getText().toString().trim();
-    double input = parseDoubleOrZero(inputStr);
+    double inputValue = parseDoubleOrZero(inputStr);
 
-    if (input <= 0) {
+    if (inputValue <= 0) {
       Toast.makeText(this, R.string.error_invalid_conversion_land_amount, Toast.LENGTH_SHORT)
           .show();
       resultManager.hideResult();
       return;
     }
 
-    Double factor = conversionFactors.get(selectedUnitResId);
-    if (factor == null) {
-      Toast.makeText(this, R.string.error_invalid_conversion_land_unit, Toast.LENGTH_SHORT).show();
-      resultManager.hideResult();
-      return;
-    }
+    double areaInSqFt =
+        UnitConverter.convertArea(inputValue, selectedUnitResId, R.string.unit_sqft);
 
-    double sqFt = input * factor;
+    resultManager.showResultWithScroll(areaInSqFt, getString(selectedUnitResId), scrollView);
 
-    Map<String, Double> InputMap = new LinkedHashMap<>();
-    InputMap.put(getString(R.string.et_conversion_hind), input);
+    String shareText = resultManager.buildShareableText(areaInSqFt, sharedTextHeading(inputValue));
 
-    resultManager.showResultWithScroll(sqFt, getString(selectedUnitResId), InputMap, scrollView);
+    resultManager.setLastSharedText(shareText);
+  }
+
+  private String sharedTextHeading(double inputValue) {
+
+    return getString(R.string.amount_of_land_title)
+        + " : "
+        + inputValue
+        + " "
+        + getString(selectedUnitResId);
   }
 
   private double parseDoubleOrZero(String s) {

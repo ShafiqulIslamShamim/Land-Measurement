@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:textColor="?attr/colorPrimary"
-            android:text="@string/card_conversion_hind"
+            android:text="@string/amount_of_land_title"
             android:textStyle="bold"
           />
 

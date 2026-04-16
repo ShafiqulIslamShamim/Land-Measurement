@@ -61,16 +61,33 @@ public class ScaleneLandActivity extends BaseActivity {
 
     double areaSqFt = averageLength * averageWidth;
 
+    resultManager.showResultWithScroll(areaSqFt, "", scrollView);
+
+    String shareText = resultManager.buildShareableText(areaSqFt, sharedTextHeading());
+
+    resultManager.setLastSharedText(shareText);
+  }
+
+  private String sharedTextHeading() {
+
     String format1 = getString(R.string.et_double_first_hind);
     String format2 = getString(R.string.et_double_second_hind);
 
-    Map<String, Double> InputMap = new LinkedHashMap<>();
-    InputMap.put(String.format(format1, getString(R.string.card_length_title), ""), FirstLength);
-    InputMap.put(String.format(format2, getString(R.string.card_length_title), ""), SecondLength);
-    InputMap.put(String.format(format1, getString(R.string.card_width_title), ""), FirstWidth);
-    InputMap.put(String.format(format2, getString(R.string.card_width_title), ""), SecondWidth);
-
-    resultManager.showResultWithScroll(areaSqFt, "", InputMap, scrollView);
+    return String.format(format1, getString(R.string.card_length_title), "")
+        + " : "
+        + lengthInput.getFirstValueAsString()
+        + "\n"
+        + String.format(format1, getString(R.string.card_width_title), "")
+        + " : "
+        + widthInput.getFirstValueAsString()
+        + "\n"
+        + String.format(format2, getString(R.string.card_length_title), "")
+        + " : "
+        + lengthInput.getSecondValueAsString()
+        + "\n"
+        + String.format(format2, getString(R.string.card_width_title), "")
+        + " : "
+        + widthInput.getSecondValueAsString();
   }
 
   @Override

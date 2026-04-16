@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.shamim.landmeasurement.*;
 import com.shamim.landmeasurement.exception_catcher.*;
-// import com.shamim.landmeasurement.fragment.*;
 import com.shamim.landmeasurement.preference.*;
 import com.shamim.landmeasurement.recycle_view.adapter.*;
 import com.shamim.landmeasurement.recycle_view.model.*;
@@ -80,7 +79,7 @@ public class MainActivity extends BaseActivity {
     List<ItemModel> items = new ArrayList<>();
 
     // Headers
-    items.add(new ItemModel(getString(R.string.header_land_shape)));
+    items.add(new ItemModel(getString(R.string.amount_of_land_title)));
 
     // Land Shape Items
     items.add(
@@ -102,6 +101,17 @@ public class MainActivity extends BaseActivity {
             getString(R.string.item_cov_linear_units),
             null));
 
+    // Headers
+    items.add(new ItemModel(getString(R.string.header_side_calculation)));
+
+    // Side measurement Items
+    items.add(
+        new ItemModel(31, R.drawable.rectangle_24px, getString(R.string.item_quadrilateral), null));
+    items.add(new ItemModel(32, R.drawable.circle_24px, getString(R.string.item_circular), null));
+    items.add(
+        new ItemModel(
+            33, R.drawable.change_history_24px, getString(R.string.item_triangular), null));
+
     ItemAdapter adapter =
         new ItemAdapter(
             items,
@@ -116,6 +126,12 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, AreaUnitsConversionActivity.class));
               } else if (id == 21) {
                 startActivity(new Intent(this, LinearUnitsConversionActivity.class));
+              } else if (id == 31) {
+                startActivity(new Intent(this, RectangleSideCalculatorActivity.class));
+              } else if (id == 32) {
+                startActivity(new Intent(this, CircleSideCalculatorActivity.class));
+              } else if (id == 33) {
+                startActivity(new Intent(this, TriangleSideCalculatorActivity.class));
               }
             });
 

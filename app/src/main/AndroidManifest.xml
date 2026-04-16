@@ -39,6 +39,9 @@
     <activity android:name=".activity.TriangularLandActivityHeight" />
     <activity android:name=".activity.QuadrilateralItemsActivity" />
     <activity android:name=".activity.TriangularItemsActivity" />
+    <activity android:name=".activity.RectangleSideCalculatorActivity" />
+    <activity android:name=".activity.CircleSideCalculatorActivity" />
+    <activity android:name=".activity.TriangleSideCalculatorActivity" />
         <activity android:name=".activity.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
