@@ -123,7 +123,7 @@ public class AreaInputCardView extends ConstraintLayout {
   }
 
   public String getAreaValueAsString() {
-    return getAreaValue() + " " + getContext().getString(selectedUnitResId);
+    return String.format("%.2f", getAreaValue()) + " " + getContext().getString(selectedUnitResId);
   }
 
   public int getSelectedUnitResId() {

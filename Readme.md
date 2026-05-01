@@ -26,8 +26,10 @@ No need to stress over complex geometry. Just select the shape of your land and 
 
 - **Quadrilateral**  
   Calculate rectangular, square, and scalene (irregular) plots with ease.
+
 - **Circular**  
   Ideal for round plots, ponds, or tanks.
+
 - **Triangular**  
   Quickly measure triangular sections or corner plots.
 
@@ -41,6 +43,9 @@ Input measurements in the units you’re comfortable with:
 - Inch  
 - Meter  
 - Cubit  
+- Yard  
+- Centimeter  
+- Millimeter  
 
 **Instant Results In**
 
@@ -66,9 +71,19 @@ Input measurements in the units you’re comfortable with:
 Need fast and accurate unit conversions? The built-in converter makes it simple and reliable.
 
 - Instantly convert between **Shotok, Katha, Bigha, Acre, Hectare**, and other supported units  
-- Enter a value in any unit and automatically see the equivalent values in all available units  
+- Enter a value in any unit and automatically see the equivalent values in all available units (**Feet, Inch, Meter, Cubit, Yard, Centimeter, Millimeter**)  
 - Supports both **land area** and **linear measurements** for complete flexibility  
 - Designed for quick use with clear and easy-to-read results  
+
+---
+
+### 📏 Side-Based Calculation
+Need to know the measurements of all sides quickly? Just enter the length of one side and get instant conversions.
+
+- Available for **Quadrilateral, Circular, and Triangular** shapes  
+- Enter one side length and automatically get results for other sides  
+- Shows converted values in **Feet, Inch, Meter, Cubit, Yard, Centimeter, Millimeter**  
+- Fast, simple, and perfect for practical land measurements  
 
 Perfect for land measurement, planning, and everyday conversion needs.
 

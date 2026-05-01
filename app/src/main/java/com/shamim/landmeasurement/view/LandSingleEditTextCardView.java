@@ -143,15 +143,15 @@ public class LandSingleEditTextCardView extends ConstraintLayout {
     double inches = parseDoubleOrZero(etFirstIn.getText());
 
     if (selectedUnitResId == R.string.unit_foot) {
-      return mainValue
+      return String.format("%.2f", mainValue)
           + " "
           + getContext().getString(R.string.unit_foot)
           + " "
-          + inches
+          + String.format("%.2f", inches)
           + " "
           + getContext().getString(R.string.unit_inch);
     } else {
-      return mainValue + " " + getContext().getString(selectedUnitResId);
+      return String.format("%.2f", mainValue) + " " + getContext().getString(selectedUnitResId);
     }
   }
 

@@ -249,7 +249,7 @@
 
 
 <!-- Share section -->
-<string name="share_area_label">Area : </string>
+<string name="share_area_label">"Area : "</string>
 <string name="share_selected_unit">Selected unit: </string>
 <string name="share_footer">Shared from Land Measurement App</string>
 <string name="share_lengths_label">Lengths: </string>

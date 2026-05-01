@@ -178,15 +178,15 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     double inch = parseDoubleOrZero(etFirstIn.getText());
 
     if (selectedUnitResId == R.string.unit_foot) {
-      return main
+      return String.format("%.2f", main)
           + " "
           + getContext().getString(R.string.unit_foot)
           + " "
-          + inch
+          + String.format("%.2f", inch)
           + " "
           + getContext().getString(R.string.unit_inch);
     } else {
-      return main + " " + getContext().getString(selectedUnitResId);
+      return String.format("%.2f", main) + " " + getContext().getString(selectedUnitResId);
     }
   }
 
@@ -196,15 +196,15 @@ public class LandTwoEditTextCardView extends ConstraintLayout {
     double inch = parseDoubleOrZero(etSecondIn.getText());
 
     if (selectedUnitResId == R.string.unit_foot) {
-      return main
+      return String.format("%.2f", main)
           + " "
           + getContext().getString(R.string.unit_foot)
           + " "
-          + inch
+          + String.format("%.2f", inch)
           + " "
           + getContext().getString(R.string.unit_inch);
     } else {
-      return main + " " + getContext().getString(selectedUnitResId);
+      return String.format("%.2f", main) + " " + getContext().getString(selectedUnitResId);
     }
   }
 

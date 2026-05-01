@@ -73,19 +73,21 @@ public class ScaleneLandActivity extends BaseActivity {
     String format1 = getString(R.string.et_double_first_hind);
     String format2 = getString(R.string.et_double_second_hind);
 
-    return String.format(format1, getString(R.string.card_length_title), "")
+    return String.format(
+            format1, getString(R.string.card_length_title), lengthInput.getSelectedUnit())
         + " : "
         + lengthInput.getFirstValueAsString()
         + "\n"
-        + String.format(format1, getString(R.string.card_width_title), "")
+        + String.format(format1, getString(R.string.card_width_title), widthInput.getSelectedUnit())
         + " : "
         + widthInput.getFirstValueAsString()
         + "\n"
-        + String.format(format2, getString(R.string.card_length_title), "")
+        + String.format(
+            format2, getString(R.string.card_length_title), lengthInput.getSelectedUnit())
         + " : "
         + lengthInput.getSecondValueAsString()
         + "\n"
-        + String.format(format2, getString(R.string.card_width_title), "")
+        + String.format(format2, getString(R.string.card_width_title), widthInput.getSelectedUnit())
         + " : "
         + widthInput.getSecondValueAsString();
   }

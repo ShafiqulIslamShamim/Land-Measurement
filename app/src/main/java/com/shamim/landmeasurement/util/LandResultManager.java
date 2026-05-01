@@ -1,27 +1,17 @@
 package com.shamim.landmeasurement.util;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ScrollView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.shamim.landmeasurement.R;
-import com.shamim.landmeasurement.recycle_view.NewsAdapter;
-import java.io.File;
-import java.io.FileWriter;
 
 public class LandResultManager {
 
@@ -68,7 +58,8 @@ public class LandResultManager {
       throw new IllegalStateException("One or more result containers not found in layout");
     }
 
-    btnShare.setOnClickListener(v -> showShareOptionsDialog());
+    btnShare.setOnClickListener(
+        v -> ShareUtils.showShareOptionsDialog(context, lastSharedText, "Measurement_Result"));
   }
 
   public View sectionLayout() {
@@ -141,14 +132,13 @@ public class LandResultManager {
   }
 
   private void addRegionalLocalizedUnits(double areaSqFt, String excludeUnit) {
-    double shotok = UnitConverter.convertArea(areaSqFt, R.string.unit_sqft, R.string.unit_shotok);
 
     addUnitIfNotSelected(
-        containerRegionalLocalized, R.string.unit_kora, shotok, excludeUnit, "%.3f");
+        containerRegionalLocalized, R.string.unit_kora, areaSqFt, excludeUnit, "%.3f");
     addUnitIfNotSelected(
-        containerRegionalLocalized, R.string.unit_joistho, shotok, excludeUnit, "%.3f");
+        containerRegionalLocalized, R.string.unit_joistho, areaSqFt, excludeUnit, "%.3f");
     addUnitIfNotSelected(
-        containerRegionalLocalized, R.string.unit_kani, shotok, excludeUnit, "%.3f");
+        containerRegionalLocalized, R.string.unit_kani, areaSqFt, excludeUnit, "%.3f");
   }
 
   private void addUnitIfNotSelected(
@@ -201,26 +191,15 @@ public class LandResultManager {
 
   private void appendRegionalLocalizedSection(StringBuilder sb, double areaSqFt) {
     sb.append(getString(R.string.result_item_regional_localized)).append(":\n");
-    double shotok = UnitConverter.convertArea(areaSqFt, R.string.unit_sqft, R.string.unit_shotok);
 
-    appendConvertedUnit(sb, R.string.unit_kora, shotok, "%.3f");
-    appendConvertedUnit(sb, R.string.unit_joistho, shotok, "%.3f");
-    appendConvertedUnit(sb, R.string.unit_kani, shotok, "%.3f");
+    appendUnitToShare(sb, R.string.unit_kora, areaSqFt, "%.3f");
+    appendUnitToShare(sb, R.string.unit_joistho, areaSqFt, "%.3f");
+    appendUnitToShare(sb, R.string.unit_kani, areaSqFt, "%.3f");
     sb.append("\n");
   }
 
   private void appendUnitToShare(StringBuilder sb, int unitResId, double areaSqFt, String format) {
     double value = UnitConverter.convertArea(areaSqFt, R.string.unit_sqft, unitResId);
-    sb.append("• ")
-        .append(getString(unitResId))
-        .append(" : ")
-        .append(String.format(format, value))
-        .append("\n");
-  }
-
-  private void appendConvertedUnit(
-      StringBuilder sb, int unitResId, double shotokValue, String format) {
-    double value = UnitConverter.convertArea(shotokValue, R.string.unit_shotok, unitResId);
     sb.append("• ")
         .append(getString(unitResId))
         .append(" : ")
@@ -236,68 +215,6 @@ public class LandResultManager {
     tvLabel.setText(label);
     tvValue.setText(value);
     parent.addView(row);
-  }
-
-  private void showShareOptionsDialog() {
-    if (lastSharedText.isEmpty()) {
-      Toast.makeText(context, R.string.no_result_to_share, Toast.LENGTH_SHORT).show();
-      return;
-    }
-
-    String[] titles = {getString(R.string.share_as_text), getString(R.string.share_as_file)};
-    int[] icons = {R.drawable.text_ad_24px, R.drawable.file_export_24px};
-
-    NewsAdapter adapter =
-        new NewsAdapter(
-            titles,
-            icons,
-            pos -> {
-              if (pos == 0) shareAsPlainText();
-              else if (pos == 1) shareAsTextFile();
-            });
-
-    RecyclerView recyclerView = new RecyclerView(context);
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-    recyclerView.setAdapter(adapter);
-    recyclerView.setPadding(30, 30, 30, 30);
-
-    new MaterialAlertDialogBuilder(context)
-        .setTitle(getString(R.string.share_choose_option))
-        .setView(recyclerView)
-        .setPositiveButton(R.string.close, null)
-        .show();
-  }
-
-  private void shareAsPlainText() {
-    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-    shareIntent.setType("text/plain");
-    shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_title));
-    shareIntent.putExtra(Intent.EXTRA_TEXT, lastSharedText);
-    context.startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)));
-  }
-
-  private void shareAsTextFile() {
-    try {
-      File file = new File(context.getCacheDir(), "land_measurement_result.txt");
-      try (FileWriter writer = new FileWriter(file)) {
-        writer.write(lastSharedText);
-      }
-
-      Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", file);
-
-      Intent shareIntent = new Intent(Intent.ACTION_SEND);
-      shareIntent.setType("text/plain");
-      shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-      shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-      context.startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)));
-    } catch (Exception e) {
-      Toast.makeText(
-              context,
-              getString(R.string.error_cannot_create_file) + e.getMessage(),
-              Toast.LENGTH_SHORT)
-          .show();
-    }
   }
 
   public void setLastSharedText(String text) {

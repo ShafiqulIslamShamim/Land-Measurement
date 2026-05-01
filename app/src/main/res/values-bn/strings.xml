@@ -252,7 +252,7 @@
 <string name="share_choose_option">কীভাবে শেয়ার করবেন...</string>
 
 <!-- শেয়ার সেকশন -->
-<string name="share_area_label">ক্ষেত্রফল : </string>
+<string name="share_area_label">"ক্ষেত্রফল : "</string>
 <string name="share_selected_unit">নির্বাচিত একক: </string>
 <string name="share_footer">ভূমি পরিমাপ অ্যাপ থেকে শেয়ার করা হয়েছে</string>
 <string name="share_lengths_label">দৈর্ঘ্য: </string>
