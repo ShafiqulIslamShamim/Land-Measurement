@@ -1,6 +1,7 @@
 package com.shamim.landmeasurement.history;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "history_entries")
@@ -18,6 +19,7 @@ public class HistoryEntry {
     public HistoryEntry() {
     }
 
+    @Ignore
     public HistoryEntry(String shapeTitle, String inputs, double areaSqFt, long timestamp, String activityClassName, String serializedInputs) {
         this.shapeTitle = shapeTitle;
         this.inputs = inputs;
