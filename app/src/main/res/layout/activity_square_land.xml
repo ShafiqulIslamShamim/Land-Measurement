@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+>
+
+    <com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+
+        <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="?attr/colorSurface"
+      app:titleTextColor="?attr/colorOnSurface"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:navigationIconTint="?attr/colorOnSurface"
+    />
+
+    </com.google.android.material.appbar.AppBarLayout>
+    
+<ScrollView
+    android:id="@+id/scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:fillViewport="true"
+  >
+
+    <LinearLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:paddingHorizontal="16dp"
+    >
+
+        <com.shamim.landmeasurement.view.LandSingleEditTextCardView
+        android:id="@+id/length_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      />
+
+        <include
+        android:id="@+id/result_section"
+        layout="@layout/land_result_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      />
+
+    </LinearLayout>
+
+</ScrollView>
+  </LinearLayout>

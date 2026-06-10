@@ -1,0 +1,119 @@
+
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+// Automatically restore google-services.json from system environment secrets if present
+def googleServicesJsonEnv = System.getenv("GOOGLE_SERVICES_JSON")
+if (googleServicesJsonEnv != null && !googleServicesJsonEnv.isEmpty()) {
+    def targetFile = file("google-services.json")
+    targetFile.text = googleServicesJsonEnv
+}
+
+// Automatically restore release keystore and properties from environment secrets if present
+def keystoreBase64 = System.getenv("RELEASE_KEYSTORE_BASE64") ?: System.getenv("STORE_FILE_BASE64")
+if (keystoreBase64 != null && !keystoreBase64.isEmpty()) {
+    def keystoreFile = file("keystore/release.keystore")
+    keystoreFile.parentFile.mkdirs()
+    keystoreFile.bytes = Base64.getDecoder().decode(keystoreBase64.trim().replaceAll("\\s", ""))
+}
+
+def storePasswordEnv = System.getenv("STORE_PASSWORD")
+def keyAliasEnv = System.getenv("KEY_ALIAS")
+def keyPasswordEnv = System.getenv("KEY_PASSWORD") ?: storePasswordEnv
+if (storePasswordEnv != null && keyAliasEnv != null) {
+    def keystorePropsFile = file("keystore/signing.properties")
+    keystorePropsFile.parentFile.mkdirs()
+    keystorePropsFile.text = """STORE_FILE=release.keystore
+STORE_PASSWORD=${storePasswordEnv}
+KEY_ALIAS=${keyAliasEnv}
+KEY_PASSWORD=${keyPasswordEnv}
+"""
+}
+
+def keystorePropertiesFile = file("keystore/signing.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+    namespace 'com.shamim.landmeasurement'
+    compileSdk 36
+    
+    
+    defaultConfig {
+        applicationId "com.shamim.landmeasurement"
+        minSdk 27
+        targetSdk 36
+        versionCode 10
+        versionName "1.9"
+        
+        vectorDrawables { 
+            useSupportLibrary true
+        }
+        
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    
+    signingConfigs {
+        release {
+            if (keystoreProperties['STORE_FILE']) {
+    storeFile file(keystoreProperties['STORE_FILE'])
+    storePassword keystoreProperties['STORE_PASSWORD']
+    keyAlias keystoreProperties['KEY_ALIAS']
+    keyPassword keystoreProperties['KEY_PASSWORD']
+}
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (keystoreProperties['STORE_FILE'] != null) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
+        }
+    }
+
+    
+   // buildFeatures {
+   //    viewBinding true
+        
+  //  }
+    
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += ["-Xlint:all"]
+}
+
+dependencies {
+    implementation 'androidx.documentfile:documentfile:1.1.0'
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'com.google.android.material:material:1.14.0-alpha08'
+    implementation 'androidx.preference:preference:1.2.1'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation "androidx.activity:activity:1.9.0"
+    implementation 'com.airbnb.android:lottie:6.7.1'
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation "com.github.mdbqnull:seasonal-effects-android:1.0.0"
+    
+    // Room Database
+    implementation "androidx.room:room-runtime:2.6.1"
+    annotationProcessor "androidx.room:room-compiler:2.6.1"
+    }
+    
