@@ -61,7 +61,7 @@ jobs:
           fi
           
           if [ -n "$KB64" ]; then
-            echo "$KB64" | tr -d '\s' | base64 --decode > app/keystore/release.keystore
+            echo "$KB64" | tr -d '[:space:]' | base64 --decode > app/keystore/release.keystore
             echo "Decoded keystore from RELEASE_KEYSTORE_BASE64 / STORE_FILE_BASE64."
           fi
           
