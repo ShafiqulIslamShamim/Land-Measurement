@@ -70,10 +70,12 @@ android {
                 if (!storeKeystoreFile.exists()) {
                     storeKeystoreFile = file("keystore/" + storeFilePath)
                 }
-                storeFile storeKeystoreFile
-                storePassword keystoreProperties['STORE_PASSWORD']
-                keyAlias keystoreProperties['KEY_ALIAS']
-                keyPassword keystoreProperties['KEY_PASSWORD']
+                if (storeKeystoreFile.exists()) {
+                    storeFile storeKeystoreFile
+                    storePassword keystoreProperties['STORE_PASSWORD']
+                    keyAlias keystoreProperties['KEY_ALIAS']
+                    keyPassword keystoreProperties['KEY_PASSWORD']
+                }
             }
         }
     }
@@ -82,7 +84,20 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            if (keystoreProperties['STORE_FILE'] != null) {
+            
+            def hasKeystore = false
+            if (keystoreProperties['STORE_FILE']) {
+                def storeFilePath = keystoreProperties['STORE_FILE']
+                def storeKeystoreFile = file(storeFilePath)
+                if (!storeKeystoreFile.exists()) {
+                    storeKeystoreFile = file("keystore/" + storeFilePath)
+                }
+                if (storeKeystoreFile.exists()) {
+                    hasKeystore = true
+                }
+            }
+            
+            if (hasKeystore) {
                 signingConfig signingConfigs.release
             } else {
                 signingConfig signingConfigs.debug
