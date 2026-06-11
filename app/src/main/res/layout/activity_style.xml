@@ -63,6 +63,7 @@
 
             <!-- Hero Image Preview Card -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_style_hero"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_marginBottom="24dp"
@@ -70,13 +71,67 @@
                 app:cardElevation="4dp"
                 app:strokeWidth="0dp">
 
-                <ImageView
-                    android:id="@+id/img_style_hero"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_style_preview"
-                    android:contentDescription="Style Preview" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/img_style_hero"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_style_preview"
+                        android:contentDescription="Style Preview" />
+
+                    <!-- Custom translucent overlay to dye/tint the photo dynamically to match the active theme's primary color -->
+                    <View
+                        android:id="@+id/img_style_overlay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorPrimary"
+                        android:alpha="0.25" />
+
+                    <!-- Active Theme Badge Card -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="16dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="2dp"
+                        app:strokeWidth="0dp"
+                        app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="6dp">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:src="@drawable/palette_24px"
+                                app:tint="?attr/colorOnPrimaryContainer"
+                                android:contentDescription="Palette Indicator" />
+
+                            <TextView
+                                android:id="@+id/tv_active_theme_badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:text="Generic Theme"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:textColor="?attr/colorOnPrimaryContainer" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </FrameLayout>
 
             </com.google.android.material.card.MaterialCardView>
 

@@ -135,5 +135,8 @@ dependencies {
     // Room Database
     implementation "androidx.room:room-runtime:2.6.1"
     annotationProcessor "androidx.room:room-compiler:2.6.1"
+
+    // Google Play In-App Updates
+    implementation 'com.google.android.play:app-update:2.1.0'
     }
     

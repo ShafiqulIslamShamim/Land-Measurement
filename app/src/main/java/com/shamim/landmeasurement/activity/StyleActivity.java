@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 import com.shamim.landmeasurement.R;
 import com.shamim.landmeasurement.preference.SharedPrefValues;
 import com.google.android.material.materialswitch.MaterialSwitch;
@@ -110,6 +111,31 @@ public class StyleActivity extends BaseActivity {
     ringAmber.setVisibility(currentAppTheme.equals("4") ? View.VISIBLE : View.INVISIBLE);
     ringCoral.setVisibility(currentAppTheme.equals("5") ? View.VISIBLE : View.INVISIBLE);
 
+    // Dynamic Active Theme Badge Text Update
+    TextView activeThemeBadge = findViewById(R.id.tv_active_theme_badge);
+    if (activeThemeBadge != null) {
+      switch (currentAppTheme) {
+        case "1":
+          activeThemeBadge.setText("Emerald Active");
+          break;
+        case "2":
+          activeThemeBadge.setText("Blossom Active");
+          break;
+        case "3":
+          activeThemeBadge.setText("Ocean Active");
+          break;
+        case "4":
+          activeThemeBadge.setText("Amber Active");
+          break;
+        case "5":
+          activeThemeBadge.setText("Coral Active");
+          break;
+        default:
+          activeThemeBadge.setText("Dynamic Active");
+          break;
+      }
+    }
+
     // 2. Segment Highlights
     updateSegmentHighlights(currentThemeMode);
 
@@ -122,7 +148,7 @@ public class StyleActivity extends BaseActivity {
     int activeBg = R.drawable.segment_selected_bg;
     int transparentBg = android.R.color.transparent;
 
-    int onColor = getResources().getColor(android.R.color.white);
+    int onColor = ContextCompat.getColor(this, android.R.color.white);
     
     // Resolve secondary text color dynamically from the theme
     int offColor;
@@ -131,7 +157,7 @@ public class StyleActivity extends BaseActivity {
       getTheme().resolveAttribute(com.google.android.material.R.attr.colorOnSurfaceVariant, typedValue, true);
       offColor = typedValue.data;
     } catch (Exception e) {
-      offColor = getResources().getColor(android.R.color.darker_gray);
+      offColor = ContextCompat.getColor(this, android.R.color.darker_gray);
     }
 
     // Reset segments
@@ -155,8 +181,13 @@ public class StyleActivity extends BaseActivity {
     }
   }
 
+  @SuppressWarnings("deprecation")
   private void recreateWithAnimation() {
     recreate();
-    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    if (android.os.Build.VERSION.SDK_INT >= 34) {
+      overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out);
+    } else {
+      overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
   }
 }
