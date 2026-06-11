@@ -27,6 +27,7 @@
       android:exported="true"
       android:label=""
     />
+        <activity android:name=".activity.StyleActivity" />
     <activity android:name=".history.HistoryActivity" />
     <activity android:name=".activity.IntroActivity" />
     <activity android:name=".activity.RectangularLandActivity" />

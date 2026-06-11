@@ -22,16 +22,31 @@ import com.shamim.landmeasurement.util.*;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+  private int currentAppliedThemeRes = 0;
+  private String currentAppliedLanguage = "";
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
 
     applyLocalTheme();
     LocaleHelper.applyLocale(this);
+    currentAppliedLanguage = LocaleHelper.getSavedLanguage(this);
 
     // Modern Android edge-to-edge
     EdgeToEdge.enable(this);
 
     super.onCreate(savedInstanceState);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    int expectedTheme = getExpectedThemeRes();
+    String expectedLanguage = LocaleHelper.getSavedLanguage(this);
+
+    if (currentAppliedThemeRes != expectedTheme || !currentAppliedLanguage.equals(expectedLanguage)) {
+      recreate();
+    }
   }
 
   @Override
@@ -52,19 +67,69 @@ public abstract class BaseActivity extends AppCompatActivity {
   }
 
   // THEME LOGIC (Light/Dark + AppTheme/AppThemeDefault)
-  protected void applyLocalTheme() {
+  protected int getExpectedThemeRes() {
     boolean isLight = isLightThemeActive();
     String appThemePref = SharedPrefValues.getValue("app_theme_preference", "0");
+    boolean isAmoled = SharedPrefValues.getValue("amoled_black_mode", false);
 
     final int themeRes;
 
-    if (appThemePref.equals("0")) {
-      themeRes = isLight ? R.style.AppThemeLight : R.style.AppThemeDark;
+    if (isLight) {
+      switch (appThemePref) {
+        case "1":
+          themeRes = R.style.AppThemeEmeraldLight;
+          break;
+        case "2":
+          themeRes = R.style.AppThemeBlossomLight;
+          break;
+        case "3":
+          themeRes = R.style.AppThemeOceanLight;
+          break;
+        case "4":
+          themeRes = R.style.AppThemeAmberLight;
+          break;
+        case "5":
+          themeRes = R.style.AppThemeCoralLight;
+          break;
+        case "6":
+          themeRes = R.style.AppThemeDefaultLight;
+          break;
+        default:
+          themeRes = R.style.AppThemeLight;
+          break;
+      }
     } else {
-      themeRes = isLight ? R.style.AppThemeDefaultLight : R.style.AppThemeDefaultDark;
+      switch (appThemePref) {
+        case "1":
+          themeRes = isAmoled ? R.style.AppThemeEmeraldDarkAmoled : R.style.AppThemeEmeraldDark;
+          break;
+        case "2":
+          themeRes = isAmoled ? R.style.AppThemeBlossomDarkAmoled : R.style.AppThemeBlossomDark;
+          break;
+        case "3":
+          themeRes = isAmoled ? R.style.AppThemeOceanDarkAmoled : R.style.AppThemeOceanDark;
+          break;
+        case "4":
+          themeRes = isAmoled ? R.style.AppThemeAmberDarkAmoled : R.style.AppThemeAmberDark;
+          break;
+        case "5":
+          themeRes = isAmoled ? R.style.AppThemeCoralDarkAmoled : R.style.AppThemeCoralDark;
+          break;
+        case "6":
+          themeRes = isAmoled ? R.style.AppThemeDefaultDarkAmoled : R.style.AppThemeDefaultDark;
+          break;
+        default:
+          themeRes = isAmoled ? R.style.AppThemeDarkAmoled : R.style.AppThemeDark;
+          break;
+      }
     }
 
-    setTheme(themeRes);
+    return themeRes;
+  }
+
+  protected void applyLocalTheme() {
+    currentAppliedThemeRes = getExpectedThemeRes();
+    setTheme(currentAppliedThemeRes);
   }
 
   // Status + Navigation bar icon color (Light/Dark)

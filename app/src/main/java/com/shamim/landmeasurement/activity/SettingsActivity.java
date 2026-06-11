@@ -248,6 +248,10 @@ public class SettingsActivity extends BaseActivity {
       Context ctx = getContext();
 
       switch (key) {
+        case "pref_appearance_key":
+          ctx.startActivity(new Intent(ctx, StyleActivity.class));
+          return true;
+
         case KEY_DEVELOPER:
           // Developer Telegram
           openUrl(ctx, "https://t.me/md_shamim12");

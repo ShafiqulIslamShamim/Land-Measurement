@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="44dp"
+    android:height="44dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Left Half: Blossom Pink -->
+    <path
+        android:pathData="M12,2 A10,10 0 0,0 12,22 Z"
+        android:fillColor="#EC80FC" />
+    <!-- Right Half: Dark Berry Purple -->
+    <path
+        android:pathData="M12,2 A10,10 0 0,1 12,22 Z"
+        android:fillColor="#6A0080" />
+</vector>

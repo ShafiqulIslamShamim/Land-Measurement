@@ -13,26 +13,12 @@
     android:title="@string/pref_category_system"
   >
 
-        <com.shamim.landmeasurement.preference.MaterialListPreference
+        <Preference
       android:icon="@drawable/palette_24px"
       android:layout="@layout/m3_preference_layout"
-      android:key="app_theme_preference"
-      android:title="@string/pref_app_theme_title"
-      app:useSimpleSummaryProvider="true"
-      android:entries="@array/app_theme_options"
-      android:entryValues="@array/app_theme_option_values"
-      android:defaultValue="0"
-    />
-
-        <com.shamim.landmeasurement.preference.MaterialListPreference
-      android:icon="@drawable/routine_24px"
-      android:layout="@layout/m3_preference_layout"
-      android:key="theme_preference"
-      android:title="@string/pref_select_mode_title"
-      app:useSimpleSummaryProvider="true"
-      android:entries="@array/theme_options"
-      android:entryValues="@array/theme_option_values"
-      android:defaultValue="0"
+      android:key="pref_appearance_key"
+      android:title="@string/pref_appearance_title"
+      android:summary="@string/pref_appearance_summary"
     />
 
         <com.shamim.landmeasurement.preference.MaterialListPreference

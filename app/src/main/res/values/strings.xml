@@ -109,7 +109,7 @@
     <string name="pref_check_updates_title">Check for updates</string>
     <string
     name="pref_check_updates_summary"
-  >Download link will be available here if an update is available.</string>
+  >Check for the latest version on the Google Play Store.</string>
 
     <string name="pref_privacy_policy_title">Privacy policy</string>
     <string
@@ -287,4 +287,16 @@
 <string name="history_title_linear_conversion">Linear units (Conversation)</string>
 <string name="history_title_area_conversion">Land area (Conversation)</string>
 
+    <!-- Appearance & Style -->
+    <string name="pref_appearance_title">Appearance &amp; Style</string>
+    <string name="pref_appearance_summary">Personalize your color palette, AMOLED mode, and light/dark theme modes</string>
+    <string name="style_title">Style</string>
+    <string name="accents_and_schemes">Accents &amp; Schemes</string>
+    <string name="dynamic_color_theme">Dynamic Color Theme (Default)</string>
+    <string name="amoled_black_mode_title">AMOLED Black Mode</string>
+    <string name="amoled_black_mode_summary">Uses pitch-black background to save battery</string>
+    <string name="preferred_theme_mode">Preferred Theme Mode</string>
+    <string name="theme_mode_system">System</string>
+    <string name="theme_mode_light">Off (Light)</string>
+    <string name="theme_mode_dark">On (Dark)</string>
 </resources>

@@ -109,7 +109,7 @@
     <string name="pref_check_updates_title">আপডেট চেক</string>
     <string
     name="pref_check_updates_summary"
-  >আপডেট পাওয়া গেলে এখানে ডাউনলোড লিঙ্ক পাওয়া যাবে।</string>
+  >গুগল প্লে স্টোর থেকে অ্যাপের সর্বশেষ সংস্করণ চেক করুন।</string>
 
     <string name="pref_privacy_policy_title">গোপনীয়তা নীতিমালা</string>
     <string
@@ -289,4 +289,16 @@
 <string name="history_title_linear_conversion">দৈর্ঘ্যের একক (রূপান্তর)</string>
 <string name="history_title_area_conversion">জমির পরিমাণ (রূপান্তর)</string>
 
+    <!-- Appearance & Style -->
+    <string name="pref_appearance_title">স্টাইল ও রূপান্তর</string>
+    <string name="pref_appearance_summary">আপনার প্রিয় রঙের প্যালেট, অ্যামোলেড মোড ও ডার্ক/লাইট মোড কাস্টমাইজ করুন</string>
+    <string name="style_title">স্টাইল</string>
+    <string name="accents_and_schemes">রঙের প্যালেট ও স্কিম</string>
+    <string name="dynamic_color_theme">ডায়নামিক কালার থিম (ডিফল্ট)</string>
+    <string name="amoled_black_mode_title">অ্যামোলেড ব্ল্যাক মোড</string>
+    <string name="amoled_black_mode_summary">ব্যাটারি বাঁচাতে পিচ-ব্ল্যাক ব্যাকগ্রাউন্ড ব্যবহার করে</string>
+    <string name="preferred_theme_mode">পছন্দের থিম মোড</string>
+    <string name="theme_mode_system">সিস্টেম</string>
+    <string name="theme_mode_light">বন্ধ (লাইট)</string>
+    <string name="theme_mode_dark">চালু (ডার্ক)</string>
 </resources>
