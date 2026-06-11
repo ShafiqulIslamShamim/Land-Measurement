@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.appupdate.AppUpdateOptions;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.gms.tasks.Task;
@@ -37,8 +38,8 @@ public class OTAUpdateHelper {
           try {
             appUpdateManager.startUpdateFlowForResult(
                 appUpdateInfo,
-                AppUpdateType.IMMEDIATE,
                 (Activity) context,
+                AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build(),
                 UPDATE_REQUEST_CODE);
           } catch (Exception e) {
             // Fallback to standard Play Store intent
