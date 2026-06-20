@@ -11,7 +11,8 @@ import com.shamim.landmeasurement.util.SideCalculationManager;
 import com.shamim.landmeasurement.view.AreaInputCardView;
 import com.shamim.landmeasurement.view.LandSingleEditTextCardView;
 
-public class CircleSideCalculatorActivity extends BaseActivity implements com.shamim.landmeasurement.history.HistoryItemSupport {
+public class CircleSideCalculatorActivity extends BaseActivity
+    implements com.shamim.landmeasurement.history.HistoryItemSupport {
 
   private MaterialToolbar toolbar;
   private AreaInputCardView areaInputCard;
@@ -104,22 +105,37 @@ public class CircleSideCalculatorActivity extends BaseActivity implements com.sh
     if (getIntent().getBooleanExtra("skip_history_save", false)) {
       return;
     }
-    String shapeTitle = getString(R.string.header_side_calculation) + " (" + getString(R.string.item_circular) + ")";
-    
-    String inputs = getString(R.string.amount_of_land_title) + ": " + areaInputCard.getAreaValueAsString();
-                   
+    String shapeTitle =
+        getString(R.string.header_side_calculation)
+            + " ("
+            + getString(R.string.item_circular)
+            + ")";
+
+    String inputs =
+        getString(R.string.amount_of_land_title) + ": " + areaInputCard.getAreaValueAsString();
+
     String className = getClass().getName();
     String serialized = getSerializedInputs();
-    
-    new Thread(() -> {
-      try {
-        com.shamim.landmeasurement.history.HistoryEntry entry = 
-            new com.shamim.landmeasurement.history.HistoryEntry(shapeTitle, inputs, areaSqFt, System.currentTimeMillis(), className, serialized);
-        com.shamim.landmeasurement.history.HistoryDatabase.getDatabase(this).historyDao().insert(entry);
-      } catch (Exception e) {
-        android.util.Log.e("CircleSideCalculator", "Error saving history", e);
-      }
-    }).start();
+
+    new Thread(
+            () -> {
+              try {
+                com.shamim.landmeasurement.history.HistoryEntry entry =
+                    new com.shamim.landmeasurement.history.HistoryEntry(
+                        shapeTitle,
+                        inputs,
+                        areaSqFt,
+                        System.currentTimeMillis(),
+                        className,
+                        serialized);
+                com.shamim.landmeasurement.history.HistoryDatabase.getDatabase(this)
+                    .historyDao()
+                    .insert(entry);
+              } catch (Exception e) {
+                android.util.Log.e("CircleSideCalculator", "Error saving history", e);
+              }
+            })
+        .start();
   }
 
   @Override

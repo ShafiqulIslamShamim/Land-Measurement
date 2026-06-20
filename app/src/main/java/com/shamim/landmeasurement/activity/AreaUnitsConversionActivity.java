@@ -16,7 +16,8 @@ import com.shamim.landmeasurement.util.UnitConverter;
 import java.util.Arrays;
 import java.util.List;
 
-public class AreaUnitsConversionActivity extends BaseActivity implements com.shamim.landmeasurement.history.HistoryItemSupport {
+public class AreaUnitsConversionActivity extends BaseActivity
+    implements com.shamim.landmeasurement.history.HistoryItemSupport {
 
   private LandResultManager resultManager;
   private MaterialToolbar toolbar;

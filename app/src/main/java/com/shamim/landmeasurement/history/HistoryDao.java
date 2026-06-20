@@ -8,15 +8,15 @@ import java.util.List;
 
 @Dao
 public interface HistoryDao {
-    @Query("SELECT * FROM history_entries ORDER BY timestamp DESC")
-    List<HistoryEntry> getAllHistory();
+  @Query("SELECT * FROM history_entries ORDER BY timestamp DESC")
+  List<HistoryEntry> getAllHistory();
 
-    @Insert
-    void insert(HistoryEntry entry);
+  @Insert
+  void insert(HistoryEntry entry);
 
-    @Delete
-    void delete(HistoryEntry entry);
+  @Delete
+  void delete(HistoryEntry entry);
 
-    @Query("DELETE FROM history_entries")
-    void deleteAll();
+  @Query("DELETE FROM history_entries")
+  void deleteAll();
 }

@@ -19,16 +19,21 @@ import com.shamim.landmeasurement.preference.*;
 import com.shamim.landmeasurement.recycle_view.*;
 import com.shamim.landmeasurement.update_checker.*;
 import com.shamim.landmeasurement.util.*;
+import java.util.*;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-  private int currentAppliedThemeRes = 0;
-  private String currentAppliedLanguage = "";
+  protected String lastAppliedThemePref;
+  protected String lastAppliedAppThemePref;
+  protected boolean lastAppliedAmoled;
+
+  protected String currentAppliedLanguage;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
 
     applyLocalTheme();
+
     LocaleHelper.applyLocale(this);
     currentAppliedLanguage = LocaleHelper.getSavedLanguage(this);
 
@@ -41,10 +46,24 @@ public abstract class BaseActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    int expectedTheme = getExpectedThemeRes();
-    String expectedLanguage = LocaleHelper.getSavedLanguage(this);
 
-    if (currentAppliedThemeRes != expectedTheme || !currentAppliedLanguage.equals(expectedLanguage)) {
+    String themePref = SharedPrefValues.getValue("theme_preference", "0");
+    String appThemePref = SharedPrefValues.getValue("app_theme_preference", "0");
+    boolean amoled = SharedPrefValues.getValue("amoled_black_mode", false);
+    String language = LocaleHelper.getSavedLanguage(this);
+
+    boolean needsRecreate =
+        !Objects.equals(lastAppliedThemePref, themePref)
+            || !Objects.equals(lastAppliedAppThemePref, appThemePref)
+            || lastAppliedAmoled != amoled
+            || !Objects.equals(currentAppliedLanguage, language);
+
+    if (needsRecreate) {
+      lastAppliedThemePref = themePref;
+      lastAppliedAppThemePref = appThemePref;
+      lastAppliedAmoled = amoled;
+      currentAppliedLanguage = language;
+
       recreate();
     }
   }
@@ -67,69 +86,38 @@ public abstract class BaseActivity extends AppCompatActivity {
   }
 
   // THEME LOGIC (Light/Dark + AppTheme/AppThemeDefault)
-  protected int getExpectedThemeRes() {
+  protected void applyLocalTheme() {
     boolean isLight = isLightThemeActive();
     String appThemePref = SharedPrefValues.getValue("app_theme_preference", "0");
-    boolean isAmoled = SharedPrefValues.getValue("amoled_black_mode", false);
+    boolean amoledEnabled = SharedPrefValues.getValue("amoled_black_mode", false);
+
+    lastAppliedThemePref = SharedPrefValues.getValue("theme_preference", "0");
+    lastAppliedAppThemePref = appThemePref;
+    lastAppliedAmoled = amoledEnabled;
 
     final int themeRes;
 
-    if (isLight) {
-      switch (appThemePref) {
-        case "1":
-          themeRes = R.style.AppThemeEmeraldLight;
-          break;
-        case "2":
-          themeRes = R.style.AppThemeBlossomLight;
-          break;
-        case "3":
-          themeRes = R.style.AppThemeOceanLight;
-          break;
-        case "4":
-          themeRes = R.style.AppThemeAmberLight;
-          break;
-        case "5":
-          themeRes = R.style.AppThemeCoralLight;
-          break;
-        case "6":
-          themeRes = R.style.AppThemeDefaultLight;
-          break;
-        default:
-          themeRes = R.style.AppThemeLight;
-          break;
-      }
+    if (appThemePref.equals("0")) {
+      themeRes = isLight ? R.style.AppThemeLight : R.style.AppThemeDark;
+    } else if (appThemePref.equals("1")) {
+      themeRes = isLight ? R.style.AppThemeEmeraldLight : R.style.AppThemeEmeraldDark;
+    } else if (appThemePref.equals("2")) {
+      themeRes = isLight ? R.style.AppThemeBlossomLight : R.style.AppThemeBlossomDark;
+    } else if (appThemePref.equals("3")) {
+      themeRes = isLight ? R.style.AppThemeOceanLight : R.style.AppThemeOceanDark;
+    } else if (appThemePref.equals("4")) {
+      themeRes = isLight ? R.style.AppThemeAmberLight : R.style.AppThemeAmberDark;
+    } else if (appThemePref.equals("5")) {
+      themeRes = isLight ? R.style.AppThemeCoralLight : R.style.AppThemeCoralDark;
     } else {
-      switch (appThemePref) {
-        case "1":
-          themeRes = isAmoled ? R.style.AppThemeEmeraldDarkAmoled : R.style.AppThemeEmeraldDark;
-          break;
-        case "2":
-          themeRes = isAmoled ? R.style.AppThemeBlossomDarkAmoled : R.style.AppThemeBlossomDark;
-          break;
-        case "3":
-          themeRes = isAmoled ? R.style.AppThemeOceanDarkAmoled : R.style.AppThemeOceanDark;
-          break;
-        case "4":
-          themeRes = isAmoled ? R.style.AppThemeAmberDarkAmoled : R.style.AppThemeAmberDark;
-          break;
-        case "5":
-          themeRes = isAmoled ? R.style.AppThemeCoralDarkAmoled : R.style.AppThemeCoralDark;
-          break;
-        case "6":
-          themeRes = isAmoled ? R.style.AppThemeDefaultDarkAmoled : R.style.AppThemeDefaultDark;
-          break;
-        default:
-          themeRes = isAmoled ? R.style.AppThemeDarkAmoled : R.style.AppThemeDark;
-          break;
-      }
+      themeRes = isLight ? R.style.AppThemeLight : R.style.AppThemeDark;
     }
 
-    return themeRes;
-  }
+    setTheme(themeRes);
 
-  protected void applyLocalTheme() {
-    currentAppliedThemeRes = getExpectedThemeRes();
-    setTheme(currentAppliedThemeRes);
+    if (!isLight && amoledEnabled) {
+      getTheme().applyStyle(R.style.AmoledOverlay, true);
+    }
   }
 
   // Status + Navigation bar icon color (Light/Dark)
@@ -164,7 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity {
   }
 
   // Detect whether current UI should be "light" appearance
-  private boolean isLightThemeActive() {
+  protected boolean isLightThemeActive() {
 
     String themePref = SharedPrefValues.getValue("theme_preference", "0");
 

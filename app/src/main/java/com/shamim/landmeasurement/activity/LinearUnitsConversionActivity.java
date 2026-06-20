@@ -24,7 +24,8 @@ import com.shamim.landmeasurement.util.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class LinearUnitsConversionActivity extends BaseActivity implements com.shamim.landmeasurement.history.HistoryItemSupport {
+public class LinearUnitsConversionActivity extends BaseActivity
+    implements com.shamim.landmeasurement.history.HistoryItemSupport {
 
   private MaterialToolbar toolbar;
   private TextInputEditText etInputLength, etInputInch;
@@ -92,9 +93,9 @@ public class LinearUnitsConversionActivity extends BaseActivity implements com.s
     chipGroupUnits.removeAllViews();
 
     for (int resId : unitResIds) {
-       Chip chip = new Chip(this);
-       chip.setId(resId);
-       chip.setText(resId);
+      Chip chip = new Chip(this);
+      chip.setId(resId);
+      chip.setText(resId);
       chip.setCheckable(true);
       chip.setChecked(resId == selectedUnitResId);
       chip.setChipIconResource(R.drawable.ic_check);
@@ -216,7 +217,7 @@ public class LinearUnitsConversionActivity extends BaseActivity implements com.s
       return;
     }
     String shapeTitle = getString(R.string.history_title_linear_conversion);
-    
+
     // Construct inputs text
     StringBuilder sb = new StringBuilder();
     sb.append(getString(R.string.label_convert_length)).append(": ");
@@ -232,30 +233,36 @@ public class LinearUnitsConversionActivity extends BaseActivity implements com.s
           .append(getString(R.string.unit_inch));
     } else {
       double mainVal = parseDoubleOrZero(etInputLength.getText());
-      sb.append(String.format("%.2f", mainVal))
-          .append(" ")
-          .append(getString(selectedUnitResId));
+      sb.append(String.format("%.2f", mainVal)).append(" ").append(getString(selectedUnitResId));
     }
-    
+
     String inputs = sb.toString();
     String className = getClass().getName();
     String serialized = getSerializedInputs();
-    
-    new Thread(() -> {
-      try {
-        com.shamim.landmeasurement.history.HistoryEntry entry = 
-            new com.shamim.landmeasurement.history.HistoryEntry(shapeTitle, inputs, 0.0, System.currentTimeMillis(), className, serialized);
-        com.shamim.landmeasurement.history.HistoryDatabase.getDatabase(this).historyDao().insert(entry);
-      } catch (Exception e) {
-        android.util.Log.e("LinearUnitsConversion", "Error saving history", e);
-      }
-    }).start();
+
+    new Thread(
+            () -> {
+              try {
+                com.shamim.landmeasurement.history.HistoryEntry entry =
+                    new com.shamim.landmeasurement.history.HistoryEntry(
+                        shapeTitle, inputs, 0.0, System.currentTimeMillis(), className, serialized);
+                com.shamim.landmeasurement.history.HistoryDatabase.getDatabase(this)
+                    .historyDao()
+                    .insert(entry);
+              } catch (Exception e) {
+                android.util.Log.e("LinearUnitsConversion", "Error saving history", e);
+              }
+            })
+        .start();
   }
 
   @Override
   public String getSerializedInputs() {
     String len = etInputLength.getText() != null ? etInputLength.getText().toString() : "";
-    String inch = etInputInch != null && etInputInch.getText() != null ? etInputInch.getText().toString() : "";
+    String inch =
+        etInputInch != null && etInputInch.getText() != null
+            ? etInputInch.getText().toString()
+            : "";
     return len + ";" + inch + ";" + selectedUnitResId;
   }
 

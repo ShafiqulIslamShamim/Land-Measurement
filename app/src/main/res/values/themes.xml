@@ -1,416 +1,140 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
- <style
-    name="AppThemeLight"
-    parent="Theme.Material3.DynamicColors.Light.NoActionBar"
-  >
- 
-</style>
+	<style name="AppThemeLight"
+		parent="Theme.Material3.DynamicColors.Light.NoActionBar">
 
-<style
-    name="AppThemeDark"
-    parent="Theme.Material3.DynamicColors.Dark.NoActionBar"
-  >
-  
-</style>
+	</style>
 
-<style name="Webview_PopupMenu" parent="Widget.Material3.PopupMenu">
-    <!-- Rounded corners & background -->
-    <item name="android:popupBackground">@drawable/popup_background</item>
-</style>
+	<style name="AppThemeDark"
+		parent="Theme.Material3.DynamicColors.Dark.NoActionBar">
 
-    <style name="AppThemeDefaultDark" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="colorPrimary">@color/default_theme_dark_primary</item>
-        <item name="colorOnPrimary">@color/default_theme_dark_onPrimary</item>
-        <item
-      name="colorPrimaryContainer"
-    >@color/default_theme_dark_primaryContainer</item>
-        <item
-      name="colorOnPrimaryContainer"
-    >@color/default_theme_dark_onPrimaryContainer</item>
-        <item name="colorSecondary">@color/default_theme_dark_secondary</item>
-        <item
-      name="colorOnSecondary"
-    >@color/default_theme_dark_onSecondary</item>
-        <item
-      name="colorSecondaryContainer"
-    >@color/default_theme_dark_secondaryContainer</item>
-        <item
-      name="colorOnSecondaryContainer"
-    >@color/default_theme_dark_onSecondaryContainer</item>
-        <item name="colorTertiary">@color/default_theme_dark_tertiary</item>
-        <item name="colorOnTertiary">@color/default_theme_dark_onTertiary</item>
-        <item
-      name="colorTertiaryContainer"
-    >@color/default_theme_dark_tertiaryContainer</item>
-        <item
-      name="colorOnTertiaryContainer"
-    >@color/default_theme_dark_onTertiaryContainer</item>
-        <item name="colorError">@color/default_theme_dark_error</item>
-        <item name="colorOnError">@color/default_theme_dark_onError</item>
-        <item
-      name="colorErrorContainer"
-    >@color/default_theme_dark_errorContainer</item>
-        <item
-      name="colorOnErrorContainer"
-    >@color/default_theme_dark_onErrorContainer</item>
-        <item
-      name="android:colorBackground"
-    >@color/default_theme_dark_background</item>
-        <item
-      name="colorOnBackground"
-    >@color/default_theme_dark_onBackground</item>
-        <item name="colorSurface">@color/default_theme_dark_surface</item>
-        <item name="colorOnSurface">@color/default_theme_dark_onSurface</item>
-        <item
-      name="colorSurfaceVariant"
-    >@color/default_theme_dark_surfaceVariant</item>
-        <item
-      name="colorOnSurfaceVariant"
-    >@color/default_theme_dark_onSurfaceVariant</item>
-        <item name="colorOutline">@color/default_theme_dark_outline</item>
-        <item
-      name="colorOutlineVariant"
-    >@color/default_theme_dark_outlineVariant</item>
-        <item
-      name="colorSurfaceInverse"
-    >@color/default_theme_dark_inverseSurface</item>
-        <item
-      name="colorOnSurfaceInverse"
-    >@color/default_theme_dark_inverseOnSurface</item>
-        <item
-      name="colorPrimaryInverse"
-    >@color/default_theme_dark_inversePrimary</item>
-        <item
-      name="colorPrimaryFixed"
-    >@color/default_theme_dark_primaryFixed</item>
-        <item
-      name="colorOnPrimaryFixed"
-    >@color/default_theme_dark_onPrimaryFixed</item>
-        <item
-      name="colorPrimaryFixedDim"
-    >@color/default_theme_dark_primaryFixedDim</item>
-        <item
-      name="colorOnPrimaryFixedVariant"
-    >@color/default_theme_dark_onPrimaryFixedVariant</item>
-        <item
-      name="colorSecondaryFixed"
-    >@color/default_theme_dark_secondaryFixed</item>
-        <item
-      name="colorOnSecondaryFixed"
-    >@color/default_theme_dark_onSecondaryFixed</item>
-        <item
-      name="colorSecondaryFixedDim"
-    >@color/default_theme_dark_secondaryFixedDim</item>
-        <item
-      name="colorOnSecondaryFixedVariant"
-    >@color/default_theme_dark_onSecondaryFixedVariant</item>
-        <item
-      name="colorTertiaryFixed"
-    >@color/default_theme_dark_tertiaryFixed</item>
-        <item
-      name="colorOnTertiaryFixed"
-    >@color/default_theme_dark_onTertiaryFixed</item>
-        <item
-      name="colorTertiaryFixedDim"
-    >@color/default_theme_dark_tertiaryFixedDim</item>
-        <item
-      name="colorOnTertiaryFixedVariant"
-    >@color/default_theme_dark_onTertiaryFixedVariant</item>
-        <item name="colorSurfaceDim">@color/default_theme_dark_surfaceDim</item>
-        <item
-      name="colorSurfaceBright"
-    >@color/default_theme_dark_surfaceBright</item>
-        <item
-      name="colorSurfaceContainerLowest"
-    >@color/default_theme_dark_surfaceContainerLowest</item>
-        <item
-      name="colorSurfaceContainerLow"
-    >@color/default_theme_dark_surfaceContainerLow</item>
-        <item
-      name="colorSurfaceContainer"
-    >@color/default_theme_dark_surfaceContainer</item>
-        <item
-      name="colorSurfaceContainerHigh"
-    >@color/default_theme_dark_surfaceContainerHigh</item>
-        <item
-      name="colorSurfaceContainerHighest"
-    >@color/default_theme_dark_surfaceContainerHighest</item>
-    </style>
+	</style>
 
+	<style name="Webview_PopupMenu"
+		parent="Widget.Material3.PopupMenu">
+		<!-- Rounded corners & background -->
+		<item name="android:popupBackground">@drawable/popup_background</item>
+	</style>
 
-<style name="AppThemeDefaultLight" parent="Theme.Material3.Light.NoActionBar">
-        <item name="colorPrimary">@color/default_theme_primary</item>
-        <item name="colorOnPrimary">@color/default_theme_onPrimary</item>
-        <item
-      name="colorPrimaryContainer"
-    >@color/default_theme_primaryContainer</item>
-        <item
-      name="colorOnPrimaryContainer"
-    >@color/default_theme_onPrimaryContainer</item>
-        <item name="colorSecondary">@color/default_theme_secondary</item>
-        <item name="colorOnSecondary">@color/default_theme_onSecondary</item>
-        <item
-      name="colorSecondaryContainer"
-    >@color/default_theme_secondaryContainer</item>
-        <item
-      name="colorOnSecondaryContainer"
-    >@color/default_theme_onSecondaryContainer</item>
-        <item name="colorTertiary">@color/default_theme_tertiary</item>
-        <item name="colorOnTertiary">@color/default_theme_onTertiary</item>
-        <item
-      name="colorTertiaryContainer"
-    >@color/default_theme_tertiaryContainer</item>
-        <item
-      name="colorOnTertiaryContainer"
-    >@color/default_theme_onTertiaryContainer</item>
-        <item name="colorError">@color/default_theme_error</item>
-        <item name="colorOnError">@color/default_theme_onError</item>
-        <item
-      name="colorErrorContainer"
-    >@color/default_theme_errorContainer</item>
-        <item
-      name="colorOnErrorContainer"
-    >@color/default_theme_onErrorContainer</item>
-        <item
-      name="android:colorBackground"
-    >@color/default_theme_background</item>
-        <item name="colorOnBackground">@color/default_theme_onBackground</item>
-        <item name="colorSurface">@color/default_theme_surface</item>
-        <item name="colorOnSurface">@color/default_theme_onSurface</item>
-        <item
-      name="colorSurfaceVariant"
-    >@color/default_theme_surfaceVariant</item>
-        <item
-      name="colorOnSurfaceVariant"
-    >@color/default_theme_onSurfaceVariant</item>
-        <item name="colorOutline">@color/default_theme_outline</item>
-        <item
-      name="colorOutlineVariant"
-    >@color/default_theme_outlineVariant</item>
-        <item
-      name="colorSurfaceInverse"
-    >@color/default_theme_inverseSurface</item>
-        <item
-      name="colorOnSurfaceInverse"
-    >@color/default_theme_inverseOnSurface</item>
-        <item
-      name="colorPrimaryInverse"
-    >@color/default_theme_inversePrimary</item>
-        <item name="colorPrimaryFixed">@color/default_theme_primaryFixed</item>
-        <item
-      name="colorOnPrimaryFixed"
-    >@color/default_theme_onPrimaryFixed</item>
-        <item
-      name="colorPrimaryFixedDim"
-    >@color/default_theme_primaryFixedDim</item>
-        <item
-      name="colorOnPrimaryFixedVariant"
-    >@color/default_theme_onPrimaryFixedVariant</item>
-        <item
-      name="colorSecondaryFixed"
-    >@color/default_theme_secondaryFixed</item>
-        <item
-      name="colorOnSecondaryFixed"
-    >@color/default_theme_onSecondaryFixed</item>
-        <item
-      name="colorSecondaryFixedDim"
-    >@color/default_theme_secondaryFixedDim</item>
-        <item
-      name="colorOnSecondaryFixedVariant"
-    >@color/default_theme_onSecondaryFixedVariant</item>
-        <item
-      name="colorTertiaryFixed"
-    >@color/default_theme_tertiaryFixed</item>
-        <item
-      name="colorOnTertiaryFixed"
-    >@color/default_theme_onTertiaryFixed</item>
-        <item
-      name="colorTertiaryFixedDim"
-    >@color/default_theme_tertiaryFixedDim</item>
-        <item
-      name="colorOnTertiaryFixedVariant"
-    >@color/default_theme_onTertiaryFixedVariant</item>
-        <item name="colorSurfaceDim">@color/default_theme_surfaceDim</item>
-        <item
-      name="colorSurfaceBright"
-    >@color/default_theme_surfaceBright</item>
-        <item
-      name="colorSurfaceContainerLowest"
-    >@color/default_theme_surfaceContainerLowest</item>
-        <item
-      name="colorSurfaceContainerLow"
-    >@color/default_theme_surfaceContainerLow</item>
-        <item
-      name="colorSurfaceContainer"
-    >@color/default_theme_surfaceContainer</item>
-        <item
-      name="colorSurfaceContainerHigh"
-    >@color/default_theme_surfaceContainerHigh</item>
-        <item
-      name="colorSurfaceContainerHighest"
-    >@color/default_theme_surfaceContainerHighest</item>
-    </style>
+	<!-- Custom Accent Themes -->
+	<!-- Emerald Themes -->
+	<style name="AppThemeEmeraldLight"
+		parent="Theme.Material3.Light.NoActionBar">
+		<item name="colorPrimary">@color/emerald_primary_light</item>
+		<item name="colorOnPrimary">@color/emerald_onPrimary_light</item>
+		<item name="colorPrimaryContainer">@color/emerald_primaryContainer_light</item>
+		<item name="colorOnPrimaryContainer">@color/emerald_onPrimaryContainer_light</item>
+		<item name="android:colorBackground">@color/default_theme_background</item>
+		<item name="colorSurface">@color/default_theme_surface</item>
+		<item name="colorOnSurface">@color/default_theme_onSurface</item>
+	</style>
+	<style name="AppThemeEmeraldDark"
+		parent="Theme.Material3.Dark.NoActionBar">
+		<item name="colorPrimary">@color/emerald_primary_dark</item>
+		<item name="colorOnPrimary">@color/emerald_onPrimary_dark</item>
+		<item name="colorPrimaryContainer">@color/emerald_primaryContainer_dark</item>
+		<item name="colorOnPrimaryContainer">@color/emerald_onPrimaryContainer_dark</item>
+		<item name="android:colorBackground">@color/default_theme_dark_background</item>
+		<item name="colorSurface">@color/default_theme_dark_surface</item>
+		<item name="colorOnSurface">@color/default_theme_dark_onSurface</item>
+	</style>
 
-    <!-- Emerald Themes -->
-    <style name="AppThemeEmeraldLight" parent="AppThemeDefaultLight">
-        <item name="colorPrimary">#0EA165</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#E2F9EE</item>
-        <item name="colorOnPrimaryContainer">#054327</item>
-        <item name="colorSecondary">#0C8050</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="android:colorBackground">#F5FBF8</item>
-        <item name="colorSurface">#F5FBF8</item>
-        <item name="colorSurfaceContainer">#EAF8F1</item>
-    </style>
-    <style name="AppThemeEmeraldDark" parent="AppThemeDefaultDark">
-        <item name="colorPrimary">#6ADAA9</item>
-        <item name="colorOnPrimary">#003820</item>
-        <item name="colorPrimaryContainer">#005231</item>
-        <item name="colorOnPrimaryContainer">#87F7C4</item>
-        <item name="colorSecondary">#8BE0BA</item>
-        <item name="android:colorBackground">#0B120E</item>
-        <item name="colorSurface">#0B120E</item>
-        <item name="colorSurfaceContainer">#131F1A</item>
-    </style>
-    <style name="AppThemeEmeraldDarkAmoled" parent="AppThemeEmeraldDark">
-        <item name="android:colorBackground">#000000</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceContainer">#0A0A0A</item>
-        <item name="colorSurfaceContainerLow">#050505</item>
-        <item name="colorSurfaceContainerHigh">#121212</item>
-    </style>
+	<!-- Blossom Themes -->
+	<style name="AppThemeBlossomLight"
+		parent="Theme.Material3.Light.NoActionBar">
+		<item name="colorPrimary">@color/blossom_primary_light</item>
+		<item name="colorOnPrimary">@color/blossom_onPrimary_light</item>
+		<item name="colorPrimaryContainer">@color/blossom_primaryContainer_light</item>
+		<item name="colorOnPrimaryContainer">@color/blossom_onPrimaryContainer_light</item>
+		<item name="android:colorBackground">@color/default_theme_background</item>
+		<item name="colorSurface">@color/default_theme_surface</item>
+		<item name="colorOnSurface">@color/default_theme_onSurface</item>
+	</style>
+	<style name="AppThemeBlossomDark"
+		parent="Theme.Material3.Dark.NoActionBar">
+		<item name="colorPrimary">@color/blossom_primary_dark</item>
+		<item name="colorOnPrimary">@color/blossom_onPrimary_dark</item>
+		<item name="colorPrimaryContainer">@color/blossom_primaryContainer_dark</item>
+		<item name="colorOnPrimaryContainer">@color/blossom_onPrimaryContainer_dark</item>
+		<item name="android:colorBackground">@color/default_theme_dark_background</item>
+		<item name="colorSurface">@color/default_theme_dark_surface</item>
+		<item name="colorOnSurface">@color/default_theme_dark_onSurface</item>
+	</style>
 
-    <!-- Blossom Themes -->
-    <style name="AppThemeBlossomLight" parent="AppThemeDefaultLight">
-        <item name="colorPrimary">#9C27B0</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#FCEBFF</item>
-        <item name="colorOnPrimaryContainer">#42004F</item>
-        <item name="colorSecondary">#8E24AA</item>
-        <item name="android:colorBackground">#FEF6FE</item>
-        <item name="colorSurface">#FEF6FE</item>
-        <item name="colorSurfaceContainer">#FAF0FA</item>
-    </style>
-    <style name="AppThemeBlossomDark" parent="AppThemeDefaultDark">
-        <item name="colorPrimary">#EC82FC</item>
-        <item name="colorOnPrimary">#510061</item>
-        <item name="colorPrimaryContainer">#6A0080</item>
-        <item name="colorOnPrimaryContainer">#FBD5FF</item>
-        <item name="colorSecondary">#EA80FC</item>
-        <item name="android:colorBackground">#140916</item>
-        <item name="colorSurface">#140916</item>
-        <item name="colorSurfaceContainer">#1D1021</item>
-    </style>
-    <style name="AppThemeBlossomDarkAmoled" parent="AppThemeBlossomDark">
-        <item name="android:colorBackground">#000000</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceContainer">#0A0A0A</item>
-        <item name="colorSurfaceContainerLow">#050505</item>
-        <item name="colorSurfaceContainerHigh">#121212</item>
-    </style>
+	<!-- Ocean Themes -->
+	<style name="AppThemeOceanLight"
+		parent="Theme.Material3.Light.NoActionBar">
+		<item name="colorPrimary">@color/ocean_primary_light</item>
+		<item name="colorOnPrimary">@color/ocean_onPrimary_light</item>
+		<item name="colorPrimaryContainer">@color/ocean_primaryContainer_light</item>
+		<item name="colorOnPrimaryContainer">@color/ocean_onPrimaryContainer_light</item>
+		<item name="android:colorBackground">@color/default_theme_background</item>
+		<item name="colorSurface">@color/default_theme_surface</item>
+		<item name="colorOnSurface">@color/default_theme_onSurface</item>
+	</style>
+	<style name="AppThemeOceanDark"
+		parent="Theme.Material3.Dark.NoActionBar">
+		<item name="colorPrimary">@color/ocean_primary_dark</item>
+		<item name="colorOnPrimary">@color/ocean_onPrimary_dark</item>
+		<item name="colorPrimaryContainer">@color/ocean_primaryContainer_dark</item>
+		<item name="colorOnPrimaryContainer">@color/ocean_onPrimaryContainer_dark</item>
+		<item name="android:colorBackground">@color/default_theme_dark_background</item>
+		<item name="colorSurface">@color/default_theme_dark_surface</item>
+		<item name="colorOnSurface">@color/default_theme_dark_onSurface</item>
+	</style>
 
-    <!-- Ocean Themes -->
-    <style name="AppThemeOceanLight" parent="AppThemeDefaultLight">
-        <item name="colorPrimary">#1E88E5</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#E3F2FD</item>
-        <item name="colorOnPrimaryContainer">#0D47A1</item>
-        <item name="colorSecondary">#1565C0</item>
-        <item name="android:colorBackground">#F4F9FC</item>
-        <item name="colorSurface">#F4F9FC</item>
-        <item name="colorSurfaceContainer">#EBF4F9</item>
-    </style>
-    <style name="AppThemeOceanDark" parent="AppThemeDefaultDark">
-        <item name="colorPrimary">#64B5F6</item>
-        <item name="colorOnPrimary">#0D47A1</item>
-        <item name="colorPrimaryContainer">#1565C0</item>
-        <item name="colorOnPrimaryContainer">#E3F2FD</item>
-        <item name="colorSecondary">#42A5F5</item>
-        <item name="android:colorBackground">#0C111A</item>
-        <item name="colorSurface">#0C111A</item>
-        <item name="colorSurfaceContainer">#151E2B</item>
-    </style>
-    <style name="AppThemeOceanDarkAmoled" parent="AppThemeOceanDark">
-        <item name="android:colorBackground">#000000</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceContainer">#0A0A0A</item>
-        <item name="colorSurfaceContainerLow">#050505</item>
-        <item name="colorSurfaceContainerHigh">#121212</item>
-    </style>
+	<!-- Amber Themes -->
+	<style name="AppThemeAmberLight"
+		parent="Theme.Material3.Light.NoActionBar">
+		<item name="colorPrimary">@color/amber_primary_light</item>
+		<item name="colorOnPrimary">@color/amber_onPrimary_light</item>
+		<item name="colorPrimaryContainer">@color/amber_primaryContainer_light</item>
+		<item name="colorOnPrimaryContainer">@color/amber_onPrimaryContainer_light</item>
+		<item name="android:colorBackground">@color/default_theme_background</item>
+		<item name="colorSurface">@color/default_theme_surface</item>
+		<item name="colorOnSurface">@color/default_theme_onSurface</item>
+	</style>
+	<style name="AppThemeAmberDark"
+		parent="Theme.Material3.Dark.NoActionBar">
+		<item name="colorPrimary">@color/amber_primary_dark</item>
+		<item name="colorOnPrimary">@color/amber_onPrimary_dark</item>
+		<item name="colorPrimaryContainer">@color/amber_primaryContainer_dark</item>
+		<item name="colorOnPrimaryContainer">@color/amber_onPrimaryContainer_dark</item>
+		<item name="android:colorBackground">@color/default_theme_dark_background</item>
+		<item name="colorSurface">@color/default_theme_dark_surface</item>
+		<item name="colorOnSurface">@color/default_theme_dark_onSurface</item>
+	</style>
 
-    <!-- Amber Themes -->
-    <style name="AppThemeAmberLight" parent="AppThemeDefaultLight">
-        <item name="colorPrimary">#FFB300</item>
-        <item name="colorOnPrimary">#2D1E00</item>
-        <item name="colorPrimaryContainer">#FFF8E1</item>
-        <item name="colorOnPrimaryContainer">#5E4F00</item>
-        <item name="colorSecondary">#FFA000</item>
-        <item name="android:colorBackground">#FFFDF9</item>
-        <item name="colorSurface">#FFFDF9</item>
-        <item name="colorSurfaceContainer">#FFFBF0</item>
-    </style>
-    <style name="AppThemeAmberDark" parent="AppThemeDefaultDark">
-        <item name="colorPrimary">#FFCA28</item>
-        <item name="colorOnPrimary">#3E2723</item>
-        <item name="colorPrimaryContainer">#5D4037</item>
-        <item name="colorOnPrimaryContainer">#FFE082</item>
-        <item name="colorSecondary">#FFB300</item>
-        <item name="android:colorBackground">#15110E</item>
-        <item name="colorSurface">#15110E</item>
-        <item name="colorSurfaceContainer">#1E1914</item>
-    </style>
-    <style name="AppThemeAmberDarkAmoled" parent="AppThemeAmberDark">
-        <item name="android:colorBackground">#000000</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceContainer">#0A0A0A</item>
-        <item name="colorSurfaceContainerLow">#050505</item>
-        <item name="colorSurfaceContainerHigh">#121212</item>
-    </style>
+	<!-- Coral Themes -->
+	<style name="AppThemeCoralLight"
+		parent="Theme.Material3.Light.NoActionBar">
+		<item name="colorPrimary">@color/coral_primary_light</item>
+		<item name="colorOnPrimary">@color/coral_onPrimary_light</item>
+		<item name="colorPrimaryContainer">@color/coral_primaryContainer_light</item>
+		<item name="colorOnPrimaryContainer">@color/coral_onPrimaryContainer_light</item>
+		<item name="android:colorBackground">@color/default_theme_background</item>
+		<item name="colorSurface">@color/default_theme_surface</item>
+		<item name="colorOnSurface">@color/default_theme_onSurface</item>
+	</style>
+	<style name="AppThemeCoralDark"
+		parent="Theme.Material3.Dark.NoActionBar">
+		<item name="colorPrimary">@color/coral_primary_dark</item>
+		<item name="colorOnPrimary">@color/coral_onPrimary_dark</item>
+		<item name="colorPrimaryContainer">@color/coral_primaryContainer_dark</item>
+		<item name="colorOnPrimaryContainer">@color/coral_onPrimaryContainer_dark</item>
+		<item name="android:colorBackground">@color/default_theme_dark_background</item>
+		<item name="colorSurface">@color/default_theme_dark_surface</item>
+		<item name="colorOnSurface">@color/default_theme_dark_onSurface</item>
+	</style>
 
-    <!-- Coral Themes -->
-    <style name="AppThemeCoralLight" parent="AppThemeDefaultLight">
-        <item name="colorPrimary">#E05345</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorPrimaryContainer">#FEECEB</item>
-        <item name="colorOnPrimaryContainer">#5F1911</item>
-        <item name="colorSecondary">#C0392B</item>
-        <item name="android:colorBackground">#FDF5F4</item>
-        <item name="colorSurface">#FDF5F4</item>
-        <item name="colorSurfaceContainer">#FAF0EE</item>
-    </style>
-    <style name="AppThemeCoralDark" parent="AppThemeDefaultDark">
-        <item name="colorPrimary">#FF8A80</item>
-        <item name="colorOnPrimary">#5F0E05</item>
-        <item name="colorPrimaryContainer">#921207</item>
-        <item name="colorOnPrimaryContainer">#FFEDEA</item>
-        <item name="colorSecondary">#FF5252</item>
-        <item name="android:colorBackground">#190F0E</item>
-        <item name="colorSurface">#190F0E</item>
-        <item name="colorSurfaceContainer">#251715</item>
-    </style>
-    <style name="AppThemeCoralDarkAmoled" parent="AppThemeCoralDark">
-        <item name="android:colorBackground">#000000</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceContainer">#0A0A0A</item>
-        <item name="colorSurfaceContainerLow">#050505</item>
-        <item name="colorSurfaceContainerHigh">#121212</item>
-    </style>
-
-    <!-- Additional Base Dark AMOLED reference -->
-    <style name="AppThemeDarkAmoled" parent="AppThemeDark">
-        <item name="android:colorBackground">#000000</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceContainer">#0A0A0A</item>
-        <item name="colorSurfaceContainerLow">#050505</item>
-        <item name="colorSurfaceContainerHigh">#121212</item>
-    </style>
-    <style name="AppThemeDefaultDarkAmoled" parent="AppThemeDefaultDark">
-        <item name="android:colorBackground">#000000</item>
-        <item name="colorSurface">#000000</item>
-        <item name="colorSurfaceContainer">#0A0A0A</item>
-        <item name="colorSurfaceContainerLow">#050505</item>
-        <item name="colorSurfaceContainerHigh">#121212</item>
-    </style>
+	<!-- AMOLED Pitch-Black Overlay -->
+	<style name="AmoledOverlay">
+		<item name="android:colorBackground">#000000</item>
+		<item name="android:windowBackground">#000000</item>
+		<item name="colorSurface">#000000</item>
+		<item name="colorSurfaceDim">#000000</item>
+		<item name="colorSurfaceContainer">#000000</item>
+		<item name="colorSurfaceContainerLow">#000000</item>
+		<item name="colorSurfaceContainerLowest">#000000</item>
+	</style>
 </resources>

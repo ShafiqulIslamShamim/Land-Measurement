@@ -1,70 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="?attr/colorSurface">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
-        app:elevation="0dp">
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/appBarLayout" android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="?attr/colorSurface" app:elevation="0dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/history_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorSurface"
-            app:title="@string/history_activity_title"
-            app:titleTextColor="?attr/colorOnSurface"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-            app:navigationIconTint="?attr/colorOnSurface" />
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/history_toolbar" android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:background="?attr/colorSurface"
+			app:title="@string/history_activity_title"
+			app:titleTextColor="?attr/colorOnSurface"
+			app:navigationIcon="?attr/homeAsUpIndicator"
+			app:navigationIconTint="?attr/colorOnSurface" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+	</com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/appBarLayout"
-        android:padding="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:visibility="gone" />
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/history_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/appBarLayout" android:padding="8dp"
+		android:clipToPadding="false" android:scrollbars="vertical"
+		android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/empty_state_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/appBarLayout"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="32dp"
-        android:visibility="visible">
+	<LinearLayout android:id="@+id/empty_state_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/appBarLayout" android:orientation="vertical"
+		android:gravity="center" android:padding="32dp"
+		android:visibility="visible">
 
-        <ImageView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/ic_history"
-            app:tint="?attr/colorPrimary"
-            android:alpha="0.4"
-            android:contentDescription="@string/history_empty" />
+		<ImageView android:layout_width="96dp"
+			android:layout_height="96dp" android:src="@drawable/ic_history"
+			app:tint="?attr/colorPrimary" android:alpha="0.4"
+			android:contentDescription="@string/history_empty" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
+		<Space android:layout_width="match_parent"
+			android:layout_height="16dp" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/history_empty"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textStyle="bold"
-            android:gravity="center" />
+		<com.google.android.material.textview.MaterialTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/history_empty"
+			android:textAppearance="?attr/textAppearanceBodyLarge"
+			android:textColor="?attr/colorOnSurfaceVariant"
+			android:textStyle="bold" android:gravity="center" />
 
-    </LinearLayout>
+	</LinearLayout>
 
 </RelativeLayout>

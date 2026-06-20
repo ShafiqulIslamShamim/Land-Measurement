@@ -11,7 +11,8 @@ import com.shamim.landmeasurement.util.SideCalculationManager;
 import com.shamim.landmeasurement.view.AreaInputCardView;
 import com.shamim.landmeasurement.view.LandSingleEditTextCardView;
 
-public class RectangleSideCalculatorActivity extends BaseActivity implements com.shamim.landmeasurement.history.HistoryItemSupport {
+public class RectangleSideCalculatorActivity extends BaseActivity
+    implements com.shamim.landmeasurement.history.HistoryItemSupport {
 
   private MaterialToolbar toolbar;
   private AreaInputCardView areaInputCard;
@@ -105,28 +106,54 @@ public class RectangleSideCalculatorActivity extends BaseActivity implements com
     if (getIntent().getBooleanExtra("skip_history_save", false)) {
       return;
     }
-    String shapeTitle = getString(R.string.header_side_calculation) + " (" + getString(R.string.item_quadrilateral) + " - " + getString(R.string.item_rectangular) + ")";
-    
-    String inputs = getString(R.string.amount_of_land_title) + ": " + areaInputCard.getAreaValueAsString() + "\n" +
-                   getString(R.string.first_arm_title) + ": " + widthInput.getValueAsString();
-                   
+    String shapeTitle =
+        getString(R.string.header_side_calculation)
+            + " ("
+            + getString(R.string.item_quadrilateral)
+            + " - "
+            + getString(R.string.item_rectangular)
+            + ")";
+
+    String inputs =
+        getString(R.string.amount_of_land_title)
+            + ": "
+            + areaInputCard.getAreaValueAsString()
+            + "\n"
+            + getString(R.string.first_arm_title)
+            + ": "
+            + widthInput.getValueAsString();
+
     String className = getClass().getName();
     String serialized = getSerializedInputs();
-    
-    new Thread(() -> {
-      try {
-        com.shamim.landmeasurement.history.HistoryEntry entry = 
-            new com.shamim.landmeasurement.history.HistoryEntry(shapeTitle, inputs, areaSqFt, System.currentTimeMillis(), className, serialized);
-        com.shamim.landmeasurement.history.HistoryDatabase.getDatabase(this).historyDao().insert(entry);
-      } catch (Exception e) {
-        android.util.Log.e("RectangleSideCalculator", "Error saving history", e);
-      }
-    }).start();
+
+    new Thread(
+            () -> {
+              try {
+                com.shamim.landmeasurement.history.HistoryEntry entry =
+                    new com.shamim.landmeasurement.history.HistoryEntry(
+                        shapeTitle,
+                        inputs,
+                        areaSqFt,
+                        System.currentTimeMillis(),
+                        className,
+                        serialized);
+                com.shamim.landmeasurement.history.HistoryDatabase.getDatabase(this)
+                    .historyDao()
+                    .insert(entry);
+              } catch (Exception e) {
+                android.util.Log.e("RectangleSideCalculator", "Error saving history", e);
+              }
+            })
+        .start();
   }
 
   @Override
   public String getSerializedInputs() {
-    return areaInputCard.getAreaValue() + ";" + areaInputCard.getSelectedUnitResId() + ";" + widthInput.getSerializedState();
+    return areaInputCard.getAreaValue()
+        + ";"
+        + areaInputCard.getSelectedUnitResId()
+        + ";"
+        + widthInput.getSerializedState();
   }
 
   @Override

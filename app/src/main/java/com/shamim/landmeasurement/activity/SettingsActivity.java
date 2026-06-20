@@ -216,14 +216,9 @@ public class SettingsActivity extends BaseActivity {
 
       if (key.equals("disable_seasonal_effect")) {
         restartAppDelayed(requireContext());
-
       }
-
       // শুধু theme_preference হলে
-      else if (key.equals("theme_preference")
-          || key.equals("app_theme_preference")
-          || key.equals("language_preference")) {
-
+      else if (key.equals("language_preference")) {
         requireActivity().recreate();
       }
     }
@@ -248,10 +243,6 @@ public class SettingsActivity extends BaseActivity {
       Context ctx = getContext();
 
       switch (key) {
-        case "pref_appearance_key":
-          ctx.startActivity(new Intent(ctx, StyleActivity.class));
-          return true;
-
         case KEY_DEVELOPER:
           // Developer Telegram
           openUrl(ctx, "https://t.me/md_shamim12");

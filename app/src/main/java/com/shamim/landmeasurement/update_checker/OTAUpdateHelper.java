@@ -1,78 +1,208 @@
 package com.shamim.landmeasurement.update_checker;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.content.ContextWrapper;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.os.Build;
 import android.widget.Toast;
-import com.google.android.play.core.appupdate.AppUpdateInfo;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.appupdate.AppUpdateOptions;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
-import com.google.android.gms.tasks.Task;
+import com.shamim.landmeasurement.*;
 
+@SuppressWarnings("deprecation")
 public class OTAUpdateHelper {
 
-  private static final int UPDATE_REQUEST_CODE = 9911;
+  private static final int RC_APP_UPDATE = 9001;
+
+  public static boolean isInternetAvailable(@NonNull Context context) {
+    ConnectivityManager cm =
+        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (cm == null) return false;
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+      Network network = cm.getActiveNetwork();
+      if (network == null) return false;
+      NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
+      return capabilities != null
+          && (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+              || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+              || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
+    } else {
+      return checkInternetConnectionLegacy(cm);
+    }
+  }
+
+  @SuppressWarnings("deprecation")
+  private static boolean checkInternetConnectionLegacy(ConnectivityManager cm) {
+    android.net.NetworkInfo activeNetwork = cm.getNetworkInfo(cm.getActiveNetwork());
+    if (activeNetwork == null) {
+      activeNetwork = cm.getActiveNetworkInfo();
+    }
+    return activeNetwork != null && activeNetwork.isConnected();
+  }
+
+  private static Activity getActivity(Context context) {
+    if (context instanceof Activity) {
+      return (Activity) context;
+    } else if (context instanceof ContextWrapper) {
+      return getActivity(((ContextWrapper) context).getBaseContext());
+    }
+    return null;
+  }
 
   public static void hookPreference(Context context) {
-    checkForUpdatesFromPlayStoreCore(context);
+    Activity activity = getActivity(context);
+    if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+      Toast.makeText(context, R.string.update_no_activity, Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+    if (!isInternetAvailable(activity)) {
+      Toast.makeText(activity, R.string.update_no_internet, Toast.LENGTH_LONG).show();
+      return;
+    }
+
+    AlertDialog progressDialog =
+        new MaterialAlertDialogBuilder(activity)
+            .setTitle(R.string.update_checking_title)
+            .setMessage(R.string.update_checking_message)
+            .setCancelable(false)
+            .show();
+
+    AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(activity);
+    appUpdateManager
+        .getAppUpdateInfo()
+        .addOnSuccessListener(
+            appUpdateInfo -> {
+              if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+              }
+
+              if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                  && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                try {
+                  appUpdateManager.startUpdateFlowForResult(
+                      appUpdateInfo,
+                      activity,
+                      AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE),
+                      RC_APP_UPDATE);
+                } catch (Exception e) {
+                  e.printStackTrace();
+                  Toast.makeText(
+                          activity,
+                          getString(activity, R.string.update_failed_launch)
+                              + ": "
+                              + e.getMessage(),
+                          Toast.LENGTH_SHORT)
+                      .show();
+                }
+              } else {
+                new MaterialAlertDialogBuilder(activity)
+                    .setTitle(R.string.update_up_to_date_title)
+                    .setMessage(R.string.update_up_to_date_message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
+              }
+            })
+        .addOnFailureListener(
+            e -> {
+              if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+              }
+
+              try {
+                String packageName = activity.getPackageName();
+                android.content.Intent intent =
+                    new android.content.Intent(
+                        android.content.Intent.ACTION_VIEW,
+                        android.net.Uri.parse(
+                            "https://play.google.com/store/apps/details?id=" + packageName));
+                activity.startActivity(intent);
+              } catch (Exception ex) {
+                Toast.makeText(activity, R.string.update_failed_play_store, Toast.LENGTH_SHORT)
+                    .show();
+              }
+            });
   }
 
   public static void checkForUpdatesIfDue(Context context) {
-    // Left as a non-intrusive no-op to support existing callers in MainActivity without breaking the contract
+    Activity activity = getActivity(context);
+    if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
+
+    if (!isInternetAvailable(activity)) return;
+
+    AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(activity);
+
+    appUpdateManager
+        .getAppUpdateInfo()
+        .addOnSuccessListener(
+            appUpdateInfo -> {
+              if (appUpdateInfo.updateAvailability()
+                  == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                try {
+                  appUpdateManager.startUpdateFlowForResult(
+                      appUpdateInfo,
+                      activity,
+                      AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE),
+                      RC_APP_UPDATE);
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+                return;
+              }
+
+              // Throttle auto-checking...
+              final String PREF_NAME = "update_pref";
+              final String KEY_LAST_CHECK = "last_check_time";
+              final long CHECK_INTERVAL = 24L * 60 * 60 * 1000;
+
+              SharedPreferences prefs =
+                  activity.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+              long lastCheck = prefs.getLong(KEY_LAST_CHECK, 0);
+              long currentTime = System.currentTimeMillis();
+
+              if (currentTime - lastCheck >= CHECK_INTERVAL) {
+                prefs.edit().putLong(KEY_LAST_CHECK, currentTime).apply();
+
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+
+                  new MaterialAlertDialogBuilder(activity)
+                      .setTitle(R.string.update_available_title)
+                      .setMessage(R.string.update_available_message)
+                      .setPositiveButton(
+                          R.string.update_now,
+                          (dialog, which) -> {
+                            try {
+                              appUpdateManager.startUpdateFlowForResult(
+                                  appUpdateInfo,
+                                  activity,
+                                  AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE),
+                                  RC_APP_UPDATE);
+                            } catch (Exception e) {
+                              e.printStackTrace();
+                            }
+                          })
+                      .setNegativeButton(R.string.update_later, null)
+                      .setCancelable(true)
+                      .show();
+                }
+              }
+            });
   }
 
-  public static void checkForUpdatesFromPlayStoreCore(Context context) {
-    Toast.makeText(context, "Checking for updates...", Toast.LENGTH_SHORT).show();
-    
-    AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(context);
-    Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
-
-    appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-      if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-        if (context instanceof Activity && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-          try {
-            appUpdateManager.startUpdateFlowForResult(
-                appUpdateInfo,
-                (Activity) context,
-                AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build(),
-                UPDATE_REQUEST_CODE);
-          } catch (Exception e) {
-            // Fallback to standard Play Store intent
-            launchPlayStoreIntent(context);
-          }
-        } else {
-          launchPlayStoreIntent(context);
-        }
-      } else {
-        Toast.makeText(context, "App is up to date!", Toast.LENGTH_SHORT).show();
-      }
-    });
-
-    appUpdateInfoTask.addOnFailureListener(e -> {
-      // Sideloaded build, emulator, or no Play store - open play store page directly as fallback
-      launchPlayStoreIntent(context);
-    });
-  }
-
-  public static void launchPlayStoreIntent(Context context) {
-    String packageName = context.getPackageName();
-    Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName));
-    playStoreIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-    try {
-      context.startActivity(playStoreIntent);
-    } catch (ActivityNotFoundException e) {
-      Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
-      webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      try {
-        context.startActivity(webIntent);
-      } catch (Exception ex) {
-        Toast.makeText(context, "Play Store is not available.", Toast.LENGTH_SHORT).show();
-      }
-    }
+  // Helper method to safely get string from context
+  private static String getString(Context context, int resId) {
+    return context.getString(resId);
   }
 }

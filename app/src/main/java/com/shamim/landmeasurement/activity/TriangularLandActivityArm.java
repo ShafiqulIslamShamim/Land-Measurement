@@ -10,7 +10,8 @@ import com.shamim.landmeasurement.util.*;
 import com.shamim.landmeasurement.view.*;
 import java.util.*;
 
-public class TriangularLandActivityArm extends BaseActivity implements com.shamim.landmeasurement.history.HistoryItemSupport {
+public class TriangularLandActivityArm extends BaseActivity
+    implements com.shamim.landmeasurement.history.HistoryItemSupport {
 
   private LandResultManager resultManager;
   private LandSingleEditTextCardView FirstArmInput;
@@ -51,7 +52,11 @@ public class TriangularLandActivityArm extends BaseActivity implements com.shami
 
   @Override
   public String getSerializedInputs() {
-    return FirstArmInput.getSerializedState() + ";" + SecondArmInput.getSerializedState() + ";" + ThirdArmInput.getSerializedState();
+    return FirstArmInput.getSerializedState()
+        + ";"
+        + SecondArmInput.getSerializedState()
+        + ";"
+        + ThirdArmInput.getSerializedState();
   }
 
   @Override

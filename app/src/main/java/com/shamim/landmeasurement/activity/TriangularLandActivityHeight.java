@@ -10,7 +10,8 @@ import com.shamim.landmeasurement.util.*;
 import com.shamim.landmeasurement.view.*;
 import java.util.*;
 
-public class TriangularLandActivityHeight extends BaseActivity implements com.shamim.landmeasurement.history.HistoryItemSupport {
+public class TriangularLandActivityHeight extends BaseActivity
+    implements com.shamim.landmeasurement.history.HistoryItemSupport {
 
   private LandResultManager resultManager;
   private LandSingleEditTextCardView baseInput;

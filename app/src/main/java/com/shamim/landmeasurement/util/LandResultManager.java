@@ -12,15 +12,15 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.shamim.landmeasurement.R;
-import com.shamim.landmeasurement.history.HistoryDatabase;
-import com.shamim.landmeasurement.history.HistoryEntry;
-import com.shamim.landmeasurement.activity.RectangularLandActivity;
-import com.shamim.landmeasurement.activity.SquareLandActivity;
+import com.shamim.landmeasurement.activity.AreaUnitsConversionActivity;
 import com.shamim.landmeasurement.activity.CircularLandActivity;
+import com.shamim.landmeasurement.activity.RectangularLandActivity;
+import com.shamim.landmeasurement.activity.ScaleneLandActivity;
+import com.shamim.landmeasurement.activity.SquareLandActivity;
 import com.shamim.landmeasurement.activity.TriangularLandActivityArm;
 import com.shamim.landmeasurement.activity.TriangularLandActivityHeight;
-import com.shamim.landmeasurement.activity.ScaleneLandActivity;
-import com.shamim.landmeasurement.activity.AreaUnitsConversionActivity;
+import com.shamim.landmeasurement.history.HistoryDatabase;
+import com.shamim.landmeasurement.history.HistoryEntry;
 
 public class LandResultManager {
 
@@ -186,54 +186,87 @@ public class LandResultManager {
 
   private void saveToHistory(double areaSqFt, String inputs) {
     if (context instanceof com.shamim.landmeasurement.history.HistoryItemSupport) {
-        if (context instanceof android.app.Activity) {
-            if (((android.app.Activity) context).getIntent().getBooleanExtra("skip_history_save", false)) {
-                return;
-            }
+      if (context instanceof android.app.Activity) {
+        if (((android.app.Activity) context)
+            .getIntent()
+            .getBooleanExtra("skip_history_save", false)) {
+          return;
         }
-        String tempTitle = null;
-        if (context instanceof TriangularLandActivityHeight) {
-            tempTitle = context.getString(R.string.item_triangular) + " (" + context.getString(R.string.item_rectangular_height_based) + ")";
-        } else if (context instanceof TriangularLandActivityArm) {
-            tempTitle = context.getString(R.string.item_triangular) + " (" + context.getString(R.string.item_rectangular_arm_based) + ")";
-        } else if (context instanceof RectangularLandActivity) {
-            tempTitle = context.getString(R.string.item_quadrilateral) + " (" + context.getString(R.string.item_rectangular) + ")";
-        } else if (context instanceof SquareLandActivity) {
-            tempTitle = context.getString(R.string.item_quadrilateral) + " (" + context.getString(R.string.item_square) + ")";
-        } else if (context instanceof ScaleneLandActivity) {
-            tempTitle = context.getString(R.string.item_quadrilateral) + " (" + context.getString(R.string.item_scalene) + ")";
-        } else if (context instanceof CircularLandActivity) {
-            tempTitle = context.getString(R.string.item_circular);
-        } else if (context instanceof AreaUnitsConversionActivity) {
-            tempTitle = context.getString(R.string.history_title_area_conversion);
-        } else if (context instanceof androidx.appcompat.app.AppCompatActivity) {
-            androidx.appcompat.app.ActionBar actionBar = ((androidx.appcompat.app.AppCompatActivity) context).getSupportActionBar();
-            if (actionBar != null && actionBar.getTitle() != null) {
-                tempTitle = actionBar.getTitle().toString();
-            }
+      }
+      String tempTitle = null;
+      if (context instanceof TriangularLandActivityHeight) {
+        tempTitle =
+            context.getString(R.string.item_triangular)
+                + " ("
+                + context.getString(R.string.item_rectangular_height_based)
+                + ")";
+      } else if (context instanceof TriangularLandActivityArm) {
+        tempTitle =
+            context.getString(R.string.item_triangular)
+                + " ("
+                + context.getString(R.string.item_rectangular_arm_based)
+                + ")";
+      } else if (context instanceof RectangularLandActivity) {
+        tempTitle =
+            context.getString(R.string.item_quadrilateral)
+                + " ("
+                + context.getString(R.string.item_rectangular)
+                + ")";
+      } else if (context instanceof SquareLandActivity) {
+        tempTitle =
+            context.getString(R.string.item_quadrilateral)
+                + " ("
+                + context.getString(R.string.item_square)
+                + ")";
+      } else if (context instanceof ScaleneLandActivity) {
+        tempTitle =
+            context.getString(R.string.item_quadrilateral)
+                + " ("
+                + context.getString(R.string.item_scalene)
+                + ")";
+      } else if (context instanceof CircularLandActivity) {
+        tempTitle = context.getString(R.string.item_circular);
+      } else if (context instanceof AreaUnitsConversionActivity) {
+        tempTitle = context.getString(R.string.history_title_area_conversion);
+      } else if (context instanceof androidx.appcompat.app.AppCompatActivity) {
+        androidx.appcompat.app.ActionBar actionBar =
+            ((androidx.appcompat.app.AppCompatActivity) context).getSupportActionBar();
+        if (actionBar != null && actionBar.getTitle() != null) {
+          tempTitle = actionBar.getTitle().toString();
         }
-        if (tempTitle == null && context instanceof android.app.Activity) {
-            CharSequence title = ((android.app.Activity) context).getTitle();
-            if (title != null) {
-                tempTitle = title.toString();
-            }
+      }
+      if (tempTitle == null && context instanceof android.app.Activity) {
+        CharSequence title = ((android.app.Activity) context).getTitle();
+        if (title != null) {
+          tempTitle = title.toString();
         }
-        if (tempTitle == null || tempTitle.isEmpty()) {
-            tempTitle = "Land Measurement";
-        }
-        final String shapeTitle = tempTitle;
+      }
+      if (tempTitle == null || tempTitle.isEmpty()) {
+        tempTitle = "Land Measurement";
+      }
+      final String shapeTitle = tempTitle;
 
-        final String className = context.getClass().getName();
-        final String serialized = ((com.shamim.landmeasurement.history.HistoryItemSupport) context).getSerializedInputs();
+      final String className = context.getClass().getName();
+      final String serialized =
+          ((com.shamim.landmeasurement.history.HistoryItemSupport) context).getSerializedInputs();
 
-        new Thread(() -> {
-            try {
-                HistoryEntry entry = new HistoryEntry(shapeTitle, inputs, areaSqFt, System.currentTimeMillis(), className, serialized);
-                HistoryDatabase.getDatabase(context).historyDao().insert(entry);
-            } catch (Exception e) {
-                android.util.Log.e("LandResultManager", "Error saving history", e);
-            }
-        }).start();
+      new Thread(
+              () -> {
+                try {
+                  HistoryEntry entry =
+                      new HistoryEntry(
+                          shapeTitle,
+                          inputs,
+                          areaSqFt,
+                          System.currentTimeMillis(),
+                          className,
+                          serialized);
+                  HistoryDatabase.getDatabase(context).historyDao().insert(entry);
+                } catch (Exception e) {
+                  android.util.Log.e("LandResultManager", "Error saving history", e);
+                }
+              })
+          .start();
     }
   }
 

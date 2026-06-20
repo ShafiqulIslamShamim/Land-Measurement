@@ -1,302 +1,337 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-    <string name="app_name">Land Measurement</string>
-    
-    <string name="settings">Settings</string>
-    <string name="shortcut_main_short">Home</string>
-    <string name="shortcut_main_long">Open Main Screen</string>
-    <string name="shortcut_settings_short">Settings</string>
-    <string name="shortcut_settings_long">Open Settings</string>
+	<string name="app_name">Land Measurement</string>
 
-    <!-- Tab Texts -->
-    <string name="tab_land_calculation">Calculation</string>
-    <string name="tab_land_conversion">Conversion</string>
+	<string name="settings">Settings</string>
+	<string name="shortcut_main_short">Home</string>
+	<string name="shortcut_main_long">Open Main Screen</string>
+	<string name="shortcut_settings_short">Settings</string>
+	<string name="shortcut_settings_long">Open Settings</string>
 
-    <!-- Toolbar / Menu related -->
-    <string name="menu_reset">Reset</string>
-    <string name="menu_settings">Settings</string>
-    <string name="menu_history">History</string>
+	<!-- Tab Texts -->
+	<string name="tab_land_calculation">Calculation</string>
+	<string name="tab_land_conversion">Conversion</string>
 
-    <!-- History Screen Strings -->
-    <string name="history_activity_title">Calculation History</string>
-    <string name="history_empty">No measurement history yet.</string>
-    <string name="delete_all_history">Clear All History</string>
-    <string name="delete_all_confirmation_title">Clear All</string>
-    <string name="delete_all_confirmation_msg">Are you sure you want to delete all calculation history?</string>
-    <string name="delete_entry_confirmation_title">Delete Entry?</string>
-    <string name="delete_entry_confirmation_msg">Are you sure you want to delete this calculation record?</string>
-    <string name="history_deleted_toast">History record deleted</string>
-    <string name="history_cleared_toast">All history cleared</string>
-    <string name="dialog_confirm">Delete</string>
-    <string name="dialog_cancel">Cancel</string>
+	<!-- Toolbar / Menu related -->
+	<string name="menu_reset">Reset</string>
+	<string name="menu_settings">Settings</string>
+	<string name="menu_history">History</string>
 
-    <!-- Share chooser title -->
-    <string name="share_chooser_title">Share via</string>
-    <string name="open_with_chooser_title">Open with</string>
-    
-    <!-- Settings Titles -->
-    <string name="settings_title">Settings</string>
-    <string name="news_updates_title">News &amp; Updates</string>
-    <string name="close">Close</string>
-    
-    <!-- News Dialog Items -->
-    <string name="news_facebook">Facebook Page</string>
-    <string name="news_github">GitHub Repository</string>
+	<!-- History Screen Strings -->
+	<string name="history_activity_title">Calculation History</string>
+	<string name="history_empty">No measurement history yet.</string>
+	<string name="delete_all_history">Clear All History</string>
+	<string name="delete_all_confirmation_title">Clear All</string>
+	<string name="delete_all_confirmation_msg">Are you sure you want to delete all calculation
+		history?</string>
+	<string name="delete_entry_confirmation_title">Delete Entry?</string>
+	<string name="delete_entry_confirmation_msg">Are you sure you want to delete this calculation
+		record?</string>
+	<string name="history_deleted_toast">History record deleted</string>
+	<string name="history_cleared_toast">All history cleared</string>
+	<string name="dialog_confirm">Delete</string>
+	<string name="dialog_cancel">Cancel</string>
 
-    <!-- Email Feedback -->
-    <string name="feedback_subject">Feedback - %1$s v%2$s (Code %3$d)</string>
-    <string name="send_feedback_chooser">Send Feedback</string>
-    
-    <string name="welcome">Welcome to Land Measurement</string>
-    <string
-    name="summary"
-  >Accurate &amp; Reliable Modern Land Measurement Solution</string>
+	<!-- Share chooser title -->
+	<string name="share_chooser_title">Share via</string>
+	<string name="open_with_chooser_title">Open with</string>
 
-    <string name="select_language">Select Language</string>
-    <string name="lang_default">Default</string>
-    <string name="bangla">Bangla</string>
+	<!-- Settings Titles -->
+	<string name="settings_title">Settings</string>
+	<string name="news_updates_title">News &amp; Updates</string>
+	<string name="close">Close</string>
 
-    <string name="get_started">Get Started</string>
+	<!-- News Dialog Items -->
+	<string name="news_facebook">Facebook Page</string>
+	<string name="news_github">GitHub Repository</string>
 
-    <!-- Network / Internet -->
-    <string name="internet_not_available">Internet is not available!</string>
-    <string
-    name="internet_available_auto_reload"
-  >Internet available! Auto-reloading...</string>
-    
-    <!-- Theme options -->
-    <string name="theme_follow_system">Follow System</string>
-    <string name="theme_dark_mode">Dark Mode</string>
-    <string name="theme_light_mode">Light Mode</string>
-    
-    <string name="language_default">Default</string>
-    <string name="language_ban">Bangla</string>
-    
-    <string name="app_theme_dynamic">Dynamic theme</string>
-    <string name="app_theme_default">Default theme</string>
-    
-    <!-- Settings Preference -->
-    <string name="pref_settings">Settings</string>
+	<!-- Email Feedback -->
+	<string name="feedback_subject">Feedback - %1$s v%2$s (Code %3$d)</string>
+	<string name="send_feedback_chooser">Send Feedback</string>
 
-    <!-- Categories -->
-    <string name="pref_category_system">System</string>
-    <string name="pref_category_about">About</string>
-    <string name="pref_category_support">Support</string>
+	<string name="welcome">Welcome to Land Measurement</string>
+	<string name="summary">Accurate &amp; Reliable Modern Land
+		Measurement
+		Solution</string>
 
-    <!-- System -->
-    <string name="pref_app_theme_title">App theme</string>
-    <string name="pref_select_mode_title">Select mode</string>
-    <string name="pref_select_language_title">Select language</string>
-    <string name="pref_enable_logcat_title">Enable logcat</string>
-    <string
-    name="pref_enable_logcat_summary"
-  >Turn on to enable logcat logging</string>
-  
-    <string name="pref_disable_seasonal_effect_title">Seasonal effect</string>
-    <string
-    name="pref_disable_seasonal_effect_summary"
-  >Turn on to disable seasonal effect</string>
+	<string name="select_language">Select Language</string>
+	<string name="lang_default">Default</string>
+	<string name="bangla">Bangla</string>
 
-    <!-- About -->
-    <string name="pref_developed_by_title">Developed by</string>
-    <string name="pref_developed_by_summary">Shafiqul Islam Shamim</string>
+	<string name="get_started">Get Started</string>
 
-    <string name="pref_news_title">News</string>
-    <string
-    name="pref_news_summary"
-  >Stay informed about updates and other news.</string>
+	<!-- Network / Internet -->
+	<string name="internet_not_available">Internet is not available!</string>
+	<string name="internet_available_auto_reload">Internet
+		available! Auto-reloading...</string>
 
-    <string name="pref_check_updates_title">Check for updates</string>
-    <string
-    name="pref_check_updates_summary"
-  >Check for the latest version on the Google Play Store.</string>
+	<!-- Theme options -->
+	<string name="theme_follow_system">Follow System</string>
+	<string name="theme_dark_mode">Dark Mode</string>
+	<string name="theme_light_mode">Light Mode</string>
 
-    <string name="pref_privacy_policy_title">Privacy policy</string>
-    <string
-    name="pref_privacy_policy_summary"
-  >Privacy policy • Terms &amp; conditions.</string>
+	<string name="language_default">Default</string>
+	<string name="language_ban">Bangla</string>
 
-    <!-- Support -->
-    <string name="pref_rate_it_title">Rate it</string>
-    <string
-    name="pref_rate_it_summary"
-  >Every rating helps to make the app even better.</string>
+	<string name="app_theme_dynamic">Dynamic theme</string>
+	<string name="app_theme_default">Default theme</string>
 
-    <string name="pref_try_more_apps_title">Try more apps</string>
-    <string
-    name="pref_try_more_apps_summary"
-  >All my apps are available through this link.</string>
+	<!-- Settings Preference -->
+	<string name="pref_settings">Settings</string>
 
-    <string name="pref_feedback_title">Feedback</string>
-    <string
-    name="pref_feedback_summary"
-  >Tell us how this app can be improved or report any issues.</string>
+	<!-- Categories -->
+	<string name="pref_category_system">System</string>
+	<string name="pref_category_about">About</string>
+	<string name="pref_category_support">Support</string>
 
-    <string name="et_inch_hind">Inch(if any) (0-11)</string>
-    <string name="btn_feet">Feet</string>    
-    <string name="btn_inch">Inch</string>
-    <string name="btn_hat">Cubit</string>
-    <string name="btn_meter">Meter</string>
+	<!-- System -->
+	<string name="pref_app_theme_title">App theme</string>
+	<string name="pref_select_mode_title">Select mode</string>
+	<string name="pref_select_language_title">Select language</string>
+	<string name="pref_enable_logcat_title">Enable logcat</string>
+	<string name="pref_enable_logcat_summary">Turn on to enable
+		logcat logging</string>
 
-    <string name="et_single_feet_hind">Feet</string>
-    <string name="et_single_inch_hind">Inch</string>
-    <string name="et_single_hat_hind">Cubit</string>    
-    <string name="et_single_meter_hind">Meter</string>
-    <string name="et_single_default_hind">Enter value</string>
+	<string name="pref_disable_seasonal_effect_title">Seasonal effect</string>
+	<string name="pref_disable_seasonal_effect_summary">Turn on to
+		disable seasonal effect</string>
 
-    <string name="et_double_feet_hind">Feet</string>
-    <string name="et_double_inch_hind">Inch</string>
-    <string name="et_double_hat_hind">Cubit</string>    
-    <string name="et_double_meter_hind">Meter</string>
-    <string name="et_double_default_hind">Meter</string>
+	<!-- About -->
+	<string name="pref_developed_by_title">Developed by</string>
+	<string name="pref_developed_by_summary">Shafiqul Islam Shamim</string>
 
-    <string name="et_double_first_hind">First %1$s (%2$s)</string>
-    <string name="et_double_second_hind">Second %1$s (%2$s)</string>
+	<string name="pref_news_title">News</string>
+	<string name="pref_news_summary">Stay informed about updates and
+		other news.</string>
 
-    <string name="header_land_shape">Land shape</string>
-    <string name="header_conversion">Conversion</string>
+	<string name="pref_check_updates_title">Check for updates</string>
+	<string name="pref_check_updates_summary">Check for the latest
+		version on the Google Play
+		Store.</string>
 
-    <string name="item_quadrilateral">Quadrilateral</string>
-    <string name="item_circular">Circular</string>
-    <string name="item_triangular">Triangular</string>
-    <string name="item_cov_area_units">Land area</string>
-    <string name="item_cov_linear_units">Linear units</string>
-    <string name="item_rectangular">Rectangular</string>
-    <string name="item_square">Square</string>
-    <string name="item_scalene">Scalene</string>
+	<string name="pref_privacy_policy_title">Privacy policy</string>
+	<string name="pref_privacy_policy_summary">Privacy policy •
+		Terms &amp; conditions.</string>
 
-    <string name="card_length_title">Length</string>    
-    <string name="card_width_title">Width</string>
-    <string name="card_radius_title">Radius</string>
+	<!-- Support -->
+	<string name="pref_rate_it_title">Rate it</string>
+	<string name="pref_rate_it_summary">Every rating helps to make
+		the app even better.</string>
 
-    <string name="first_arm_title">First side</string>    
-    <string name="second_arm_title">Second side</string>
-    <string name="third_arm_title">Third side</string>    
-    <string
-    name="item_triangular_arm_input_error"
-  >You must fill at least three side fields!</string>
-    <string
-    name="item_scalene_input_error"
-  >You must fill at least two length and two width field!</string>
-    <string
-    name="item_circular_input_error"
-  >You must fill the radius field!</string>
-    <string
-    name="item_rectangular_input_error"
-  >You must fill both length and width fields!</string>
-    <string
-    name="item_square_input_error"
-  >You must fill the length field!</string>
+	<string name="pref_try_more_apps_title">Try more apps</string>
+	<string name="pref_try_more_apps_summary">All my apps are
+		available through this link.</string>
 
-    <string
-    name="error_invalid_conversion_land_amount"
-  >Area must be valid and greater than zero!</string>
+	<string name="pref_feedback_title">Feedback</string>
+	<string name="pref_feedback_summary">Tell us how this app can be
+		improved or report any
+		issues.</string>
 
-    <!-- Units -->
-    <string name="unit_sqft">Square Feet</string>
-    <string name="unit_sqm">Square Meter</string>
-    <string name="unit_shotok">Shotok</string>
-    <string name="unit_katha">Katha</string>
-    <string name="unit_bigha">Bigha</string>
-    <string name="unit_acre">Acre</string>
-    <string name="unit_hectare">Hectare</string>
-    <string name="unit_kora">Kora</string>
-    <string name="unit_joistho">Joistho</string>
-    <string name="unit_kani">Kani</string>
-    
-    <string name="card_conversion_hind">Measurement Results</string>
-    <string name="et_conversion_hind">Amount</string>
-    
-    <string name="result_section_btn">Calculate</string>
-    <string
-    name="error_invalid_conversion_land_unit"
-  >Invalid unit selected</string>
-<string name="result_item_international">International Units</string>
-<string name="result_item_regional_standard">Regional (Standard) Units</string>
-<string
-    name="result_item_regional_localized"
-  >Regional (Localized) Units</string>
+	<string name="et_inch_hind">Inch(if any) (0-11)</string>
+	<string name="btn_feet">Feet</string>
+	<string name="btn_inch">Inch</string>
+	<string name="btn_hat">Cubit</string>
+	<string name="btn_meter">Meter</string>
 
-    <string name="title_length_conversion">Length Conversion</string>
+	<string name="et_single_feet_hind">Feet</string>
+	<string name="et_single_inch_hind">Inch</string>
+	<string name="et_single_hat_hind">Cubit</string>
+	<string name="et_single_meter_hind">Meter</string>
+	<string name="et_single_default_hind">Enter value</string>
 
-    <string name="label_convert_length">Length</string>
-    <string name="hint_enter_value">Enter value (length)</string>
-    <string name="btn_convert">Convert</string>
-    <string name="label_converted_values">Linear units</string>
+	<string name="et_double_feet_hind">Feet</string>
+	<string name="et_double_inch_hind">Inch</string>
+	<string name="et_double_hat_hind">Cubit</string>
+	<string name="et_double_meter_hind">Meter</string>
+	<string name="et_double_default_hind">Meter</string>
 
-    <string name="unit_inch">Inch</string>
-    <string name="unit_foot">Foot</string>
-    <string name="unit_yard">Yard</string>
-    <string name="unit_hath">Cubit</string> <string
-    name="unit_meter"
-  >Meter</string>
-    <string name="unit_centimeter">Centimeter</string>
-    <string name="unit_millimeter">Millimeter</string>
+	<string name="et_double_first_hind">First %1$s (%2$s)</string>
+	<string name="et_double_second_hind">Second %1$s (%2$s)</string>
 
-    <string
-    name="conversation_length_error_invalid_value"
-  >Please enter a valid value</string>
-    <string
-    name="conversation_length_error_unit_not_found"
-  >Unit not found</string>
-    
-      <string name="item_rectangular_arm_based">Side-based</string>
-  <string name="item_rectangular_height_based">Height-based</string>
-  <string name="card_base_title">Base</string>
-  <string name="card_height_title">Height</string>
-  <string
-    name="item_triangular_height_input_error"
-  >You must fill in at least the base and height fields!</string>
-  
-   <string name="dialog_folder_permission_title">Folder Access Needed</string>
-    <string
-    name="dialog_folder_permission_message"
-  >This app needs permission to save log files. Please select a folder.</string>
-    <string name="dialog_folder_permission_positive">Select Folder</string>
-    <string name="dialog_folder_permission_negative">Cancel</string>
-    
-    <string name="share_result">Share Result</string>
-<string name="share_as_text">As Text</string>
-<string name="share_as_file">As File (.txt)</string>
-<string name="share_title">Share Land Measurement</string>
-<string name="share_choose_option">Share as...</string>
+	<string name="header_land_shape">Land shape</string>
+	<string name="header_conversion">Conversion</string>
+
+	<string name="item_quadrilateral">Quadrilateral</string>
+	<string name="item_circular">Circular</string>
+	<string name="item_triangular">Triangular</string>
+	<string name="item_cov_area_units">Land area</string>
+	<string name="item_cov_linear_units">Linear units</string>
+	<string name="item_rectangular">Rectangular</string>
+	<string name="item_square">Square</string>
+	<string name="item_scalene">Scalene</string>
+
+	<string name="card_length_title">Length</string>
+	<string name="card_width_title">Width</string>
+	<string name="card_radius_title">Radius</string>
+
+	<string name="first_arm_title">First side</string>
+	<string name="second_arm_title">Second side</string>
+	<string name="third_arm_title">Third side</string>
+	<string name="item_triangular_arm_input_error">You must fill at
+		least three side fields!</string>
+	<string name="item_scalene_input_error">You must fill at least
+		two length and two width
+		field!</string>
+	<string name="item_circular_input_error">You must fill the
+		radius field!</string>
+	<string name="item_rectangular_input_error">You must fill both
+		length and width fields!</string>
+	<string name="item_square_input_error">You must fill the length
+		field!</string>
+
+	<string name="error_invalid_conversion_land_amount">Area must be
+		valid and greater than zero!</string>
+
+	<!-- Units -->
+	<string name="unit_sqft">Square Feet</string>
+	<string name="unit_sqm">Square Meter</string>
+	<string name="unit_shotok">Shotok</string>
+	<string name="unit_katha">Katha</string>
+	<string name="unit_bigha">Bigha</string>
+	<string name="unit_acre">Acre</string>
+	<string name="unit_hectare">Hectare</string>
+	<string name="unit_kora">Kora</string>
+	<string name="unit_joistho">Joistho</string>
+	<string name="unit_kani">Kani</string>
+
+	<string name="card_conversion_hind">Measurement Results</string>
+	<string name="et_conversion_hind">Amount</string>
+
+	<string name="result_section_btn">Calculate</string>
+	<string name="error_invalid_conversion_land_unit">Invalid unit
+		selected</string>
+	<string name="result_item_international">International Units</string>
+	<string name="result_item_regional_standard">Regional (Standard) Units</string>
+	<string name="result_item_regional_localized">Regional
+		(Localized) Units</string>
+
+	<string name="title_length_conversion">Length Conversion</string>
+
+	<string name="label_convert_length">Length</string>
+	<string name="hint_enter_value">Enter value (length)</string>
+	<string name="btn_convert">Convert</string>
+	<string name="label_converted_values">Linear units</string>
+
+	<string name="unit_inch">Inch</string>
+	<string name="unit_foot">Foot</string>
+	<string name="unit_yard">Yard</string>
+	<string name="unit_hath">Cubit</string>
+	<string name="unit_meter">Meter</string>
+	<string name="unit_centimeter">Centimeter</string>
+	<string name="unit_millimeter">Millimeter</string>
+
+	<string name="conversation_length_error_invalid_value">Please
+		enter a valid value</string>
+	<string name="conversation_length_error_unit_not_found">Unit not
+		found</string>
+
+	<string name="item_rectangular_arm_based">Side-based</string>
+	<string name="item_rectangular_height_based">Height-based</string>
+	<string name="card_base_title">Base</string>
+	<string name="card_height_title">Height</string>
+	<string name="item_triangular_height_input_error">You must fill
+		in at least the base and height
+		fields!</string>
+
+	<string name="dialog_folder_permission_title">Folder Access Needed</string>
+	<string name="dialog_folder_permission_message">This app needs
+		permission to save log files. Please
+		select a folder.</string>
+	<string name="dialog_folder_permission_positive">Select Folder</string>
+	<string name="dialog_folder_permission_negative">Cancel</string>
+
+	<string name="share_result">Share Result</string>
+	<string name="share_as_text">As Text</string>
+	<string name="share_as_file">As File (.txt)</string>
+	<string name="share_title">Share Land Measurement</string>
+	<string name="share_choose_option">Share as...</string>
 
 
-<!-- Share section -->
-<string name="share_area_label">"Area : "</string>
-<string name="share_selected_unit">Selected unit: </string>
-<string name="share_footer">Shared from Land Measurement App</string>
-<string name="share_lengths_label">Lengths: </string>
-<string name="share_widths_label">Widths: </string>
+	<!-- Share section -->
+	<string name="share_area_label">"Area : "</string>
+	<string name="share_selected_unit">Selected unit: </string>
+	<string name="share_footer">Shared from Land Measurement App</string>
+	<string name="share_lengths_label">Lengths: </string>
+	<string name="share_widths_label">Widths: </string>
 
-<!-- Errors -->
-<string name="error_map_empty">Error: Input dimensions are empty</string>
-<string
-    name="error_unsupported_map_size"
-  >Unsupported number of dimensions: </string>
-<string name="error_cannot_create_file">Cannot create file: </string>
-<string name="value_with_unit">%1$s %2$s</string>
+	<!-- Errors -->
+	<string name="error_map_empty">Error: Input dimensions are empty</string>
+	<string name="error_unsupported_map_size">Unsupported number of
+		dimensions:
+	</string>
+	<string name="error_cannot_create_file">Cannot create file: </string>
+	<string name="value_with_unit">%1$s %2$s</string>
 
-<string name="no_result_to_share">No result to share yet!</string>
+	<string name="no_result_to_share">No result to share yet!</string>
 
-<string name="header_side_calculation">Side calculation</string>
-<string name="other_side_title">Other Side</string>
-<string name="unknown_side_title">Base or height</string>
-<string name="amount_of_land_title">Amount of land</string>
-<string name="history_tap_to_view_details">Tap to view more details</string>
-<string name="history_title_linear_conversion">Linear units (Conversation)</string>
-<string name="history_title_area_conversion">Land area (Conversation)</string>
+	<string name="header_side_calculation">Side calculation</string>
+	<string name="other_side_title">Other Side</string>
+	<string name="unknown_side_title">Base or height</string>
+	<string name="amount_of_land_title">Amount of land</string>
+	<string name="history_tap_to_view_details">Tap to view more details</string>
+	<string name="history_title_linear_conversion">Linear units (Conversation)</string>
+	<string name="history_title_area_conversion">Land area (Conversation)</string>
 
-    <!-- Appearance & Style -->
-    <string name="pref_appearance_title">Appearance &amp; Style</string>
-    <string name="pref_appearance_summary">Personalize your color palette, AMOLED mode, and light/dark theme modes</string>
-    <string name="style_title">Style</string>
-    <string name="accents_and_schemes">Accents &amp; Schemes</string>
-    <string name="dynamic_color_theme">Dynamic Color Theme (Default)</string>
-    <string name="amoled_black_mode_title">AMOLED Black Mode</string>
-    <string name="amoled_black_mode_summary">Uses pitch-black background to save battery</string>
-    <string name="preferred_theme_mode">Preferred Theme Mode</string>
-    <string name="theme_mode_system">System</string>
-    <string name="theme_mode_light">Off (Light)</string>
-    <string name="theme_mode_dark">On (Dark)</string>
+	<!-- Appearance & Style -->
+	<string name="pref_appearance_title">Appearance &amp; Style</string>
+	<string name="pref_appearance_summary">Personalize your color palette, AMOLED mode, and
+		light/dark theme modes</string>
+
+	<!-- Style Screen -->
+	<string name="style_title">Style</string>
+	<string name="style_close">Close</string>
+
+	<!-- Active Badge -->
+	<string name="active_dynamic">Dynamic Active</string>
+	<string name="active_emerald">Emerald Active</string>
+	<string name="active_blossom">Blossom Active</string>
+	<string name="active_ocean">Ocean Active</string>
+	<string name="active_amber">Amber Active</string>
+	<string name="active_coral">Coral Active</string>
+	<string name="active_default">Default Active</string>
+
+	<!-- Categories -->
+	<string name="accents_and_schemes">Accents &amp; Schemes</string>
+	<string name="preferred_theme_mode">Preferred Theme Mode</string>
+
+	<!-- Dynamic Theme Option -->
+	<string name="dynamic_color_theme">Dynamic Color Theme (Default)</string>
+
+	<!-- Accent Names -->
+	<string name="accent_emerald">Emerald</string>
+	<string name="accent_blossom">Blossom</string>
+	<string name="accent_ocean">Ocean</string>
+	<string name="accent_amber">Amber</string>
+	<string name="accent_coral">Coral</string>
+
+	<!-- Theme Mode Buttons -->
+	<string name="theme_system">System</string>
+	<string name="theme_light">Off (Light)</string>
+	<string name="theme_dark">On (Dark)</string>
+
+	<!-- AMOLED Option -->
+	<string name="amoled_black_mode">AMOLED Black Mode</string>
+	<string name="amoled_description">Uses pitch-black background to save battery</string>
+
+
+	<!-- OTA Update Helper -->
+	<string name="update_checking_title">Checking for Updates</string>
+	<string name="update_checking_message">Please wait, searching for the latest version...</string>
+
+	<string name="update_available_title">Update Available</string>
+	<string name="update_available_message">A new version of this app is available. Update now
+		to receive the latest features and bug fixes.</string>
+	<string name="update_now">Update Now</string>
+	<string name="update_later">Later</string>
+
+	<string name="update_up_to_date_title">Up to Date</string>
+	<string name="update_up_to_date_message">You are already using the latest version of this
+		app.</string>
+
+	<string name="update_no_internet">No internet connection available.</string>
+	<string name="update_no_activity">Unable to check for updates: Activity context is
+		not available.</string>
+	<string name="update_failed_launch">Failed to launch update</string>
+	<string name="update_failed_play_store">Failed to open Google Play Store.</string>
+
 </resources>

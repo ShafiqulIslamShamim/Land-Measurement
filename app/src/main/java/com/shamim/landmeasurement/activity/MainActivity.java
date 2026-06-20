@@ -178,7 +178,8 @@ public class MainActivity extends BaseActivity {
         if (historyIcon != null) {
           historyIcon.setOnClickListener(
               v -> {
-                startActivity(new Intent(this, com.shamim.landmeasurement.history.HistoryActivity.class));
+                startActivity(
+                    new Intent(this, com.shamim.landmeasurement.history.HistoryActivity.class));
               });
         }
       }

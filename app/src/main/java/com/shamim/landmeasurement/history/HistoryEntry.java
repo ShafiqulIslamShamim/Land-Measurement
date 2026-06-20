@@ -6,82 +6,87 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "history_entries")
 public class HistoryEntry {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-    
-    private String shapeTitle;
-    private String inputs;
-    private double areaSqFt;
-    private long timestamp;
-    private String activityClassName;
-    private String serializedInputs;
+  @PrimaryKey(autoGenerate = true)
+  private int id;
 
-    public HistoryEntry() {
-    }
+  private String shapeTitle;
+  private String inputs;
+  private double areaSqFt;
+  private long timestamp;
+  private String activityClassName;
+  private String serializedInputs;
 
-    @Ignore
-    public HistoryEntry(String shapeTitle, String inputs, double areaSqFt, long timestamp, String activityClassName, String serializedInputs) {
-        this.shapeTitle = shapeTitle;
-        this.inputs = inputs;
-        this.areaSqFt = areaSqFt;
-        this.timestamp = timestamp;
-        this.activityClassName = activityClassName;
-        this.serializedInputs = serializedInputs;
-    }
+  public HistoryEntry() {}
 
-    public int getId() {
-        return id;
-    }
+  @Ignore
+  public HistoryEntry(
+      String shapeTitle,
+      String inputs,
+      double areaSqFt,
+      long timestamp,
+      String activityClassName,
+      String serializedInputs) {
+    this.shapeTitle = shapeTitle;
+    this.inputs = inputs;
+    this.areaSqFt = areaSqFt;
+    this.timestamp = timestamp;
+    this.activityClassName = activityClassName;
+    this.serializedInputs = serializedInputs;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public String getShapeTitle() {
-        return shapeTitle;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setShapeTitle(String shapeTitle) {
-        this.shapeTitle = shapeTitle;
-    }
+  public String getShapeTitle() {
+    return shapeTitle;
+  }
 
-    public String getInputs() {
-        return inputs;
-    }
+  public void setShapeTitle(String shapeTitle) {
+    this.shapeTitle = shapeTitle;
+  }
 
-    public void setInputs(String inputs) {
-        this.inputs = inputs;
-    }
+  public String getInputs() {
+    return inputs;
+  }
 
-    public double getAreaSqFt() {
-        return areaSqFt;
-    }
+  public void setInputs(String inputs) {
+    this.inputs = inputs;
+  }
 
-    public void setAreaSqFt(double areaSqFt) {
-        this.areaSqFt = areaSqFt;
-    }
+  public double getAreaSqFt() {
+    return areaSqFt;
+  }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
+  public void setAreaSqFt(double areaSqFt) {
+    this.areaSqFt = areaSqFt;
+  }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
+  public long getTimestamp() {
+    return timestamp;
+  }
 
-    public String getActivityClassName() {
-        return activityClassName;
-    }
+  public void setTimestamp(long timestamp) {
+    this.timestamp = timestamp;
+  }
 
-    public void setActivityClassName(String activityClassName) {
-        this.activityClassName = activityClassName;
-    }
+  public String getActivityClassName() {
+    return activityClassName;
+  }
 
-    public String getSerializedInputs() {
-        return serializedInputs;
-    }
+  public void setActivityClassName(String activityClassName) {
+    this.activityClassName = activityClassName;
+  }
 
-    public void setSerializedInputs(String serializedInputs) {
-        this.serializedInputs = serializedInputs;
-    }
+  public String getSerializedInputs() {
+    return serializedInputs;
+  }
+
+  public void setSerializedInputs(String serializedInputs) {
+    this.serializedInputs = serializedInputs;
+  }
 }
