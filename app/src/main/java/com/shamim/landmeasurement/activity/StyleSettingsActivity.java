@@ -122,7 +122,6 @@ public class StyleSettingsActivity extends BaseActivity {
   private void setupAmoledSelector() {
     boolean isAmoled = SharedPrefValues.getValue("amoled_black_mode", false);
 
-    // Clear listener first to avoid premature triggering of recreateActivity during initialization
     switchAmoled.setOnCheckedChangeListener(null);
     switchAmoled.setChecked(isAmoled);
 
@@ -153,53 +152,57 @@ public class StyleSettingsActivity extends BaseActivity {
     boolean isAmoled = SharedPrefValues.getValue("amoled_black_mode", false);
     boolean isLight = isLightThemeActive();
 
-    // 1. Resolve Adaptive Colors based on current theme configuration
+    // Material 3 Colors
     int colorSurface = getColorFromAttr(com.google.android.material.R.attr.colorSurface);
-    int colorSurfaceVariant =
-        getColorFromAttr(com.google.android.material.R.attr.colorSurfaceVariant);
-    int colorOutline = getColorFromAttr(com.google.android.material.R.attr.colorOutlineVariant);
+    int colorSurfaceContainer =
+        getColorFromAttr(com.google.android.material.R.attr.colorSurfaceContainer);
+    int colorSurfaceContainerLow =
+        getColorFromAttr(com.google.android.material.R.attr.colorSurfaceContainerLow);
+    int colorOutlineVariant =
+        getColorFromAttr(com.google.android.material.R.attr.colorOutlineVariant);
     int colorOnSurfaceVariant =
         getColorFromAttr(com.google.android.material.R.attr.colorOnSurfaceVariant);
 
     int bgScreenColor;
     int bgCardColor;
     int strokeCardColor;
-    int activeSegmentColor;
-    int activeSegmentTextColor;
     int inactiveSegmentTextColor;
 
     if (isLight) {
       bgScreenColor = colorSurface;
-      bgCardColor = getColorFromAttr(com.google.android.material.R.attr.colorSurfaceContainerLow);
-      strokeCardColor = colorOutline;
+      bgCardColor = colorSurfaceContainerLow;
+      strokeCardColor = colorOutlineVariant;
       inactiveSegmentTextColor = colorOnSurfaceVariant;
     } else {
-      // Dark Theme (Matches screenshot)
-      bgScreenColor =
-          isAmoled ? 0xFF000000 : getResources().getColor(R.color.style_dark_bg, getTheme());
-      bgCardColor = getResources().getColor(R.color.style_card_bg, getTheme());
-      strokeCardColor = getResources().getColor(R.color.style_card_stroke, getTheme());
-      inactiveSegmentTextColor = getResources().getColor(R.color.style_text_mute, getTheme());
+      // Dark Theme
+      bgScreenColor = isAmoled ? 0xFF000000 : colorSurface;
+      bgCardColor = colorSurfaceContainer;
+      strokeCardColor = colorOutlineVariant;
+      inactiveSegmentTextColor = colorOnSurfaceVariant;
     }
 
-    activeSegmentColor = getColorFromAttr(androidx.appcompat.R.attr.colorPrimary);
-    activeSegmentTextColor = getColorFromAttr(com.google.android.material.R.attr.colorOnPrimary);
+    int activeSegmentColor = getColorFromAttr(androidx.appcompat.R.attr.colorPrimary);
+    int activeSegmentTextColor =
+        getColorFromAttr(com.google.android.material.R.attr.colorOnPrimary);
 
-    // 2. Set backgrounds programmatically to adapt perfectly
+    // Apply background colors
     View styleRoot = findViewById(R.id.style_root);
     if (styleRoot != null) {
       styleRoot.setBackgroundColor(bgScreenColor);
     }
 
+    // Style Preview (SVG)
     if (ivStylePreview != null) {
       try {
+
         String t90 = getColorHex("colorTertiaryContainer");
-        String s90 = getColorHex("colorSurfaceVariant");
-        String s50 = getColorHex("colorOnPrimaryContainer");
+        String s90 = getColorHex("colorSecondaryContainer");
+        String s50 = getColorHex("colorPrimaryContainer");
         String p50 = getColorHex("colorPrimary");
-        String s40 = getColorHex("colorOnSecondary");
-        String t40 = getColorHex("colorOnSurface");
+        String s40 = getColorHex("colorTertiary");
+        String t40 = getColorHex("colorOutline");
         String s30 = getColorHex("colorSecondary");
+
         String svg =
             "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 888 678\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
                 + "<g clip-path=\"url(#clip0_7439_23886)\">\n"
@@ -259,6 +262,7 @@ public class StyleSettingsActivity extends BaseActivity {
                 + "</clipPath>\n"
                 + "</defs>\n"
                 + "</svg>";
+
         svg =
             svg.replaceAll("t90", t90)
                 .replaceAll("s90", s90)
@@ -267,27 +271,26 @@ public class StyleSettingsActivity extends BaseActivity {
                 .replaceAll("s40", s40)
                 .replaceAll("t40", t40)
                 .replaceAll("s30", s30);
-        ivStylePreview.setColorFilter(
-            null); // Clear previous color filters to let natural colors render
+
+        ivStylePreview.setColorFilter(null);
         ivStylePreview.setImageDrawable(Sharp.loadString(svg).getDrawable());
       } catch (Exception e) {
         e.printStackTrace();
-        // Fallback color filter if error occurs
         int previewColor = getPreviewTintColor(currentAccent);
         ivStylePreview.setColorFilter(previewColor, android.graphics.PorterDuff.Mode.SRC_IN);
       }
     }
 
+    // Card backgrounds
     MaterialCardView cardAccentsContainer = findViewById(R.id.card_accents_container);
     if (cardAccentsContainer != null) {
       cardAccentsContainer.setCardBackgroundColor(ColorStateList.valueOf(bgCardColor));
       cardAccentsContainer.setStrokeColor(ColorStateList.valueOf(strokeCardColor));
     }
 
-    MaterialCardView cardAmoledContainer = findViewById(R.id.card_amoled_black);
-    if (cardAmoledContainer != null) {
-      cardAmoledContainer.setCardBackgroundColor(ColorStateList.valueOf(bgCardColor));
-      cardAmoledContainer.setStrokeColor(ColorStateList.valueOf(strokeCardColor));
+    if (cardAmoledBlack != null) {
+      cardAmoledBlack.setCardBackgroundColor(ColorStateList.valueOf(bgCardColor));
+      cardAmoledBlack.setStrokeColor(ColorStateList.valueOf(strokeCardColor));
     }
 
     View containerSegmented = findViewById(R.id.container_segmented);
@@ -295,7 +298,7 @@ public class StyleSettingsActivity extends BaseActivity {
       containerSegmented.setBackgroundTintList(ColorStateList.valueOf(bgCardColor));
     }
 
-    // 3. Update Checkmarks for Accent Palette Options
+    // Accent checkmarks
     ivDynamicChecked.setVisibility(currentAccent.equals("0") ? View.VISIBLE : View.GONE);
     ivAccentEmeraldCheck.setVisibility(currentAccent.equals("1") ? View.VISIBLE : View.GONE);
     ivAccentBlossomCheck.setVisibility(currentAccent.equals("2") ? View.VISIBLE : View.GONE);
@@ -303,28 +306,28 @@ public class StyleSettingsActivity extends BaseActivity {
     ivAccentAmberCheck.setVisibility(currentAccent.equals("4") ? View.VISIBLE : View.GONE);
     ivAccentCoralCheck.setVisibility(currentAccent.equals("5") ? View.VISIBLE : View.GONE);
 
-    // 4. Update Floating Badge Text and Dynamic Theme Colors for the badge
+    // Active Badge
     switch (currentAccent) {
       case "0":
-        tvActiveBadge.setText(getString(R.string.active_dynamic));
+        tvActiveBadge.setText(R.string.active_dynamic);
         break;
       case "1":
-        tvActiveBadge.setText(getString(R.string.active_emerald));
+        tvActiveBadge.setText(R.string.active_emerald);
         break;
       case "2":
-        tvActiveBadge.setText(getString(R.string.active_blossom));
+        tvActiveBadge.setText(R.string.active_blossom);
         break;
       case "3":
-        tvActiveBadge.setText(getString(R.string.active_ocean));
+        tvActiveBadge.setText(R.string.active_ocean);
         break;
       case "4":
-        tvActiveBadge.setText(getString(R.string.active_amber));
+        tvActiveBadge.setText(R.string.active_amber);
         break;
       case "5":
-        tvActiveBadge.setText(getString(R.string.active_coral));
+        tvActiveBadge.setText(R.string.active_coral);
         break;
       default:
-        tvActiveBadge.setText(getString(R.string.active_default));
+        tvActiveBadge.setText(R.string.active_default);
         break;
     }
 
@@ -340,7 +343,7 @@ public class StyleSettingsActivity extends BaseActivity {
       tvActiveBadge.setTextColor(previewPrimaryColor);
     }
 
-    // 5. Update Segmented Button Pills Concurrently
+    // Segmented Theme Buttons
     btnThemeSystem.setBackgroundResource(0);
     btnThemeLight.setBackgroundResource(0);
     btnThemeDark.setBackgroundResource(0);
@@ -349,19 +352,12 @@ public class StyleSettingsActivity extends BaseActivity {
     btnThemeLight.setTextColor(inactiveSegmentTextColor);
     btnThemeDark.setTextColor(inactiveSegmentTextColor);
 
-    // Highlight selected Theme segment
-    TextView selectedSegment = null;
-    switch (currentTheme) {
-      case "3": // Light (Off)
-        selectedSegment = btnThemeLight;
-        break;
-      case "2": // Dark (On)
-        selectedSegment = btnThemeDark;
-        break;
-      default: // System (Follow)
-        selectedSegment = btnThemeSystem;
-        break;
-    }
+    TextView selectedSegment =
+        switch (currentTheme) {
+          case "3" -> btnThemeLight;
+          case "2" -> btnThemeDark;
+          default -> btnThemeSystem;
+        };
 
     if (selectedSegment != null) {
       android.graphics.drawable.GradientDrawable gd =
@@ -379,78 +375,53 @@ public class StyleSettingsActivity extends BaseActivity {
   }
 
   private int getPreviewTintColor(String currentAccent) {
-    switch (currentAccent) {
-      case "1": // Emerald
-        return getResources().getColor(R.color.emerald_primary_dark, getTheme());
-      case "2": // Blossom
-        return getResources().getColor(R.color.blossom_primary_dark, getTheme());
-      case "3": // Ocean
-        return getResources().getColor(R.color.ocean_primary_dark, getTheme());
-      case "4": // Amber
-        return getResources().getColor(R.color.amber_primary_dark, getTheme());
-      case "5": // Coral
-        return getResources().getColor(R.color.coral_primary_dark, getTheme());
-      case "0": // Dynamic/Default
-      default:
-        return getColorFromAttr(androidx.appcompat.R.attr.colorPrimary);
-    }
+    return switch (currentAccent) {
+      case "1" -> getResources().getColor(R.color.emerald_dark_primary, getTheme());
+      case "2" -> getResources().getColor(R.color.blossom_dark_primary, getTheme());
+      case "3" -> getResources().getColor(R.color.ocean_dark_primary, getTheme());
+      case "4" -> getResources().getColor(R.color.amber_dark_primary, getTheme());
+      case "5" -> getResources().getColor(R.color.coral_dark_primary, getTheme());
+      default -> getColorFromAttr(androidx.appcompat.R.attr.colorPrimary);
+    };
   }
 
   private int getBadgeContainerColor(String currentAccent) {
-    int color;
-    switch (currentAccent) {
-      case "1": // Emerald
-        color = getResources().getColor(R.color.emerald_primaryContainer_dark, getTheme());
-        break;
-      case "2": // Blossom
-        color = getResources().getColor(R.color.blossom_primaryContainer_dark, getTheme());
-        break;
-      case "3": // Ocean
-        color = getResources().getColor(R.color.ocean_primaryContainer_dark, getTheme());
-        break;
-      case "4": // Amber
-        color = getResources().getColor(R.color.amber_primaryContainer_dark, getTheme());
-        break;
-      case "5": // Coral
-        color = getResources().getColor(R.color.coral_primaryContainer_dark, getTheme());
-        break;
-      case "0": // Dynamic/Default
-      default:
-        color = getColorFromAttr(com.google.android.material.R.attr.colorPrimaryContainer);
-        break;
-    }
-    // Set alpha to ~75% (0xBF)
-    return (color & 0x00FFFFFF) | 0xBF000000;
+    int color =
+        switch (currentAccent) {
+          case "1" -> getResources().getColor(R.color.emerald_dark_primaryContainer, getTheme());
+          case "2" -> getResources().getColor(R.color.blossom_dark_primaryContainer, getTheme());
+          case "3" -> getResources().getColor(R.color.ocean_dark_primaryContainer, getTheme());
+          case "4" -> getResources().getColor(R.color.amber_dark_primaryContainer, getTheme());
+          case "5" -> getResources().getColor(R.color.coral_dark_primaryContainer, getTheme());
+          default -> getColorFromAttr(com.google.android.material.R.attr.colorPrimaryContainer);
+        };
+    return (color & 0x00FFFFFF) | 0xBF000000; // 75% opacity
   }
 
   private String getColorHex(String attrName) {
-    int attrId;
-    switch (attrName) {
-      case "colorTertiaryContainer":
-        attrId = com.google.android.material.R.attr.colorTertiaryContainer;
-        break;
-      case "colorSurfaceVariant":
-        attrId = com.google.android.material.R.attr.colorSurfaceVariant;
-        break;
-      case "colorOnPrimaryContainer":
-        attrId = com.google.android.material.R.attr.colorOnPrimaryContainer;
-        break;
-      case "colorPrimary":
-        attrId = androidx.appcompat.R.attr.colorPrimary;
-        break;
-      case "colorOnSecondary":
-        attrId = com.google.android.material.R.attr.colorOnSecondary;
-        break;
-      case "colorOnSurface":
-        attrId = com.google.android.material.R.attr.colorOnSurface;
-        break;
-      case "colorSecondary":
-        attrId = com.google.android.material.R.attr.colorSecondary;
-        break;
-      default:
-        attrId = androidx.appcompat.R.attr.colorPrimary;
-        break;
-    }
+    int attrId =
+        switch (attrName) {
+          case "colorPrimary" -> androidx.appcompat.R.attr.colorPrimary;
+
+          case "colorPrimaryContainer" -> com.google.android.material.R.attr.colorPrimaryContainer;
+
+          case "colorSecondary" -> com.google.android.material.R.attr.colorSecondary;
+
+          case "colorSecondaryContainer" ->
+              com.google.android.material.R.attr.colorSecondaryContainer;
+
+          case "colorTertiary" -> com.google.android.material.R.attr.colorTertiary;
+
+          case "colorTertiaryContainer" ->
+              com.google.android.material.R.attr.colorTertiaryContainer;
+
+          case "colorOutline" -> com.google.android.material.R.attr.colorOutline;
+
+          case "colorOnSurface" -> com.google.android.material.R.attr.colorOnSurface;
+
+          default -> androidx.appcompat.R.attr.colorPrimary;
+        };
+
     return getColorHexFromAttr(attrId);
   }
 
