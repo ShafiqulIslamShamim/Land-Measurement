@@ -334,4 +334,33 @@
 		উপলব্ধ নেই।</string>
 	<string name="update_failed_launch">আপডেট চালু করতে ব্যর্থ হয়েছে</string>
 	<string name="update_failed_play_store">গুগল প্লে স্টোর খুলতে ব্যর্থ হয়েছে।</string>
+
+	<!-- History Activity strings -->
+	<string name="history_title_triangular_height">জমির পরিমাণ (ত্রিভুজাকার - উচ্চতা-ভিত্তিক)</string>
+	<string name="history_title_triangular_side">জমির পরিমাণ (ত্রিভুজাকার - বাহু-ভিত্তিক)</string>
+	<string name="history_title_rectangular">জমির পরিমাণ (চতুর্ভুজ - আয়তক্ষেত্রাকার)</string>
+	<string name="history_title_square">জমির পরিমাণ (চতুর্ভুজ - বর্গাকার)</string>
+	<string name="history_title_scalene">জমির পরিমাণ (চতুর্ভুজ - অসমবাহু)</string>
+	<string name="history_title_circular">জমির পরিমাণ (বৃত্তাকার)</string>
+	<string name="history_title_conversion_area">জমির পরিমাণ (রূপান্তর)</string>
+	<string name="history_title_conversion_linear">দৈর্ঘ্যের একক (রূপান্তর)</string>
+	<string name="history_title_side_triangular">পার্শ্ব গণনা (ত্রিভুজাকার)</string>
+	<string name="history_title_side_rectangular">পার্শ্ব গণনা (চতুর্ভুজ - আয়তক্ষেত্রাকার)</string>
+	<string name="history_title_side_circular">পার্শ্ব গণনা (বৃত্তাকার)</string>
+
+	<string name="history_unit_foot">ফুট</string>
+	<string name="history_unit_inch">ইঞ্চি</string>
+	<string name="history_unit_meter">মিটার</string>
+	<string name="history_unit_centimeter">সেন্টিমিটার</string>
+	<string name="history_unit_millimeter">মিলিমিটার</string>
+	<string name="history_unit_yard">গজ</string>
+	<string name="history_unit_hath">হাত</string>
+
+	<string name="history_primary_converted_length">রূপান্তরিত দৈর্ঘ্য: %1$.3f %2$s</string>
+	<string name="history_primary_other_side">অন্য বাহু: %1$.2f ফুট</string>
+	<string name="history_primary_unknown_side">ভূমি বা উচ্চতা: %1$.2f ফুট</string>
+	<string name="history_primary_radius">ব্যাসার্ধ: %1$.2f ফুট</string>
+	<string name="history_primary_area">ক্ষেত্রফল: %1$.2f %2$s</string>
+	<string name="history_separator"> : </string>
+
 </resources>

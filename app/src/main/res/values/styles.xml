@@ -35,7 +35,10 @@
 	</style>
 	<style name="ToolbarTitle"
 		parent="TextAppearance.Material3.TitleLarge">
+
 		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">?attr/colorPrimary</item>
+
 	</style>
 
 	<style name="TabText"

@@ -334,4 +334,32 @@
 	<string name="update_failed_launch">Failed to launch update</string>
 	<string name="update_failed_play_store">Failed to open Google Play Store.</string>
 
+	<!-- History Activity strings -->
+	<string name="history_title_triangular_height">Amount of Land (Triangular - Height-based)</string>
+	<string name="history_title_triangular_side">Amount of Land (Triangular - Side-based)</string>
+	<string name="history_title_rectangular">Amount of Land (Quadrilateral - Rectangular)</string>
+	<string name="history_title_square">Amount of Land (Quadrilateral - Square)</string>
+	<string name="history_title_scalene">Amount of Land (Quadrilateral - Scalene)</string>
+	<string name="history_title_circular">Amount of Land (Circular)</string>
+	<string name="history_title_conversion_area">Conversion (Land area)</string>
+	<string name="history_title_conversion_linear">Conversion (Linear units)</string>
+	<string name="history_title_side_triangular">Side calculation (Triangular)</string>
+	<string name="history_title_side_rectangular">Side calculation (Quadrilateral - Rectangular)</string>
+	<string name="history_title_side_circular">Side calculation (Circular)</string>
+
+	<string name="history_unit_foot">feet</string>
+	<string name="history_unit_inch">Inch</string>
+	<string name="history_unit_meter">Meter</string>
+	<string name="history_unit_centimeter">Centimeter</string>
+	<string name="history_unit_millimeter">Millimeter</string>
+	<string name="history_unit_yard">Yard</string>
+	<string name="history_unit_hath">Cubit</string>
+
+	<string name="history_primary_converted_length">Converted Length: %1$.3f %2$s</string>
+	<string name="history_primary_other_side">Other Side: %1$.2f Feet</string>
+	<string name="history_primary_unknown_side">Base or height: %1$.2f Feet</string>
+	<string name="history_primary_radius">Radius: %1$.2f Feet</string>
+	<string name="history_primary_area">Area: %1$.2f %2$s</string>
+	<string name="history_separator">: </string>
+
 </resources>

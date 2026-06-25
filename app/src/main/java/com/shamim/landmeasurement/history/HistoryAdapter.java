@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.shamim.landmeasurement.R;
+import com.shamim.landmeasurement.util.UnitConverter;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -52,16 +53,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     holder.tvSubtitle.setText(getLocalizedSubtitle(context, entry).trim());
 
     // Primary Area representation
-    if (entry.getActivityClassName() != null
-        && entry.getActivityClassName().contains("LinearUnitsConversionActivity")) {
-      holder.tvPrimaryArea.setVisibility(View.GONE);
-    } else {
-      holder.tvPrimaryArea.setVisibility(View.VISIBLE);
-      String areaLabel = context.getString(R.string.share_area_label);
-      String sqFtSuffix = context.getString(R.string.unit_sqft);
-      String formattedArea = String.format("%.2f", entry.getAreaSqFt());
-      holder.tvPrimaryArea.setText(areaLabel + " " + formattedArea + " " + sqFtSuffix);
-    }
+    holder.tvPrimaryArea.setVisibility(View.VISIBLE);
+    holder.tvPrimaryArea.setText(getLocalizedPrimaryArea(context, entry));
 
     // Click on entire card (excluding separate interactive parts) to load the shape calculation
     holder.itemView.setOnClickListener(
@@ -91,53 +84,27 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
       return entry.getShapeTitle(); // Fallback
     }
     if (className.contains("TriangularLandActivityHeight")) {
-      return context.getString(R.string.item_triangular)
-          + " ("
-          + context.getString(R.string.item_rectangular_height_based)
-          + ")";
+      return context.getString(R.string.history_title_triangular_height);
     } else if (className.contains("TriangularLandActivityArm")) {
-      return context.getString(R.string.item_triangular)
-          + " ("
-          + context.getString(R.string.item_rectangular_arm_based)
-          + ")";
+      return context.getString(R.string.history_title_triangular_side);
     } else if (className.contains("RectangularLandActivity")) {
-      return context.getString(R.string.item_quadrilateral)
-          + " ("
-          + context.getString(R.string.item_rectangular)
-          + ")";
+      return context.getString(R.string.history_title_rectangular);
     } else if (className.contains("SquareLandActivity")) {
-      return context.getString(R.string.item_quadrilateral)
-          + " ("
-          + context.getString(R.string.item_square)
-          + ")";
+      return context.getString(R.string.history_title_square);
     } else if (className.contains("ScaleneLandActivity")) {
-      return context.getString(R.string.item_quadrilateral)
-          + " ("
-          + context.getString(R.string.item_scalene)
-          + ")";
+      return context.getString(R.string.history_title_scalene);
     } else if (className.contains("CircularLandActivity")) {
-      return context.getString(R.string.item_circular);
+      return context.getString(R.string.history_title_circular);
     } else if (className.contains("AreaUnitsConversionActivity")) {
-      return context.getString(R.string.history_title_area_conversion);
+      return context.getString(R.string.history_title_conversion_area);
     } else if (className.contains("LinearUnitsConversionActivity")) {
-      return context.getString(R.string.history_title_linear_conversion);
+      return context.getString(R.string.history_title_conversion_linear);
     } else if (className.contains("TriangleSideCalculatorActivity")) {
-      return context.getString(R.string.header_side_calculation)
-          + " ("
-          + context.getString(R.string.item_triangular)
-          + ")";
+      return context.getString(R.string.history_title_side_triangular);
     } else if (className.contains("RectangleSideCalculatorActivity")) {
-      return context.getString(R.string.header_side_calculation)
-          + " ("
-          + context.getString(R.string.item_quadrilateral)
-          + " - "
-          + context.getString(R.string.item_rectangular)
-          + ")";
+      return context.getString(R.string.history_title_side_rectangular);
     } else if (className.contains("CircleSideCalculatorActivity")) {
-      return context.getString(R.string.header_side_calculation)
-          + " ("
-          + context.getString(R.string.item_circular)
-          + ")";
+      return context.getString(R.string.history_title_side_circular);
     }
     return entry.getShapeTitle();
   }
@@ -149,6 +116,49 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     } catch (NumberFormatException e) {
       return 0.0;
     }
+  }
+
+  private static String getLocalizedUnitString(Context context, int unitResId) {
+    if (unitResId == R.string.unit_foot) {
+      return context.getString(R.string.history_unit_foot);
+    } else if (unitResId == R.string.unit_inch) {
+      return context.getString(R.string.history_unit_inch);
+    } else if (unitResId == R.string.unit_meter) {
+      return context.getString(R.string.history_unit_meter);
+    } else if (unitResId == R.string.unit_centimeter) {
+      return context.getString(R.string.history_unit_centimeter);
+    } else if (unitResId == R.string.unit_millimeter) {
+      return context.getString(R.string.history_unit_millimeter);
+    } else if (unitResId == R.string.unit_yard) {
+      return context.getString(R.string.history_unit_yard);
+    } else if (unitResId == R.string.unit_hath) {
+      return context.getString(R.string.history_unit_hath);
+    } else {
+      String name = context.getString(unitResId);
+      if (name.isEmpty()) return "";
+      return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+    }
+  }
+
+  private static double getSingleCardFeetValue(String serializedState) {
+    if (serializedState == null || serializedState.isEmpty()) return 0.0;
+    String[] parts = serializedState.split(",", -1);
+    if (parts.length >= 3) {
+      double mainVal = parseDoubleOrZero(parts[0]);
+      double inchVal = parseDoubleOrZero(parts[1]);
+      int unitResId = R.string.unit_foot;
+      try {
+        unitResId = Integer.parseInt(parts[2]);
+      } catch (NumberFormatException e) {
+        // fallback
+      }
+      double val = mainVal;
+      if (unitResId == R.string.unit_foot) {
+        val = mainVal + (inchVal / 12.0);
+      }
+      return UnitConverter.convertLength(val, unitResId, R.string.unit_foot);
+    }
+    return 0.0;
   }
 
   private static String getSingleCardString(Context context, String serializedState) {
@@ -166,13 +176,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
       if (unitResId == R.string.unit_foot) {
         return String.format("%.2f", mainVal)
             + " "
-            + context.getString(R.string.unit_foot)
+            + getLocalizedUnitString(context, R.string.unit_foot)
             + " "
             + String.format("%.2f", inchVal)
             + " "
-            + context.getString(R.string.unit_inch);
+            + getLocalizedUnitString(context, R.string.unit_inch);
       } else {
-        return String.format("%.2f", mainVal) + " " + context.getString(unitResId);
+        return String.format("%.2f", mainVal) + " " + getLocalizedUnitString(context, unitResId);
       }
     }
     return "";
@@ -195,7 +205,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
       String format1 = context.getString(R.string.et_double_first_hind);
       String format2 = context.getString(R.string.et_double_second_hind);
-      String isFeetStr = context.getString(unitResId);
+      String isFeetStr = getLocalizedUnitString(context, unitResId);
 
       String firstFormatted;
       String secondFormatted;
@@ -203,31 +213,32 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         firstFormatted =
             String.format("%.2f", firstVal)
                 + " "
-                + context.getString(R.string.unit_foot)
+                + getLocalizedUnitString(context, R.string.unit_foot)
                 + " "
                 + String.format("%.2f", firstIn)
                 + " "
-                + context.getString(R.string.unit_inch);
+                + getLocalizedUnitString(context, R.string.unit_inch);
 
         secondFormatted =
             String.format("%.2f", secondVal)
                 + " "
-                + context.getString(R.string.unit_foot)
+                + getLocalizedUnitString(context, R.string.unit_foot)
                 + " "
                 + String.format("%.2f", secondIn)
                 + " "
-                + context.getString(R.string.unit_inch);
+                + getLocalizedUnitString(context, R.string.unit_inch);
       } else {
         firstFormatted = String.format("%.2f", firstVal) + " " + isFeetStr;
         secondFormatted = String.format("%.2f", secondVal) + " " + isFeetStr;
       }
 
+      String sep = context.getString(R.string.history_separator);
       return String.format(format1, title, isFeetStr)
-          + " : "
+          + sep
           + firstFormatted
           + "\n"
           + String.format(format2, title, isFeetStr)
-          + " : "
+          + sep
           + secondFormatted;
     }
     return "";
@@ -241,16 +252,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
       return entry.getInputs() != null ? entry.getInputs() : "";
     }
 
+    String sep = context.getString(R.string.history_separator);
+
     try {
       if (className.contains("SquareLandActivity")) {
         return context.getString(R.string.card_length_title)
-            + " : "
+            + sep
             + getSingleCardString(context, data);
       }
 
       if (className.contains("CircularLandActivity")) {
         return context.getString(R.string.card_radius_title)
-            + " : "
+            + sep
             + getSingleCardString(context, data);
       }
 
@@ -258,11 +271,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         String[] parts = data.split(";");
         if (parts.length >= 2) {
           return context.getString(R.string.card_length_title)
-              + " : "
+              + sep
               + getSingleCardString(context, parts[0])
               + "\n"
               + context.getString(R.string.card_width_title)
-              + " : "
+              + sep
               + getSingleCardString(context, parts[1]);
         }
       }
@@ -280,11 +293,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         String[] parts = data.split(";");
         if (parts.length >= 2) {
           return context.getString(R.string.card_base_title)
-              + " : "
+              + sep
               + getSingleCardString(context, parts[0])
               + "\n"
               + context.getString(R.string.card_height_title)
-              + " : "
+              + sep
               + getSingleCardString(context, parts[1]);
         }
       }
@@ -293,15 +306,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         String[] parts = data.split(";");
         if (parts.length >= 3) {
           return context.getString(R.string.first_arm_title)
-              + " : "
+              + sep
               + getSingleCardString(context, parts[0])
               + "\n"
               + context.getString(R.string.second_arm_title)
-              + " : "
+              + sep
               + getSingleCardString(context, parts[1])
               + "\n"
               + context.getString(R.string.third_arm_title)
-              + " : "
+              + sep
               + getSingleCardString(context, parts[2]);
         }
       }
@@ -317,10 +330,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             // ignore
           }
           return context.getString(R.string.amount_of_land_title)
-              + " : "
+              + sep
               + val
               + " "
-              + context.getString(unitResId);
+              + getLocalizedUnitString(context, unitResId);
         }
       }
 
@@ -334,22 +347,22 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             // ignore
           }
           StringBuilder sb = new StringBuilder();
-          sb.append(context.getString(R.string.label_convert_length)).append(": ");
+          sb.append(context.getString(R.string.label_convert_length)).append(sep);
           if (unitResId == R.string.unit_foot) {
             double mainFt = parseDoubleOrZero(parts[0]);
             double inch = parseDoubleOrZero(parts[1]);
             sb.append(String.format("%.2f", mainFt))
                 .append(" ")
-                .append(context.getString(R.string.unit_foot))
+                .append(getLocalizedUnitString(context, R.string.unit_foot))
                 .append(" ")
                 .append(String.format("%.2f", inch))
                 .append(" ")
-                .append(context.getString(R.string.unit_inch));
+                .append(getLocalizedUnitString(context, R.string.unit_inch));
           } else {
             double mainVal = parseDoubleOrZero(parts[0]);
             sb.append(String.format("%.2f", mainVal))
                 .append(" ")
-                .append(context.getString(unitResId));
+                .append(getLocalizedUnitString(context, unitResId));
           }
           return sb.toString();
         }
@@ -364,13 +377,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             unitResId = Integer.parseInt(parts[1]);
           } catch (NumberFormatException ignored) {
           }
-          String areaStr = String.format("%.2f", areaVal) + " " + context.getString(unitResId);
+          String areaStr = String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
           return context.getString(R.string.amount_of_land_title)
-              + ": "
+              + sep
               + areaStr
               + "\n"
               + context.getString(R.string.first_arm_title)
-              + ": "
+              + sep
               + getSingleCardString(context, parts[2]);
         }
       }
@@ -384,8 +397,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             unitResId = Integer.parseInt(parts[1]);
           } catch (NumberFormatException ignored) {
           }
-          String areaStr = String.format("%.2f", areaVal) + " " + context.getString(unitResId);
-          return context.getString(R.string.amount_of_land_title) + ": " + areaStr;
+          String areaStr = String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
+          return context.getString(R.string.amount_of_land_title) + sep + areaStr;
         }
       }
 
@@ -398,13 +411,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             unitResId = Integer.parseInt(parts[1]);
           } catch (NumberFormatException ignored) {
           }
-          String areaStr = String.format("%.2f", areaVal) + " " + context.getString(unitResId);
+          String areaStr = String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
           return context.getString(R.string.amount_of_land_title)
-              + ": "
+              + sep
               + areaStr
               + "\n"
               + context.getString(R.string.unknown_side_title)
-              + ": "
+              + sep
               + getSingleCardString(context, parts[2]);
         }
       }
@@ -416,12 +429,91 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     return entry.getInputs() != null ? entry.getInputs() : "";
   }
 
+  public static String getLocalizedPrimaryArea(Context context, HistoryEntry entry) {
+    String className = entry.getActivityClassName();
+    if (className == null) {
+      return "";
+    }
+    String serialized = entry.getSerializedInputs();
+
+    try {
+      if (className.contains("LinearUnitsConversionActivity")) {
+        if (serialized != null && !serialized.isEmpty()) {
+          String[] parts = serialized.split(";");
+          if (parts.length >= 3) {
+            double mainVal = parseDoubleOrZero(parts[0]);
+            double inchVal = parseDoubleOrZero(parts[1]);
+            int unitResId = R.string.unit_foot;
+            try {
+              unitResId = Integer.parseInt(parts[2]);
+            } catch (NumberFormatException e) {
+              // fallback
+            }
+            double valueInSelectedUnit = mainVal;
+            if (unitResId == R.string.unit_foot) {
+              valueInSelectedUnit = mainVal + (inchVal / 12.0);
+            }
+            int targetUnitResId;
+            if (unitResId == R.string.unit_meter || unitResId == R.string.unit_centimeter || unitResId == R.string.unit_millimeter) {
+              targetUnitResId = R.string.unit_foot;
+            } else {
+              targetUnitResId = R.string.unit_meter;
+            }
+            double convertedValue = UnitConverter.convertLength(valueInSelectedUnit, unitResId, targetUnitResId);
+            String targetUnitName = getLocalizedUnitString(context, targetUnitResId);
+            return context.getString(R.string.history_primary_converted_length, convertedValue, targetUnitName);
+          }
+        }
+      }
+
+      if (className.contains("RectangleSideCalculatorActivity")) {
+        if (serialized != null && !serialized.isEmpty()) {
+          String[] parts = serialized.split(";");
+          if (parts.length >= 3) {
+            double firstSideFeet = getSingleCardFeetValue(parts[2]);
+            double areaSqFt = entry.getAreaSqFt();
+            if (firstSideFeet > 0) {
+              double otherSideVal = areaSqFt / firstSideFeet;
+              return context.getString(R.string.history_primary_other_side, otherSideVal);
+            }
+          }
+        }
+      }
+
+      if (className.contains("TriangleSideCalculatorActivity")) {
+        if (serialized != null && !serialized.isEmpty()) {
+          String[] parts = serialized.split(";");
+          if (parts.length >= 3) {
+            double firstSideFeet = getSingleCardFeetValue(parts[2]);
+            double areaSqFt = entry.getAreaSqFt();
+            if (firstSideFeet > 0) {
+              double otherSideVal = (areaSqFt * 2) / firstSideFeet;
+              return context.getString(R.string.history_primary_unknown_side, otherSideVal);
+            }
+          }
+        }
+      }
+
+      if (className.contains("CircleSideCalculatorActivity")) {
+        double areaSqFt = entry.getAreaSqFt();
+        double radius = Math.sqrt(areaSqFt / Math.PI);
+        return context.getString(R.string.history_primary_radius, radius);
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    // Default: Area representation
+    return context.getString(R.string.history_primary_area, entry.getAreaSqFt(), context.getString(R.string.unit_sqft));
+  }
+
   public static class ViewHolder extends RecyclerView.ViewHolder {
     final TextView tvTitle;
     final TextView tvDate;
     final TextView tvSubtitle;
     final TextView tvPrimaryArea;
-    final ImageButton btnDelete;
+    final View btnDelete;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
