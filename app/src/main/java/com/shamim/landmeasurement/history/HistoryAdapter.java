@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -247,186 +246,203 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
   public static String getLocalizedSubtitle(Context context, HistoryEntry entry) {
     String className = entry.getActivityClassName();
     String data = entry.getSerializedInputs();
+    String rawSubtitle = "";
 
     if (className == null || data == null || data.isEmpty()) {
-      return entry.getInputs() != null ? entry.getInputs() : "";
-    }
+      rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
+    } else {
+      String sep = context.getString(R.string.history_separator);
 
-    String sep = context.getString(R.string.history_separator);
-
-    try {
-      if (className.contains("SquareLandActivity")) {
-        return context.getString(R.string.card_length_title)
-            + sep
-            + getSingleCardString(context, data);
-      }
-
-      if (className.contains("CircularLandActivity")) {
-        return context.getString(R.string.card_radius_title)
-            + sep
-            + getSingleCardString(context, data);
-      }
-
-      if (className.contains("RectangularLandActivity")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 2) {
-          return context.getString(R.string.card_length_title)
-              + sep
-              + getSingleCardString(context, parts[0])
-              + "\n"
-              + context.getString(R.string.card_width_title)
-              + sep
-              + getSingleCardString(context, parts[1]);
-        }
-      }
-
-      if (className.contains("ScaleneLandActivity")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 2) {
-          return getTwoCardString(context, context.getString(R.string.card_length_title), parts[0])
-              + "\n"
-              + getTwoCardString(context, context.getString(R.string.card_width_title), parts[1]);
-        }
-      }
-
-      if (className.contains("TriangularLandActivityHeight")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 2) {
-          return context.getString(R.string.card_base_title)
-              + sep
-              + getSingleCardString(context, parts[0])
-              + "\n"
-              + context.getString(R.string.card_height_title)
-              + sep
-              + getSingleCardString(context, parts[1]);
-        }
-      }
-
-      if (className.contains("TriangularLandActivityArm")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 3) {
-          return context.getString(R.string.first_arm_title)
-              + sep
-              + getSingleCardString(context, parts[0])
-              + "\n"
-              + context.getString(R.string.second_arm_title)
-              + sep
-              + getSingleCardString(context, parts[1])
-              + "\n"
-              + context.getString(R.string.third_arm_title)
-              + sep
-              + getSingleCardString(context, parts[2]);
-        }
-      }
-
-      if (className.contains("AreaUnitsConversionActivity")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 2) {
-          double val = parseDoubleOrZero(parts[0]);
-          int unitResId = R.string.unit_sqft;
-          try {
-            unitResId = Integer.parseInt(parts[1]);
-          } catch (NumberFormatException e) {
-            // ignore
-          }
-          return context.getString(R.string.amount_of_land_title)
-              + sep
-              + val
-              + " "
-              + getLocalizedUnitString(context, unitResId);
-        }
-      }
-
-      if (className.contains("LinearUnitsConversionActivity")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 3) {
-          int unitResId = R.string.unit_foot;
-          try {
-            unitResId = Integer.parseInt(parts[2]);
-          } catch (NumberFormatException e) {
-            // ignore
-          }
-          StringBuilder sb = new StringBuilder();
-          sb.append(context.getString(R.string.label_convert_length)).append(sep);
-          if (unitResId == R.string.unit_foot) {
-            double mainFt = parseDoubleOrZero(parts[0]);
-            double inch = parseDoubleOrZero(parts[1]);
-            sb.append(String.format("%.2f", mainFt))
-                .append(" ")
-                .append(getLocalizedUnitString(context, R.string.unit_foot))
-                .append(" ")
-                .append(String.format("%.2f", inch))
-                .append(" ")
-                .append(getLocalizedUnitString(context, R.string.unit_inch));
+      try {
+        if (className.contains("SquareLandActivity")) {
+          rawSubtitle =
+              context.getString(R.string.card_length_title)
+                  + sep
+                  + getSingleCardString(context, data);
+        } else if (className.contains("CircularLandActivity")) {
+          rawSubtitle =
+              context.getString(R.string.card_radius_title)
+                  + sep
+                  + getSingleCardString(context, data);
+        } else if (className.contains("RectangularLandActivity")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 2) {
+            rawSubtitle =
+                context.getString(R.string.card_length_title)
+                    + sep
+                    + getSingleCardString(context, parts[0])
+                    + "\n"
+                    + context.getString(R.string.card_width_title)
+                    + sep
+                    + getSingleCardString(context, parts[1]);
           } else {
-            double mainVal = parseDoubleOrZero(parts[0]);
-            sb.append(String.format("%.2f", mainVal))
-                .append(" ")
-                .append(getLocalizedUnitString(context, unitResId));
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
           }
-          return sb.toString();
-        }
-      }
-
-      if (className.contains("RectangleSideCalculatorActivity")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 3) {
-          double areaVal = parseDoubleOrZero(parts[0]);
-          int unitResId = R.string.unit_sqft;
-          try {
-            unitResId = Integer.parseInt(parts[1]);
-          } catch (NumberFormatException ignored) {
+        } else if (className.contains("ScaleneLandActivity")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 2) {
+            rawSubtitle =
+                getTwoCardString(context, context.getString(R.string.card_length_title), parts[0])
+                    + "\n"
+                    + getTwoCardString(
+                        context, context.getString(R.string.card_width_title), parts[1]);
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
           }
-          String areaStr = String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
-          return context.getString(R.string.amount_of_land_title)
-              + sep
-              + areaStr
-              + "\n"
-              + context.getString(R.string.first_arm_title)
-              + sep
-              + getSingleCardString(context, parts[2]);
-        }
-      }
-
-      if (className.contains("CircleSideCalculatorActivity")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 2) {
-          double areaVal = parseDoubleOrZero(parts[0]);
-          int unitResId = R.string.unit_sqft;
-          try {
-            unitResId = Integer.parseInt(parts[1]);
-          } catch (NumberFormatException ignored) {
+        } else if (className.contains("TriangularLandActivityHeight")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 2) {
+            rawSubtitle =
+                context.getString(R.string.card_base_title)
+                    + sep
+                    + getSingleCardString(context, parts[0])
+                    + "\n"
+                    + context.getString(R.string.card_height_title)
+                    + sep
+                    + getSingleCardString(context, parts[1]);
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
           }
-          String areaStr = String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
-          return context.getString(R.string.amount_of_land_title) + sep + areaStr;
-        }
-      }
-
-      if (className.contains("TriangleSideCalculatorActivity")) {
-        String[] parts = data.split(";");
-        if (parts.length >= 3) {
-          double areaVal = parseDoubleOrZero(parts[0]);
-          int unitResId = R.string.unit_sqft;
-          try {
-            unitResId = Integer.parseInt(parts[1]);
-          } catch (NumberFormatException ignored) {
+        } else if (className.contains("TriangularLandActivityArm")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 3) {
+            rawSubtitle =
+                context.getString(R.string.first_arm_title)
+                    + sep
+                    + getSingleCardString(context, parts[0])
+                    + "\n"
+                    + context.getString(R.string.second_arm_title)
+                    + sep
+                    + getSingleCardString(context, parts[1])
+                    + "\n"
+                    + context.getString(R.string.third_arm_title)
+                    + sep
+                    + getSingleCardString(context, parts[2]);
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
           }
-          String areaStr = String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
-          return context.getString(R.string.amount_of_land_title)
-              + sep
-              + areaStr
-              + "\n"
-              + context.getString(R.string.unknown_side_title)
-              + sep
-              + getSingleCardString(context, parts[2]);
+        } else if (className.contains("AreaUnitsConversionActivity")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 2) {
+            double val = parseDoubleOrZero(parts[0]);
+            int unitResId = R.string.unit_sqft;
+            try {
+              unitResId = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException e) {
+              // ignore
+            }
+            rawSubtitle =
+                context.getString(R.string.amount_of_land_title)
+                    + sep
+                    + val
+                    + " "
+                    + getLocalizedUnitString(context, unitResId);
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
+          }
+        } else if (className.contains("LinearUnitsConversionActivity")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 3) {
+            int unitResId = R.string.unit_foot;
+            try {
+              unitResId = Integer.parseInt(parts[2]);
+            } catch (NumberFormatException e) {
+              // ignore
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append(context.getString(R.string.label_convert_length)).append(sep);
+            if (unitResId == R.string.unit_foot) {
+              double mainFt = parseDoubleOrZero(parts[0]);
+              double inch = parseDoubleOrZero(parts[1]);
+              sb.append(String.format("%.2f", mainFt))
+                  .append(" ")
+                  .append(getLocalizedUnitString(context, R.string.unit_foot))
+                  .append(" ")
+                  .append(String.format("%.2f", inch))
+                  .append(" ")
+                  .append(getLocalizedUnitString(context, R.string.unit_inch));
+            } else {
+              double mainVal = parseDoubleOrZero(parts[0]);
+              sb.append(String.format("%.2f", mainVal))
+                  .append(" ")
+                  .append(getLocalizedUnitString(context, unitResId));
+            }
+            rawSubtitle = sb.toString();
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
+          }
+        } else if (className.contains("RectangleSideCalculatorActivity")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 3) {
+            double areaVal = parseDoubleOrZero(parts[0]);
+            int unitResId = R.string.unit_sqft;
+            try {
+              unitResId = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ignored) {
+            }
+            String areaStr =
+                String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
+            rawSubtitle =
+                context.getString(R.string.amount_of_land_title)
+                    + sep
+                    + areaStr
+                    + "\n"
+                    + context.getString(R.string.first_arm_title)
+                    + sep
+                    + getSingleCardString(context, parts[2]);
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
+          }
+        } else if (className.contains("CircleSideCalculatorActivity")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 2) {
+            double areaVal = parseDoubleOrZero(parts[0]);
+            int unitResId = R.string.unit_sqft;
+            try {
+              unitResId = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ignored) {
+            }
+            String areaStr =
+                String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
+            rawSubtitle = context.getString(R.string.amount_of_land_title) + sep + areaStr;
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
+          }
+        } else if (className.contains("TriangleSideCalculatorActivity")) {
+          String[] parts = data.split(";");
+          if (parts.length >= 3) {
+            double areaVal = parseDoubleOrZero(parts[0]);
+            int unitResId = R.string.unit_sqft;
+            try {
+              unitResId = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ignored) {
+            }
+            String areaStr =
+                String.format("%.2f", areaVal) + " " + getLocalizedUnitString(context, unitResId);
+            rawSubtitle =
+                context.getString(R.string.amount_of_land_title)
+                    + sep
+                    + areaStr
+                    + "\n"
+                    + context.getString(R.string.unknown_side_title)
+                    + sep
+                    + getSingleCardString(context, parts[2]);
+          } else {
+            rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
+          }
+        } else {
+          rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
         }
+      } catch (Exception e) {
+        e.printStackTrace();
+        rawSubtitle = entry.getInputs() != null ? entry.getInputs() : "";
       }
-
-    } catch (Exception e) {
-      e.printStackTrace();
     }
 
-    return entry.getInputs() != null ? entry.getInputs() : "";
+    if (rawSubtitle == null) {
+      return "";
+    }
+    return rawSubtitle.replaceAll("\\s*:\\s*", " : ");
   }
 
   public static String getLocalizedPrimaryArea(Context context, HistoryEntry entry) {
@@ -454,14 +470,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
               valueInSelectedUnit = mainVal + (inchVal / 12.0);
             }
             int targetUnitResId;
-            if (unitResId == R.string.unit_meter || unitResId == R.string.unit_centimeter || unitResId == R.string.unit_millimeter) {
+            if (unitResId == R.string.unit_meter
+                || unitResId == R.string.unit_centimeter
+                || unitResId == R.string.unit_millimeter) {
               targetUnitResId = R.string.unit_foot;
             } else {
               targetUnitResId = R.string.unit_meter;
             }
-            double convertedValue = UnitConverter.convertLength(valueInSelectedUnit, unitResId, targetUnitResId);
+            double convertedValue =
+                UnitConverter.convertLength(valueInSelectedUnit, unitResId, targetUnitResId);
             String targetUnitName = getLocalizedUnitString(context, targetUnitResId);
-            return context.getString(R.string.history_primary_converted_length, convertedValue, targetUnitName);
+            return context.getString(
+                R.string.history_primary_converted_length, convertedValue, targetUnitName);
           }
         }
       }
@@ -505,7 +525,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     }
 
     // Default: Area representation
-    return context.getString(R.string.history_primary_area, entry.getAreaSqFt(), context.getString(R.string.unit_sqft));
+    return context.getString(
+        R.string.history_primary_area, entry.getAreaSqFt(), context.getString(R.string.unit_sqft));
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {

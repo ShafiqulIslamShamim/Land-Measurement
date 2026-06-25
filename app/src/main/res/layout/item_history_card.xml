@@ -50,24 +50,17 @@
 			</LinearLayout>
 
 			<com.google.android.material.card.MaterialCardView
-				android:id="@+id/btn_delete_entry"
-				android:layout_width="36dp"
-				android:layout_height="36dp"
-				android:layout_alignParentEnd="true"
-				android:layout_centerVertical="true"
-				app:cardCornerRadius="50dp"
+				android:id="@+id/btn_delete_entry" android:layout_width="36dp"
+				android:layout_height="36dp" android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true" app:cardCornerRadius="50dp"
 				app:cardElevation="3dp"
 				app:cardBackgroundColor="?attr/colorSurfaceVariant"
-				android:clickable="true"
-				android:focusable="true"
+				android:clickable="true" android:focusable="true"
 				android:stateListAnimator="@animator/card_press_bounce">
 
-				<ImageView
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:padding="8dp"
-					android:src="@drawable/ic_delete"
-					app:tint="?attr/colorError"
+				<ImageView android:layout_width="match_parent"
+					android:layout_height="match_parent" android:padding="8dp"
+					android:src="@drawable/ic_delete" app:tint="?attr/colorError"
 					android:contentDescription="Delete entry" />
 			</com.google.android.material.card.MaterialCardView>
 

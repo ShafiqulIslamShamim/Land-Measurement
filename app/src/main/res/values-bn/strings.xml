@@ -356,11 +356,11 @@
 	<string name="history_unit_yard">গজ</string>
 	<string name="history_unit_hath">হাত</string>
 
-	<string name="history_primary_converted_length">রূপান্তরিত দৈর্ঘ্য: %1$.3f %2$s</string>
-	<string name="history_primary_other_side">অন্য বাহু: %1$.2f ফুট</string>
-	<string name="history_primary_unknown_side">ভূমি বা উচ্চতা: %1$.2f ফুট</string>
-	<string name="history_primary_radius">ব্যাসার্ধ: %1$.2f ফুট</string>
-	<string name="history_primary_area">ক্ষেত্রফল: %1$.2f %2$s</string>
+	<string name="history_primary_converted_length">রূপান্তরিত দৈর্ঘ্য : %1$.3f %2$s</string>
+	<string name="history_primary_other_side">অন্য বাহু : %1$.2f ফুট</string>
+	<string name="history_primary_unknown_side">ভূমি বা উচ্চতা : %1$.2f ফুট</string>
+	<string name="history_primary_radius">ব্যাসার্ধ : %1$.2f ফুট</string>
+	<string name="history_primary_area">ক্ষেত্রফল : %1$.2f %2$s</string>
 	<string name="history_separator"> : </string>
 
 </resources>
