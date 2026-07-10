@@ -1,0 +1,515 @@
+/*
+ * Copyright (c) 2026 Shafiqul Islam Shamim
+ * GitHub: https://github.com/ShafiqulIslamShamim/Land-Measurement
+ *
+ * All Rights Reserved.
+ *
+ * This source code is made publicly available solely for viewing, collaboration,
+ * educational reference, and submitting pull requests to the official repository.
+ *
+ * No permission is granted to copy, modify, redistribute, sublicense, or use
+ * this source code, in whole or in part, for personal, commercial, or any other
+ * purpose without the prior written permission of the copyright holder.
+ */
+package com.shamim.landmeasurement.activity;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ScrollView;
+import android.widget.Toast;
+import androidx.annotation.Nullable;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textview.MaterialTextView;
+import com.shamim.landmeasurement.R;
+import com.shamim.landmeasurement.util.*;
+import java.util.Arrays;
+import java.util.List;
+
+public class LinearUnitsConversionActivity extends BaseActivity
+    implements com.shamim.landmeasurement.history.HistoryItemSupport {
+
+  private MaterialToolbar toolbar;
+  private TextInputEditText etInputLength, etInputInch;
+  private TextInputLayout tilInputInch;
+  private ChipGroup chipGroupUnits;
+  private ScrollView scrollView;
+  private MaterialButton btnCalculate, btnShare;
+  private MaterialCardView cardResult;
+  private ViewGroup containerLengthUnits;
+
+  private int selectedUnitResId = R.string.unit_foot;
+  private String lastSharedText = "";
+
+  /**
+   * On create.
+   *
+   * @param savedInstanceState the savedInstanceState
+   */
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_linear_units_conversion);
+
+    initViews();
+    setupToolbar();
+    setupChipGroup();
+    setupListeners();
+    updateInchFieldVisibility(); // Initial setup
+
+    String serialized = getIntent().getStringExtra("serialized_inputs");
+    if (serialized != null) {
+      restoreSerializedInputs(serialized);
+    }
+  }
+
+  /** Init views. */
+  private void initViews() {
+    toolbar = findViewById(R.id.toolbar);
+    etInputLength = findViewById(R.id.et_input_length);
+    chipGroupUnits = findViewById(R.id.chip_group_units);
+    scrollView = findViewById(R.id.scroll_view);
+    btnCalculate = findViewById(R.id.btn_calculate);
+    btnShare = findViewById(R.id.btn_share);
+    cardResult = findViewById(R.id.card_result);
+    containerLengthUnits = findViewById(R.id.container_length_units);
+
+    // Extra views for Inch when Foot is selected
+    tilInputInch = findViewById(R.id.til_first_in);
+    etInputInch = findViewById(R.id.et_first_in);
+  }
+
+  /** Setup toolbar. */
+  private void setupToolbar() {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setTitle(R.string.item_cov_linear_units);
+    }
+  }
+
+  /** Setup chip group. */
+  private void setupChipGroup() {
+    List<Integer> unitResIds =
+        Arrays.asList(
+            R.string.unit_inch,
+            R.string.unit_foot,
+            R.string.unit_yard,
+            R.string.unit_hath,
+            R.string.unit_meter,
+            R.string.unit_centimeter,
+            R.string.unit_millimeter);
+
+    chipGroupUnits.removeAllViews();
+
+    for (int resId : unitResIds) {
+      Chip chip = new Chip(this);
+      chip.setId(resId);
+      chip.setText(resId);
+      chip.setCheckable(true);
+      chip.setChecked(resId == selectedUnitResId);
+      chip.setChipIconResource(R.drawable.ic_check);
+      chip.setChipIconVisible(resId == selectedUnitResId);
+
+      chip.setOnCheckedChangeListener(
+          (buttonView, isChecked) -> {
+            if (isChecked) {
+              selectedUnitResId = resId;
+              updateChipIcons();
+              updateInchFieldVisibility();
+              calculate(); // Auto calculate on unit change
+            }
+          });
+
+      chipGroupUnits.addView(chip);
+    }
+  }
+
+  /** Update chip icons. */
+  private void updateChipIcons() {
+    for (int i = 0; i < chipGroupUnits.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroupUnits.getChildAt(i);
+      boolean isSelected = chip.getText().toString().equals(getString(selectedUnitResId));
+      chip.setChipIconVisible(isSelected);
+    }
+  }
+
+  /** Update inch field visibility. */
+  private void updateInchFieldVisibility() {
+    boolean isFoot = (selectedUnitResId == R.string.unit_foot);
+
+    if (tilInputInch != null) {
+      tilInputInch.setVisibility(isFoot ? View.VISIBLE : View.GONE);
+    }
+
+    if (etInputInch != null && !isFoot) {
+      etInputInch.setText("");
+    }
+  }
+
+  /** Setup listeners. */
+  private void setupListeners() {
+    // Input filtering
+    etInputLength.addTextChangedListener(
+        new TextWatcher() {
+          /**
+           * Before text changed.
+           *
+           * @param s the s
+           * @param start the start
+           * @param count the count
+           * @param after the after
+           */
+          @Override
+          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+          /**
+           * On text changed.
+           *
+           * @param s the s
+           * @param start the start
+           * @param before the before
+           * @param count the count
+           */
+          @Override
+          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+          /**
+           * After text changed.
+           *
+           * @param s the s
+           */
+          @Override
+          public void afterTextChanged(Editable s) {
+            String filtered = s.toString().replaceAll("[^0-9.]", "");
+            if (!filtered.equals(s.toString())) {
+              etInputLength.setText(filtered);
+              etInputLength.setSelection(filtered.length());
+            }
+          }
+        });
+
+    // Optional: Also add listener on inch field
+    if (etInputInch != null) {
+      etInputInch.addTextChangedListener(
+          new TextWatcher() {
+            /**
+             * Before text changed.
+             *
+             * @param s the s
+             * @param start the start
+             * @param count the count
+             * @param after the after
+             */
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            /**
+             * On text changed.
+             *
+             * @param s the s
+             * @param start the start
+             * @param before the before
+             * @param count the count
+             */
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            /**
+             * After text changed.
+             *
+             * @param s the s
+             */
+            @Override
+            public void afterTextChanged(Editable s) {
+              String filtered = s.toString().replaceAll("[^0-9.]", "");
+              if (!filtered.equals(s.toString())) {
+                etInputInch.setText(filtered);
+                etInputInch.setSelection(filtered.length());
+              }
+            }
+          });
+    }
+
+    btnCalculate.setOnClickListener(v -> calculate());
+    btnShare.setOnClickListener(
+        v ->
+            ShareUtils.showShareOptionsDialog(
+                this, lastSharedText, "Linear_units_conversion_result"));
+  }
+
+  /** Calculate. */
+  private void calculate() {
+    double mainValue = parseDoubleOrZero(etInputLength.getText());
+    double inches = (etInputInch != null) ? parseDoubleOrZero(etInputInch.getText()) : 0.0;
+
+    double valueInSelectedUnit;
+
+    if (selectedUnitResId == R.string.unit_foot) {
+      valueInSelectedUnit = mainValue + (inches / 12.0);
+    } else {
+      valueInSelectedUnit = mainValue;
+    }
+
+    if (valueInSelectedUnit <= 0) {
+      Toast.makeText(this, R.string.conversation_length_error_invalid_value, Toast.LENGTH_SHORT)
+          .show();
+      hideResult();
+      return;
+    }
+
+    // Convert to Feet (base unit)
+    double valueInFeet =
+        UnitConverter.convertLength(valueInSelectedUnit, selectedUnitResId, R.string.unit_foot);
+
+    showResult(valueInFeet, getString(selectedUnitResId));
+
+    // Save to history
+    saveToHistory();
+  }
+
+  /** Save to history. */
+  private void saveToHistory() {
+    if (getIntent().getBooleanExtra("skip_history_save", false)) {
+      return;
+    }
+    String shapeTitle = getString(R.string.history_title_linear_conversion);
+
+    // Construct inputs text
+    StringBuilder sb = new StringBuilder();
+    sb.append(getString(R.string.label_convert_length)).append(": ");
+    if (selectedUnitResId == R.string.unit_foot) {
+      double mainFt = parseDoubleOrZero(etInputLength.getText());
+      double inch = parseDoubleOrZero(etInputInch.getText());
+      sb.append(String.format("%.2f", mainFt))
+          .append(" ")
+          .append(getString(R.string.unit_foot))
+          .append(" ")
+          .append(String.format("%.2f", inch))
+          .append(" ")
+          .append(getString(R.string.unit_inch));
+    } else {
+      double mainVal = parseDoubleOrZero(etInputLength.getText());
+      sb.append(String.format("%.2f", mainVal)).append(" ").append(getString(selectedUnitResId));
+    }
+
+    String inputs = sb.toString();
+    String className = getClass().getName();
+    String serialized = getSerializedInputs();
+
+    new Thread(
+            () -> {
+              try {
+                com.shamim.landmeasurement.history.HistoryEntry entry =
+                    new com.shamim.landmeasurement.history.HistoryEntry(
+                        shapeTitle, inputs, 0.0, System.currentTimeMillis(), className, serialized);
+                com.shamim.landmeasurement.history.HistoryDatabase.getDatabase(this)
+                    .historyDao()
+                    .insert(entry);
+              } catch (Exception e) {
+                android.util.Log.e("LinearUnitsConversion", "Error saving history", e);
+              }
+            })
+        .start();
+  }
+
+  /**
+   * Get serialized inputs.
+   *
+   * @return the result of the operation
+   */
+  @Override
+  public String getSerializedInputs() {
+    String len = etInputLength.getText() != null ? etInputLength.getText().toString() : "";
+    String inch =
+        etInputInch != null && etInputInch.getText() != null
+            ? etInputInch.getText().toString()
+            : "";
+    return len + ";" + inch + ";" + selectedUnitResId;
+  }
+
+  /**
+   * Restore serialized inputs.
+   *
+   * @param data the data
+   */
+  @Override
+  public void restoreSerializedInputs(String data) {
+    if (data == null || data.isEmpty()) return;
+    String[] parts = data.split(";");
+    if (parts.length >= 3) {
+      getIntent().putExtra("skip_history_save", true);
+      etInputLength.setText(parts[0]);
+      if (etInputInch != null) {
+        etInputInch.setText(parts[1]);
+      }
+      try {
+        selectedUnitResId = Integer.parseInt(parts[2]);
+        chipGroupUnits.check(selectedUnitResId);
+      } catch (NumberFormatException e) {
+        e.printStackTrace();
+      }
+      calculate();
+      getIntent().putExtra("skip_history_save", false);
+    }
+  }
+
+  /**
+   * Show result.
+   *
+   * @param feet the feet
+   * @param selectedUnit the selectedUnit
+   */
+  private void showResult(double feet, String selectedUnit) {
+    containerLengthUnits.removeAllViews();
+
+    for (UnitConverter.LengthUnit unit : UnitConverter.LengthUnit.values()) {
+      String unitName = getString(unit.getResId());
+      if (unitName.equals(selectedUnit)) continue;
+
+      double convertedValue = unit.fromFeet(feet);
+      String formatted = formatValue(convertedValue);
+
+      addUnitRow(containerLengthUnits, unitName, formatted);
+    }
+
+    lastSharedText = buildShareableText(feet, selectedUnit);
+    cardResult.setVisibility(View.VISIBLE);
+
+    // Scroll to result
+    cardResult.post(
+        () -> {
+          cardResult.requestFocus();
+          cardResult.requestRectangleOnScreen(
+              new android.graphics.Rect(0, 0, cardResult.getWidth(), cardResult.getHeight()), true);
+        });
+  }
+
+  /**
+   * Build shareable text.
+   *
+   * @param feet the feet
+   * @param selectedUnit the selectedUnit
+   * @return the result of the operation
+   */
+  private String buildShareableText(double feet, String selectedUnit) {
+    StringBuilder sb = new StringBuilder();
+
+    double inputValue = UnitConverter.convertLength(feet, R.string.unit_foot, selectedUnitResId);
+
+    sb.append(getString(R.string.label_converted_values)).append("\n\n");
+    sb.append(getString(R.string.label_convert_length)).append(": ");
+
+    // Show proper format when Foot + Inch
+    if (selectedUnitResId == R.string.unit_foot) {
+      double mainFt = parseDoubleOrZero(etInputLength.getText());
+      double inch = parseDoubleOrZero(etInputInch.getText());
+      sb.append(String.format("%.2f", mainFt))
+          .append(" ")
+          .append(getString(R.string.unit_foot))
+          .append(" ")
+          .append(String.format("%.2f", inch))
+          .append(" ")
+          .append(getString(R.string.unit_inch));
+    } else {
+      sb.append(formatValue(inputValue)).append(" ").append(selectedUnit);
+    }
+
+    sb.append("\n\n");
+    sb.append("──────────────────────────────\n\n");
+    sb.append(getString(R.string.label_converted_values)).append(":\n");
+
+    for (UnitConverter.LengthUnit unit : UnitConverter.LengthUnit.values()) {
+      double value = unit.fromFeet(feet);
+      sb.append("• ")
+          .append(getString(unit.getResId()))
+          .append(" : ")
+          .append(formatValue(value))
+          .append("\n");
+    }
+
+    sb.append("\n").append(getString(R.string.share_footer));
+    return sb.toString();
+  }
+
+  // ================== Helpers ==================
+  /**
+   * Add unit row.
+   *
+   * @param parent the parent
+   * @param label the label
+   * @param value the value
+   */
+  private void addUnitRow(ViewGroup parent, String label, String value) {
+    View row = LayoutInflater.from(this).inflate(R.layout.item_unit_row, parent, false);
+    MaterialTextView tvLabel = row.findViewById(R.id.tv_unit_name);
+    MaterialTextView tvValue = row.findViewById(R.id.tv_unit_value);
+    tvLabel.setText(label);
+    tvValue.setText(value);
+    parent.addView(row);
+  }
+
+  /**
+   * Format value.
+   *
+   * @param value the value
+   * @return the result of the operation
+   */
+  private String formatValue(double value) {
+    if (value >= 10000 || value < 0.001) return String.format("%.4f", value);
+    if (value >= 100) return String.format("%.2f", value);
+    return String.format("%.3f", value);
+  }
+
+  /**
+   * Parse double or zero.
+   *
+   * @param s the s
+   * @return the result of the operation
+   */
+  private double parseDoubleOrZero(CharSequence s) {
+    if (s == null || s.toString().trim().isEmpty()) return 0.0;
+    try {
+      return Double.parseDouble(s.toString().trim());
+    } catch (NumberFormatException e) {
+      return 0.0;
+    }
+  }
+
+  /** Hide result. */
+  private void hideResult() {
+    cardResult.setVisibility(View.GONE);
+    lastSharedText = "";
+  }
+
+  /** Close keyboard. */
+  private void closeKeyboard() {
+    View view = getCurrentFocus();
+    if (view != null) {
+      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      if (imm != null) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+  }
+
+  /**
+   * On support navigate up.
+   *
+   * @return the result of the operation
+   */
+  @Override
+  public boolean onSupportNavigateUp() {
+    getOnBackPressedDispatcher().onBackPressed();
+    return true;
+  }
+}
